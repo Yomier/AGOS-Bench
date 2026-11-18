@@ -1,0 +1,7451 @@
+{
+ "schema_version": 4,
+ "control_graph_version": "sparse_control_graph_v4_uniform_20260914_hotfix1",
+ "control_graph_release_id": "v20260914_sparse_control_v4_1",
+ "town": "Town10HD",
+ "graph_id": "Town10HD-odr5d883b79-r2-d10-lcnon-v2",
+ "params": {
+  "road_chain_target_m": 30.0,
+  "interval_formula": "global ROAD_CHAIN_TARGET_M (uniform, all towns)",
+  "max_agent_step_m": 45.0,
+  "semantic_micro_m": 8.1,
+  "semantic_turn_m": 120.0,
+  "centerline_total_m": 1522.1,
+  "split_eps_m": 50.0,
+  "rep_lane_rule": "sorted(lane_ids)[len//2]",
+  "design": "v4 统一口径：全局 30m 链间隔（budget 软统计）+ merge 后语义补全（微转移/同路口转向）+ >45m agent 边拆 transit；rescue 拆段打标"
+ },
+ "template": {
+  "junctions": [
+   {
+    "junction_id": 23,
+    "sub": 0,
+    "in_arms": 3,
+    "out_arms": 3,
+    "nodes": 6
+   },
+   {
+    "junction_id": 134,
+    "sub": 0,
+    "in_arms": 3,
+    "out_arms": 3,
+    "nodes": 6
+   },
+   {
+    "junction_id": 189,
+    "sub": 0,
+    "in_arms": 4,
+    "out_arms": 4,
+    "nodes": 8
+   },
+   {
+    "junction_id": 468,
+    "sub": 0,
+    "in_arms": 3,
+    "out_arms": 3,
+    "nodes": 6
+   },
+   {
+    "junction_id": 532,
+    "sub": 0,
+    "in_arms": 3,
+    "out_arms": 3,
+    "nodes": 6
+   },
+   {
+    "junction_id": 664,
+    "sub": 0,
+    "in_arms": 3,
+    "out_arms": 3,
+    "nodes": 6
+   },
+   {
+    "junction_id": 719,
+    "sub": 0,
+    "in_arms": 3,
+    "out_arms": 3,
+    "nodes": 6
+   },
+   {
+    "junction_id": 841,
+    "sub": 0,
+    "in_arms": 3,
+    "out_arms": 3,
+    "nodes": 6
+   },
+   {
+    "junction_id": 895,
+    "sub": 0,
+    "in_arms": 3,
+    "out_arms": 3,
+    "nodes": 6
+   }
+  ]
+ },
+ "control_nodes": [
+  {
+   "control_node_id": "JX134S0A0_OUT",
+   "type": "junction_out",
+   "ports": [
+    "9:0:-1:0"
+   ],
+   "junction_id": 134,
+   "x": 44.02894973754883,
+   "y": 52.548702239990234,
+   "z": 0.0,
+   "arm": [
+    9,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "9:0:-1:0"
+   ]
+  },
+  {
+   "control_node_id": "JX134S0A1_IN",
+   "type": "junction_in",
+   "ports": [
+    "9:0:1:0"
+   ],
+   "junction_id": 134,
+   "x": 40.52924728393555,
+   "y": 52.59458541870117,
+   "z": 0.0,
+   "arm": [
+    9,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "9:0:1:0"
+   ]
+  },
+  {
+   "control_node_id": "JX134S0A2_IN",
+   "type": "junction_in",
+   "ports": [
+    "11:0:-1:14"
+   ],
+   "junction_id": 134,
+   "x": 58.670047760009766,
+   "y": 66.32357025146484,
+   "z": 0.0,
+   "arm": [
+    11,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "11:0:-1:14"
+   ]
+  },
+  {
+   "control_node_id": "JX134S0A3_OUT",
+   "type": "junction_out",
+   "ports": [
+    "11:0:1:14"
+   ],
+   "junction_id": 134,
+   "x": 58.32054901123047,
+   "y": 69.82312774658203,
+   "z": 0.0,
+   "arm": [
+    11,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "11:0:1:14"
+   ]
+  },
+  {
+   "control_node_id": "JX134S0A4_OUT",
+   "type": "junction_out",
+   "ports": [
+    "12:0:-1:0"
+   ],
+   "junction_id": 134,
+   "x": 27.14229393005371,
+   "y": 66.28325653076172,
+   "z": 0.0,
+   "arm": [
+    12,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "12:0:-1:0"
+   ]
+  },
+  {
+   "control_node_id": "JX134S0A5_IN",
+   "type": "junction_in",
+   "ports": [
+    "12:0:1:0"
+   ],
+   "junction_id": 134,
+   "x": 27.137819290161133,
+   "y": 69.78325653076172,
+   "z": 0.0,
+   "arm": [
+    12,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "12:0:1:0"
+   ]
+  },
+  {
+   "control_node_id": "JX189S0A0_IN",
+   "type": "junction_in",
+   "ports": [
+    "14:0:-1:5"
+   ],
+   "junction_id": 189,
+   "x": -45.18650817871094,
+   "y": 42.63542938232422,
+   "z": 0.0,
+   "arm": [
+    14,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "14:0:-1:5"
+   ]
+  },
+  {
+   "control_node_id": "JX189S0A1_OUT",
+   "type": "junction_out",
+   "ports": [
+    "14:0:1:5"
+   ],
+   "junction_id": 189,
+   "x": -48.68644332885742,
+   "y": 42.66320037841797,
+   "z": 0.0,
+   "arm": [
+    14,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "14:0:1:5"
+   ]
+  },
+  {
+   "control_node_id": "JX189S0A2_OUT",
+   "type": "junction_out",
+   "ports": [
+    "15:0:-2:1",
+    "15:0:-1:0",
+    "15:0:-1:1"
+   ],
+   "junction_id": 189,
+   "x": -41.816890716552734,
+   "y": -3.7042365074157715,
+   "z": 0.0,
+   "arm": [
+    15,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "15:0:-2:1"
+   ]
+  },
+  {
+   "control_node_id": "JX189S0A3_IN",
+   "type": "junction_in",
+   "ports": [
+    "15:0:2:1",
+    "15:0:1:1",
+    "15:0:1:0"
+   ],
+   "junction_id": 189,
+   "x": -52.31685256958008,
+   "y": -3.6746883392333984,
+   "z": 0.0,
+   "arm": [
+    15,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "15:0:2:1"
+   ]
+  },
+  {
+   "control_node_id": "JX189S0A4_IN",
+   "type": "junction_in",
+   "ports": [
+    "18:0:-1:4"
+   ],
+   "junction_id": 189,
+   "x": -80.67609405517578,
+   "y": 24.459861755371094,
+   "z": 0.0,
+   "arm": [
+    19,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "18:0:-1:4"
+   ]
+  },
+  {
+   "control_node_id": "JX189S0A5_OUT",
+   "type": "junction_out",
+   "ports": [
+    "18:0:4:4"
+   ],
+   "junction_id": 189,
+   "x": -80.65386962890625,
+   "y": 16.45989418029785,
+   "z": 0.0,
+   "arm": [
+    19,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "18:0:4:4"
+   ]
+  },
+  {
+   "control_node_id": "JX189S0A6_OUT",
+   "type": "junction_out",
+   "ports": [
+    "20:0:-1:0"
+   ],
+   "junction_id": 189,
+   "x": -28.71629524230957,
+   "y": 24.604232788085938,
+   "z": 0.0,
+   "arm": [
+    20,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "20:0:-1:0"
+   ]
+  },
+  {
+   "control_node_id": "JX189S0A7_IN",
+   "type": "junction_in",
+   "ports": [
+    "20:0:4:0"
+   ],
+   "junction_id": 189,
+   "x": -28.694067001342773,
+   "y": 16.604265213012695,
+   "z": 0.0,
+   "arm": [
+    20,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "20:0:4:0"
+   ]
+  },
+  {
+   "control_node_id": "JX23S0A0_IN",
+   "type": "junction_in",
+   "ports": [
+    "6:0:-1:43"
+   ],
+   "junction_id": 23,
+   "x": -67.46985626220703,
+   "y": -61.69721984863281,
+   "z": 0.0,
+   "arm": [
+    6,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "6:0:-1:43"
+   ]
+  },
+  {
+   "control_node_id": "JX23S0A1_OUT",
+   "type": "junction_out",
+   "ports": [
+    "6:0:1:43"
+   ],
+   "junction_id": 23,
+   "x": -67.15364074707031,
+   "y": -65.1941146850586,
+   "z": 0.0,
+   "arm": [
+    6,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "6:0:1:43"
+   ]
+  },
+  {
+   "control_node_id": "JX23S0A2_OUT",
+   "type": "junction_out",
+   "ports": [
+    "7:0:-1:0"
+   ],
+   "junction_id": 23,
+   "x": -27.800329208374023,
+   "y": -61.2840461730957,
+   "z": 0.0,
+   "arm": [
+    7,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "7:0:-1:0"
+   ]
+  },
+  {
+   "control_node_id": "JX23S0A3_IN",
+   "type": "junction_in",
+   "ports": [
+    "7:0:1:0"
+   ],
+   "junction_id": 23,
+   "x": -27.76387596130371,
+   "y": -64.78385925292969,
+   "z": 0.0,
+   "arm": [
+    7,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "7:0:1:0"
+   ]
+  },
+  {
+   "control_node_id": "JX23S0A4_OUT",
+   "type": "junction_out",
+   "ports": [
+    "22:0:-1:0"
+   ],
+   "junction_id": 23,
+   "x": -48.6427001953125,
+   "y": -43.35388946533203,
+   "z": 0.0,
+   "arm": [
+    22,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "22:0:-1:0"
+   ]
+  },
+  {
+   "control_node_id": "JX23S0A5_IN",
+   "type": "junction_in",
+   "ports": [
+    "22:0:1:0"
+   ],
+   "junction_id": 23,
+   "x": -45.142799377441406,
+   "y": -43.327484130859375,
+   "z": 0.0,
+   "arm": [
+    22,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "22:0:1:0"
+   ]
+  },
+  {
+   "control_node_id": "JX468S0A0_IN",
+   "type": "junction_in",
+   "ports": [
+    "4:0:-1:14"
+   ],
+   "junction_id": 468,
+   "x": -28.168716430664062,
+   "y": 133.53794860839844,
+   "z": 0.0,
+   "arm": [
+    4,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "4:0:-1:14"
+   ]
+  },
+  {
+   "control_node_id": "JX468S0A1_OUT",
+   "type": "junction_out",
+   "ports": [
+    "4:0:1:14"
+   ],
+   "junction_id": 468,
+   "x": -28.190227508544922,
+   "y": 137.0378875732422,
+   "z": 0.0,
+   "arm": [
+    4,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "4:0:1:14"
+   ]
+  },
+  {
+   "control_node_id": "JX468S0A2_OUT",
+   "type": "junction_out",
+   "ports": [
+    "5:0:-1:0"
+   ],
+   "junction_id": 468,
+   "x": -71.26968383789062,
+   "y": 132.3148956298828,
+   "z": 0.0,
+   "arm": [
+    5,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "5:0:-1:0"
+   ]
+  },
+  {
+   "control_node_id": "JX468S0A3_IN",
+   "type": "junction_in",
+   "ports": [
+    "5:0:1:0"
+   ],
+   "junction_id": 468,
+   "x": -72.0494384765625,
+   "y": 135.72694396972656,
+   "z": 0.0,
+   "arm": [
+    5,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "5:0:1:0"
+   ]
+  },
+  {
+   "control_node_id": "JX468S0A4_OUT",
+   "type": "junction_out",
+   "ports": [
+    "13:0:-1:0"
+   ],
+   "junction_id": 468,
+   "x": -44.98299789428711,
+   "y": 114.95514678955078,
+   "z": 0.0,
+   "arm": [
+    13,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "13:0:-1:0"
+   ]
+  },
+  {
+   "control_node_id": "JX468S0A5_IN",
+   "type": "junction_in",
+   "ports": [
+    "13:0:1:0"
+   ],
+   "junction_id": 468,
+   "x": -48.48298263549805,
+   "y": 114.9649887084961,
+   "z": 0.0,
+   "arm": [
+    13,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "13:0:1:0"
+   ]
+  },
+  {
+   "control_node_id": "JX532S0A0_IN",
+   "type": "junction_in",
+   "ports": [
+    "2:0:-1:6"
+   ],
+   "junction_id": 532,
+   "x": 106.07808685302734,
+   "y": 42.237056732177734,
+   "z": 0.0,
+   "arm": [
+    2,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "2:0:-1:6"
+   ]
+  },
+  {
+   "control_node_id": "JX532S0A1_OUT",
+   "type": "junction_out",
+   "ports": [
+    "2:0:1:6"
+   ],
+   "junction_id": 532,
+   "x": 102.57830810546875,
+   "y": 42.19169235229492,
+   "z": 0.0,
+   "arm": [
+    2,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "2:0:1:6"
+   ]
+  },
+  {
+   "control_node_id": "JX532S0A2_OUT",
+   "type": "junction_out",
+   "ports": [
+    "3:0:-1:1"
+   ],
+   "junction_id": 532,
+   "x": 106.41012573242188,
+   "y": -6.449329853057861,
+   "z": 0.0,
+   "arm": [
+    3,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "3:0:-1:1"
+   ]
+  },
+  {
+   "control_node_id": "JX532S0A3_IN",
+   "type": "junction_in",
+   "ports": [
+    "3:0:2:1",
+    "3:0:1:1"
+   ],
+   "junction_id": 532,
+   "x": 99.41028594970703,
+   "y": -6.497068405151367,
+   "z": 0.0,
+   "arm": [
+    3,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "3:0:2:1"
+   ]
+  },
+  {
+   "control_node_id": "JX532S0A4_IN",
+   "type": "junction_in",
+   "ports": [
+    "21:0:-1:13"
+   ],
+   "junction_id": 532,
+   "x": 82.60981750488281,
+   "y": 24.913555145263672,
+   "z": 0.0,
+   "arm": [
+    21,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "21:0:-1:13"
+   ]
+  },
+  {
+   "control_node_id": "JX532S0A5_OUT",
+   "type": "junction_out",
+   "ports": [
+    "21:0:4:13"
+   ],
+   "junction_id": 532,
+   "x": 83.05606842041016,
+   "y": 16.914766311645508,
+   "z": 0.0,
+   "arm": [
+    21,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "21:0:4:13"
+   ]
+  },
+  {
+   "control_node_id": "JX664S0A0_IN",
+   "type": "junction_in",
+   "ports": [
+    "1:0:-1:60"
+   ],
+   "junction_id": 664,
+   "x": 105.79457092285156,
+   "y": 83.80865478515625,
+   "z": 0.0,
+   "arm": [
+    1,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "1:0:-1:60"
+   ]
+  },
+  {
+   "control_node_id": "JX664S0A1_OUT",
+   "type": "junction_out",
+   "ports": [
+    "1:0:1:60"
+   ],
+   "junction_id": 664,
+   "x": 102.29833221435547,
+   "y": 83.24471282958984,
+   "z": 0.0,
+   "arm": [
+    1,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "1:0:1:60"
+   ]
+  },
+  {
+   "control_node_id": "JX664S0A2_OUT",
+   "type": "junction_out",
+   "ports": [
+    "2:0:-1:0"
+   ],
+   "junction_id": 664,
+   "x": 106.00284576416016,
+   "y": 53.269283294677734,
+   "z": 0.0,
+   "arm": [
+    2,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "2:0:-1:0"
+   ]
+  },
+  {
+   "control_node_id": "JX664S0A3_IN",
+   "type": "junction_in",
+   "ports": [
+    "2:0:1:0"
+   ],
+   "junction_id": 664,
+   "x": 102.50292205810547,
+   "y": 53.24541091918945,
+   "z": 0.0,
+   "arm": [
+    2,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "2:0:1:0"
+   ]
+  },
+  {
+   "control_node_id": "JX664S0A4_OUT",
+   "type": "junction_out",
+   "ports": [
+    "11:0:-1:0"
+   ],
+   "junction_id": 664,
+   "x": 85.98224639892578,
+   "y": 66.35848999023438,
+   "z": 0.0,
+   "arm": [
+    11,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "11:0:-1:0"
+   ]
+  },
+  {
+   "control_node_id": "JX664S0A5_IN",
+   "type": "junction_in",
+   "ports": [
+    "11:0:1:0"
+   ],
+   "junction_id": 664,
+   "x": 85.97777557373047,
+   "y": 69.85848999023438,
+   "z": 0.0,
+   "arm": [
+    11,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "11:0:1:0"
+   ]
+  },
+  {
+   "control_node_id": "JX719S0A0_IN",
+   "type": "junction_in",
+   "ports": [
+    "5:0:-1:53"
+   ],
+   "junction_id": 719,
+   "x": -107.24161529541016,
+   "y": 44.64942932128906,
+   "z": 0.0,
+   "arm": [
+    5,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "5:0:-1:53"
+   ]
+  },
+  {
+   "control_node_id": "JX719S0A1_OUT",
+   "type": "junction_out",
+   "ports": [
+    "5:0:1:53"
+   ],
+   "junction_id": 719,
+   "x": -110.74140167236328,
+   "y": 44.610198974609375,
+   "z": 0.0,
+   "arm": [
+    5,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "5:0:1:53"
+   ]
+  },
+  {
+   "control_node_id": "JX719S0A2_OUT",
+   "type": "junction_out",
+   "ports": [
+    "6:0:-1:0"
+   ],
+   "junction_id": 719,
+   "x": -106.7159194946289,
+   "y": -2.2476232051849365,
+   "z": 0.0,
+   "arm": [
+    6,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "6:0:-1:0"
+   ]
+  },
+  {
+   "control_node_id": "JX719S0A3_IN",
+   "type": "junction_in",
+   "ports": [
+    "6:0:1:0"
+   ],
+   "junction_id": 719,
+   "x": -110.21570587158203,
+   "y": -2.2868540287017822,
+   "z": 0.0,
+   "arm": [
+    6,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "6:0:1:0"
+   ]
+  },
+  {
+   "control_node_id": "JX719S0A4_OUT",
+   "type": "junction_out",
+   "ports": [
+    "18:0:-2:0",
+    "18:0:-1:0"
+   ],
+   "junction_id": 719,
+   "x": -88.685791015625,
+   "y": 27.937620162963867,
+   "z": 0.0,
+   "arm": [
+    18,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "18:0:-2:0"
+   ]
+  },
+  {
+   "control_node_id": "JX719S0A5_IN",
+   "type": "junction_in",
+   "ports": [
+    "18:0:5:1",
+    "18:0:4:0"
+   ],
+   "junction_id": 719,
+   "x": -86.64411926269531,
+   "y": 12.943235397338867,
+   "z": 0.0,
+   "arm": [
+    18,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "18:0:5:1"
+   ]
+  },
+  {
+   "control_node_id": "JX841S0A0_IN",
+   "type": "junction_in",
+   "ports": [
+    "9:0:-1:5"
+   ],
+   "junction_id": 841,
+   "x": 43.89786148071289,
+   "y": 42.549560546875,
+   "z": 0.0,
+   "arm": [
+    9,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "9:0:-1:5"
+   ]
+  },
+  {
+   "control_node_id": "JX841S0A1_OUT",
+   "type": "junction_out",
+   "ports": [
+    "9:0:1:5"
+   ],
+   "junction_id": 841,
+   "x": 40.39815902709961,
+   "y": 42.59544372558594,
+   "z": 0.0,
+   "arm": [
+    9,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "9:0:1:5"
+   ]
+  },
+  {
+   "control_node_id": "JX841S0A2_IN",
+   "type": "junction_in",
+   "ports": [
+    "20:0:-1:28"
+   ],
+   "junction_id": 841,
+   "x": 26.32505989074707,
+   "y": 24.757165908813477,
+   "z": 0.0,
+   "arm": [
+    20,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "20:0:-1:28"
+   ]
+  },
+  {
+   "control_node_id": "JX841S0A3_OUT",
+   "type": "junction_out",
+   "ports": [
+    "20:0:4:28"
+   ],
+   "junction_id": 841,
+   "x": 26.35443687438965,
+   "y": 16.757219314575195,
+   "z": 0.0,
+   "arm": [
+    20,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "20:0:4:28"
+   ]
+  },
+  {
+   "control_node_id": "JX841S0A4_OUT",
+   "type": "junction_out",
+   "ports": [
+    "21:0:-1:0"
+   ],
+   "junction_id": 841,
+   "x": 57.41337203979492,
+   "y": 24.84354591369629,
+   "z": 0.0,
+   "arm": [
+    21,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "21:0:-1:0"
+   ]
+  },
+  {
+   "control_node_id": "JX841S0A5_IN",
+   "type": "junction_in",
+   "ports": [
+    "21:0:4:0"
+   ],
+   "junction_id": 841,
+   "x": 57.43560028076172,
+   "y": 16.843578338623047,
+   "z": 0.0,
+   "arm": [
+    21,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "21:0:4:0"
+   ]
+  },
+  {
+   "control_node_id": "JX895S0A0_IN",
+   "type": "junction_in",
+   "ports": [
+    "12:0:-1:27"
+   ],
+   "junction_id": 895,
+   "x": -26.8576602935791,
+   "y": 66.2142105102539,
+   "z": 0.0,
+   "arm": [
+    12,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "12:0:-1:27"
+   ]
+  },
+  {
+   "control_node_id": "JX895S0A1_OUT",
+   "type": "junction_out",
+   "ports": [
+    "12:0:1:27"
+   ],
+   "junction_id": 895,
+   "x": -26.86213493347168,
+   "y": 69.7142105102539,
+   "z": 0.0,
+   "arm": [
+    12,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "12:0:1:27"
+   ]
+  },
+  {
+   "control_node_id": "JX895S0A2_IN",
+   "type": "junction_in",
+   "ports": [
+    "13:0:-1:16"
+   ],
+   "junction_id": 895,
+   "x": -45.07304763793945,
+   "y": 82.95526885986328,
+   "z": 0.0,
+   "arm": [
+    13,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "13:0:-1:16"
+   ]
+  },
+  {
+   "control_node_id": "JX895S0A3_OUT",
+   "type": "junction_out",
+   "ports": [
+    "13:0:1:16"
+   ],
+   "junction_id": 895,
+   "x": -48.57303237915039,
+   "y": 82.9651107788086,
+   "z": 0.0,
+   "arm": [
+    13,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "13:0:1:16"
+   ]
+  },
+  {
+   "control_node_id": "JX895S0A4_OUT",
+   "type": "junction_out",
+   "ports": [
+    "14:0:-1:0"
+   ],
+   "junction_id": 895,
+   "x": -45.16095733642578,
+   "y": 51.71539306640625,
+   "z": 0.0,
+   "arm": [
+    14,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "14:0:-1:0"
+   ]
+  },
+  {
+   "control_node_id": "JX895S0A5_IN",
+   "type": "junction_in",
+   "ports": [
+    "14:0:1:0"
+   ],
+   "junction_id": 895,
+   "x": -48.66094207763672,
+   "y": 51.725242614746094,
+   "z": 0.0,
+   "arm": [
+    14,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "14:0:1:0"
+   ]
+  },
+  {
+   "control_node_id": "RC0001",
+   "type": "road_chain",
+   "ports": [
+    "12:0:-1:13"
+   ],
+   "junction_id": null,
+   "x": 1.1423150300979614,
+   "y": 66.25001525878906,
+   "z": 0.0,
+   "arm": [
+    12,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "12:0:-1:13"
+   ]
+  },
+  {
+   "control_node_id": "RC0002",
+   "type": "road_chain",
+   "ports": [
+    "12:0:1:13"
+   ],
+   "junction_id": null,
+   "x": 1.1378401517868042,
+   "y": 69.75001525878906,
+   "z": 0.0,
+   "arm": [
+    12,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "12:0:1:13"
+   ]
+  },
+  {
+   "control_node_id": "RC0003",
+   "type": "road_chain",
+   "ports": [
+    "13:0:-1:8"
+   ],
+   "junction_id": null,
+   "x": -45.02802276611328,
+   "y": 98.95520782470703,
+   "z": 0.0,
+   "arm": [
+    13,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "13:0:-1:8"
+   ]
+  },
+  {
+   "control_node_id": "RC0004",
+   "type": "road_chain",
+   "ports": [
+    "13:0:1:8"
+   ],
+   "junction_id": null,
+   "x": -48.52800750732422,
+   "y": 98.96504974365234,
+   "z": 0.0,
+   "arm": [
+    13,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "13:0:1:8"
+   ]
+  },
+  {
+   "control_node_id": "RC0011",
+   "type": "road_chain",
+   "ports": [
+    "8:0:-1:9",
+    "1:0:-1:1"
+   ],
+   "junction_id": null,
+   "x": 17.808000564575195,
+   "y": 137.45132446289062,
+   "z": 0.0,
+   "arm": [
+    8,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "8:0:-1:9"
+   ]
+  },
+  {
+   "control_node_id": "RC0013",
+   "type": "road_chain",
+   "ports": [
+    "1:0:-1:16"
+   ],
+   "junction_id": null,
+   "x": 51.349708557128906,
+   "y": 137.63893127441406,
+   "z": 0.0,
+   "arm": [
+    1,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "1:0:-1:16"
+   ]
+  },
+  {
+   "control_node_id": "RC0014",
+   "type": "road_chain",
+   "ports": [
+    "1:0:-1:31"
+   ],
+   "junction_id": null,
+   "x": 81.56649780273438,
+   "y": 133.85964965820312,
+   "z": 0.0,
+   "arm": [
+    1,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "1:0:-1:31"
+   ]
+  },
+  {
+   "control_node_id": "RC0015",
+   "type": "road_chain",
+   "ports": [
+    "1:0:-1:45"
+   ],
+   "junction_id": null,
+   "x": 101.09730529785156,
+   "y": 112.93994903564453,
+   "z": 0.0,
+   "arm": [
+    1,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "1:0:-1:45"
+   ]
+  },
+  {
+   "control_node_id": "RC0016",
+   "type": "road_chain",
+   "ports": [
+    "8:0:-1:0"
+   ],
+   "junction_id": null,
+   "x": -0.19075478613376617,
+   "y": 137.2099609375,
+   "z": 0.0,
+   "arm": [
+    8,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "8:0:-1:0"
+   ]
+  },
+  {
+   "control_node_id": "RC0017",
+   "type": "road_chain",
+   "ports": [
+    "20:0:-1:14"
+   ],
+   "junction_id": null,
+   "x": -0.7164044976234436,
+   "y": 24.682031631469727,
+   "z": 0.0,
+   "arm": [
+    20,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "20:0:-1:14"
+   ]
+  },
+  {
+   "control_node_id": "RC0018",
+   "type": "road_chain",
+   "ports": [
+    "20:0:4:14"
+   ],
+   "junction_id": null,
+   "x": -0.6941763162612915,
+   "y": 16.682064056396484,
+   "z": 0.0,
+   "arm": [
+    20,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "20:0:4:14"
+   ]
+  },
+  {
+   "control_node_id": "RC0019",
+   "type": "road_chain",
+   "ports": [
+    "22:0:-1:13"
+   ],
+   "junction_id": null,
+   "x": -48.83888244628906,
+   "y": -17.354631423950195,
+   "z": 0.0,
+   "arm": [
+    22,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "22:0:-1:13"
+   ]
+  },
+  {
+   "control_node_id": "RC0020",
+   "type": "road_chain",
+   "ports": [
+    "22:0:1:13"
+   ],
+   "junction_id": null,
+   "x": -45.33898162841797,
+   "y": -17.328222274780273,
+   "z": 0.0,
+   "arm": [
+    22,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "22:0:1:13"
+   ]
+  },
+  {
+   "control_node_id": "RC0021",
+   "type": "road_chain",
+   "ports": [
+    "0:0:-1:0"
+   ],
+   "junction_id": null,
+   "x": 106.42996215820312,
+   "y": -9.358065605163574,
+   "z": 0.0,
+   "arm": [
+    0,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "0:0:-1:0"
+   ]
+  },
+  {
+   "control_node_id": "RC0022",
+   "type": "road_chain",
+   "ports": [
+    "10:0:-1:1"
+   ],
+   "junction_id": null,
+   "x": 106.45761108398438,
+   "y": -24.742660522460938,
+   "z": 0.0,
+   "arm": [
+    10,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "10:0:-1:1"
+   ]
+  },
+  {
+   "control_node_id": "RC0023",
+   "type": "road_chain",
+   "ports": [
+    "10:0:-1:15"
+   ],
+   "junction_id": null,
+   "x": 95.53977966308594,
+   "y": -51.211524963378906,
+   "z": 0.0,
+   "arm": [
+    10,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "10:0:-1:15"
+   ]
+  },
+  {
+   "control_node_id": "RC0024",
+   "type": "road_chain",
+   "ports": [
+    "10:0:-1:29"
+   ],
+   "junction_id": null,
+   "x": 70.0011978149414,
+   "y": -64.15680694580078,
+   "z": 0.0,
+   "arm": [
+    10,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "10:0:-1:29"
+   ]
+  },
+  {
+   "control_node_id": "RC0025",
+   "type": "road_chain",
+   "ports": [
+    "10:0:-1:44"
+   ],
+   "junction_id": null,
+   "x": 39.81124496459961,
+   "y": -64.41323852539062,
+   "z": 0.0,
+   "arm": [
+    10,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "10:0:-1:44"
+   ]
+  },
+  {
+   "control_node_id": "RC0026",
+   "type": "road_chain",
+   "ports": [
+    "10:0:-1:59",
+    "10:0:-1:60"
+   ],
+   "junction_id": null,
+   "x": 9.811246871948242,
+   "y": -64.4009780883789,
+   "z": 0.0,
+   "arm": [
+    10,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "10:0:-1:59"
+   ]
+  },
+  {
+   "control_node_id": "RC0028",
+   "type": "road_chain",
+   "ports": [
+    "0:0:1:0"
+   ],
+   "junction_id": null,
+   "x": 102.93003845214844,
+   "y": -9.38193416595459,
+   "z": 0.0,
+   "arm": [
+    0,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "0:0:1:0"
+   ]
+  },
+  {
+   "control_node_id": "RC0030",
+   "type": "road_chain",
+   "ports": [
+    "10:0:1:59",
+    "10:0:1:60"
+   ],
+   "junction_id": null,
+   "x": 9.812677383422852,
+   "y": -60.90098190307617,
+   "z": 0.0,
+   "arm": [
+    10,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "10:0:1:59"
+   ]
+  },
+  {
+   "control_node_id": "RC0031",
+   "type": "road_chain",
+   "ports": [
+    "10:0:1:45"
+   ],
+   "junction_id": null,
+   "x": 37.81267166137695,
+   "y": -60.912418365478516,
+   "z": 0.0,
+   "arm": [
+    10,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "10:0:1:45"
+   ]
+  },
+  {
+   "control_node_id": "RC0032",
+   "type": "road_chain",
+   "ports": [
+    "10:0:1:31"
+   ],
+   "junction_id": null,
+   "x": 65.7901840209961,
+   "y": -60.920738220214844,
+   "z": 0.0,
+   "arm": [
+    10,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "10:0:1:31"
+   ]
+  },
+  {
+   "control_node_id": "RC0033",
+   "type": "road_chain",
+   "ports": [
+    "10:0:1:16"
+   ],
+   "junction_id": null,
+   "x": 91.6375961303711,
+   "y": -50.20444869995117,
+   "z": 0.0,
+   "arm": [
+    10,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "10:0:1:16"
+   ]
+  },
+  {
+   "control_node_id": "RC0034",
+   "type": "road_chain",
+   "ports": [
+    "10:0:1:1"
+   ],
+   "junction_id": null,
+   "x": 102.95988464355469,
+   "y": -24.616687774658203,
+   "z": 0.0,
+   "arm": [
+    10,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "10:0:1:1"
+   ]
+  },
+  {
+   "control_node_id": "RC0036",
+   "type": "road_chain",
+   "ports": [
+    "4:0:-1:0"
+   ],
+   "junction_id": null,
+   "x": -0.16924521327018738,
+   "y": 133.71002197265625,
+   "z": 0.0,
+   "arm": [
+    4,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "4:0:-1:0"
+   ]
+  },
+  {
+   "control_node_id": "RC0037",
+   "type": "road_chain",
+   "ports": [
+    "4:0:1:0"
+   ],
+   "junction_id": null,
+   "x": -0.19075477123260498,
+   "y": 137.2099609375,
+   "z": 0.0,
+   "arm": [
+    4,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "4:0:1:0"
+   ]
+  },
+  {
+   "control_node_id": "RC0038",
+   "type": "road_chain",
+   "ports": [
+    "5:0:-1:14"
+   ],
+   "junction_id": null,
+   "x": -93.61933898925781,
+   "y": 118.37409210205078,
+   "z": 0.0,
+   "arm": [
+    5,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "5:0:-1:14"
+   ]
+  },
+  {
+   "control_node_id": "RC0039",
+   "type": "road_chain",
+   "ports": [
+    "5:0:-1:27"
+   ],
+   "junction_id": null,
+   "x": -104.87448120117188,
+   "y": 95.88288879394531,
+   "z": 0.0,
+   "arm": [
+    5,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "5:0:-1:27"
+   ]
+  },
+  {
+   "control_node_id": "RC0040",
+   "type": "road_chain",
+   "ports": [
+    "5:0:-1:40"
+   ],
+   "junction_id": null,
+   "x": -107.53305053710938,
+   "y": 70.64779663085938,
+   "z": 0.0,
+   "arm": [
+    5,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "5:0:-1:40"
+   ]
+  },
+  {
+   "control_node_id": "RC0041",
+   "type": "road_chain",
+   "ports": [
+    "5:0:1:39"
+   ],
+   "junction_id": null,
+   "x": -111.05525207519531,
+   "y": 72.60843658447266,
+   "z": 0.0,
+   "arm": [
+    5,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "5:0:1:39"
+   ]
+  },
+  {
+   "control_node_id": "RC0042",
+   "type": "road_chain",
+   "ports": [
+    "5:0:1:26"
+   ],
+   "junction_id": null,
+   "x": -107.64411163330078,
+   "y": 98.81144714355469,
+   "z": 0.0,
+   "arm": [
+    5,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "5:0:1:26"
+   ]
+  },
+  {
+   "control_node_id": "RC0043",
+   "type": "road_chain",
+   "ports": [
+    "5:0:1:13"
+   ],
+   "junction_id": null,
+   "x": -94.9926528930664,
+   "y": 122.1630630493164,
+   "z": 0.0,
+   "arm": [
+    5,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "5:0:1:13"
+   ]
+  },
+  {
+   "control_node_id": "RC0044",
+   "type": "road_chain",
+   "ports": [
+    "6:0:-1:14"
+   ],
+   "junction_id": null,
+   "x": -105.69900512695312,
+   "y": -29.882266998291016,
+   "z": 0.0,
+   "arm": [
+    6,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "6:0:-1:14"
+   ]
+  },
+  {
+   "control_node_id": "RC0045",
+   "type": "road_chain",
+   "ports": [
+    "6:0:-1:28"
+   ],
+   "junction_id": null,
+   "x": -93.0897216796875,
+   "y": -53.12615203857422,
+   "z": 0.0,
+   "arm": [
+    6,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "6:0:-1:28"
+   ]
+  },
+  {
+   "control_node_id": "RC0046",
+   "type": "road_chain",
+   "ports": [
+    "6:0:1:29"
+   ],
+   "junction_id": null,
+   "x": -93.85286712646484,
+   "y": -57.08296585083008,
+   "z": 0.0,
+   "arm": [
+    6,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "6:0:1:29"
+   ]
+  },
+  {
+   "control_node_id": "RC0047",
+   "type": "road_chain",
+   "ports": [
+    "6:0:1:15"
+   ],
+   "junction_id": null,
+   "x": -108.69883728027344,
+   "y": -32.57384490966797,
+   "z": 0.0,
+   "arm": [
+    6,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "6:0:1:15"
+   ]
+  },
+  {
+   "control_node_id": "RC0048",
+   "type": "road_chain",
+   "ports": [
+    "7:0:-1:11"
+   ],
+   "junction_id": null,
+   "x": -5.801522731781006,
+   "y": -61.0549201965332,
+   "z": 0.0,
+   "arm": [
+    7,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "7:0:-1:11"
+   ]
+  },
+  {
+   "control_node_id": "RC0049",
+   "type": "road_chain",
+   "ports": [
+    "7:0:1:11"
+   ],
+   "junction_id": null,
+   "x": -5.76507043838501,
+   "y": -64.55473327636719,
+   "z": 0.0,
+   "arm": [
+    7,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "7:0:1:11"
+   ]
+  },
+  {
+   "control_node_id": "RC0050",
+   "type": "road_chain",
+   "ports": [
+    "1:0:1:1",
+    "8:0:1:9"
+   ],
+   "junction_id": null,
+   "x": 21.369754791259766,
+   "y": 133.97120666503906,
+   "z": 0.0,
+   "arm": [
+    1,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "1:0:1:1"
+   ]
+  },
+  {
+   "control_node_id": "RC0052",
+   "type": "road_chain",
+   "ports": [
+    "1:0:1:45"
+   ],
+   "junction_id": null,
+   "x": 97.91947937011719,
+   "y": 111.47319793701172,
+   "z": 0.0,
+   "arm": [
+    1,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "1:0:1:45"
+   ]
+  },
+  {
+   "control_node_id": "RC0053",
+   "type": "road_chain",
+   "ports": [
+    "1:0:1:30"
+   ],
+   "junction_id": null,
+   "x": 78.29845428466797,
+   "y": 131.50173950195312,
+   "z": 0.0,
+   "arm": [
+    1,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "1:0:1:30"
+   ]
+  },
+  {
+   "control_node_id": "RC0054",
+   "type": "road_chain",
+   "ports": [
+    "1:0:1:15"
+   ],
+   "junction_id": null,
+   "x": 49.36931610107422,
+   "y": 134.1278076171875,
+   "z": 0.0,
+   "arm": [
+    1,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "1:0:1:15"
+   ]
+  },
+  {
+   "control_node_id": "RC0055",
+   "type": "road_chain",
+   "ports": [
+    "8:0:1:0"
+   ],
+   "junction_id": null,
+   "x": -0.16924519836902618,
+   "y": 133.71002197265625,
+   "z": 0.0,
+   "arm": [
+    8,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "8:0:1:0"
+   ]
+  },
+  {
+   "control_node_id": "TR0001",
+   "type": "transit",
+   "ports": [
+    "467:0:-1:12"
+   ],
+   "junction_id": null,
+   "x": -45.254295349121094,
+   "y": 18.54552459716797,
+   "z": 0.0,
+   "arm": [
+    467,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "467:0:-1:12"
+   ]
+  },
+  {
+   "control_node_id": "TR0002",
+   "type": "transit",
+   "ports": [
+    "256:0:-1:12"
+   ],
+   "junction_id": null,
+   "x": -54.047752380371094,
+   "y": 19.63545036315918,
+   "z": 0.0,
+   "arm": [
+    256,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "256:0:-1:12"
+   ]
+  },
+  {
+   "control_node_id": "TR0003",
+   "type": "transit",
+   "ports": [
+    "22:0:2:9"
+   ],
+   "junction_id": null,
+   "x": -41.778717041015625,
+   "y": -25.301586151123047,
+   "z": 0.0,
+   "arm": [
+    22,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "22:0:2:9"
+   ]
+  },
+  {
+   "control_node_id": "TR0004",
+   "type": "transit",
+   "ports": [
+    "33:0:1:11"
+   ],
+   "junction_id": null,
+   "x": -41.41991424560547,
+   "y": -49.85932540893555,
+   "z": 0.0,
+   "arm": [
+    33,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "33:0:1:11"
+   ]
+  },
+  {
+   "control_node_id": "TR0005",
+   "type": "transit",
+   "ports": [
+    "286:0:1:2"
+   ],
+   "junction_id": null,
+   "x": -62.95246505737305,
+   "y": 12.963264465332031,
+   "z": 0.0,
+   "arm": [
+    286,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "286:0:1:2"
+   ]
+  },
+  {
+   "control_node_id": "TR0006",
+   "type": "transit",
+   "ports": [
+    "296:0:-1:13"
+   ],
+   "junction_id": null,
+   "x": -45.53415298461914,
+   "y": 9.566461563110352,
+   "z": 0.0,
+   "arm": [
+    296,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "296:0:-1:13"
+   ]
+  },
+  {
+   "control_node_id": "TR0007",
+   "type": "transit",
+   "ports": [
+    "315:0:-1:7"
+   ],
+   "junction_id": null,
+   "x": -52.40938949584961,
+   "y": 21.5396671295166,
+   "z": 0.0,
+   "arm": [
+    315,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "315:0:-1:7"
+   ]
+  },
+  {
+   "control_node_id": "TR0008",
+   "type": "transit",
+   "ports": [
+    "255:0:-1:13"
+   ],
+   "junction_id": null,
+   "x": -40.82624816894531,
+   "y": 24.570585250854492,
+   "z": 0.0,
+   "arm": [
+    255,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "255:0:-1:13"
+   ]
+  },
+  {
+   "control_node_id": "TR0009",
+   "type": "transit",
+   "ports": [
+    "19:0:4:4"
+   ],
+   "junction_id": null,
+   "x": -70.04391479492188,
+   "y": 16.4893741607666,
+   "z": 0.0,
+   "arm": [
+    19,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "19:0:4:4"
+   ]
+  },
+  {
+   "control_node_id": "TR0010",
+   "type": "transit",
+   "ports": [
+    "566:0:-1:12"
+   ],
+   "junction_id": null,
+   "x": 106.24208068847656,
+   "y": 18.19009780883789,
+   "z": 0.0,
+   "arm": [
+    566,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "566:0:-1:12"
+   ]
+  },
+  {
+   "control_node_id": "TR0011",
+   "type": "transit",
+   "ports": [
+    "565:0:1:8"
+   ],
+   "junction_id": null,
+   "x": 102.6875991821289,
+   "y": 26.16604232788086,
+   "z": 0.0,
+   "arm": [
+    565,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "565:0:1:8"
+   ]
+  },
+  {
+   "control_node_id": "TR0012",
+   "type": "transit",
+   "ports": [
+    "565:0:2:4"
+   ],
+   "junction_id": null,
+   "x": 99.13312530517578,
+   "y": 34.14198684692383,
+   "z": 0.0,
+   "arm": [
+    565,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "565:0:2:4"
+   ]
+  },
+  {
+   "control_node_id": "TR0013",
+   "type": "transit",
+   "ports": [
+    "703:0:1:9"
+   ],
+   "junction_id": null,
+   "x": 98.56529998779297,
+   "y": 59.372676849365234,
+   "z": 0.0,
+   "arm": [
+    703,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "703:0:1:9"
+   ]
+  },
+  {
+   "control_node_id": "TR0014",
+   "type": "transit",
+   "ports": [
+    "637:0:-1:14"
+   ],
+   "junction_id": null,
+   "x": 105.7469253540039,
+   "y": 10.888010025024414,
+   "z": 0.0,
+   "arm": [
+    637,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "637:0:-1:14"
+   ]
+  },
+  {
+   "control_node_id": "TR0015",
+   "type": "transit",
+   "ports": [
+    "1:0:2:56"
+   ],
+   "junction_id": null,
+   "x": 98.74658203125,
+   "y": 90.82066345214844,
+   "z": 0.0,
+   "arm": [
+    1,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "1:0:2:56"
+   ]
+  },
+  {
+   "control_node_id": "TR0016",
+   "type": "transit",
+   "ports": [
+    "1:0:2:40"
+   ],
+   "junction_id": null,
+   "x": 90.20001983642578,
+   "y": 117.66710662841797,
+   "z": 0.0,
+   "arm": [
+    1,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "1:0:2:40"
+   ]
+  },
+  {
+   "control_node_id": "TR0017",
+   "type": "transit",
+   "ports": [
+    "1:0:2:22"
+   ],
+   "junction_id": null,
+   "x": 63.388675689697266,
+   "y": 130.70614624023438,
+   "z": 0.0,
+   "arm": [
+    1,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "1:0:2:22"
+   ]
+  },
+  {
+   "control_node_id": "TR0018",
+   "type": "transit",
+   "ports": [
+    "1:0:2:8"
+   ],
+   "junction_id": null,
+   "x": 35.38911056518555,
+   "y": 130.549560546875,
+   "z": 0.0,
+   "arm": [
+    1,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "1:0:2:8"
+   ]
+  },
+  {
+   "control_node_id": "TR0019",
+   "type": "transit",
+   "ports": [
+    "4:0:-2:4"
+   ],
+   "junction_id": null,
+   "x": -8.147583961486816,
+   "y": 130.16091918945312,
+   "z": 0.0,
+   "arm": [
+    4,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "4:0:-2:4"
+   ]
+  },
+  {
+   "control_node_id": "TR0020",
+   "type": "transit",
+   "ports": [
+    "486:0:-1:4"
+   ],
+   "junction_id": null,
+   "x": -35.82014083862305,
+   "y": 129.0264434814453,
+   "z": 0.0,
+   "arm": [
+    486,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "486:0:-1:4"
+   ]
+  },
+  {
+   "control_node_id": "TR0021",
+   "type": "transit",
+   "ports": [
+    "736:0:-1:11"
+   ],
+   "junction_id": null,
+   "x": -106.98661804199219,
+   "y": 21.900861740112305,
+   "z": 0.0,
+   "arm": [
+    736,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "736:0:-1:11"
+   ]
+  },
+  {
+   "control_node_id": "TR0022",
+   "type": "transit",
+   "ports": [
+    "735:0:1:7"
+   ],
+   "junction_id": null,
+   "x": -110.57608032226562,
+   "y": 29.861127853393555,
+   "z": 0.0,
+   "arm": [
+    735,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "735:0:1:7"
+   ]
+  },
+  {
+   "control_node_id": "TR0023",
+   "type": "transit",
+   "ports": [
+    "811:0:1:6"
+   ],
+   "junction_id": null,
+   "x": -101.20113372802734,
+   "y": 26.736164093017578,
+   "z": 0.0,
+   "arm": [
+    811,
+    0,
+    1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "811:0:1:6"
+   ]
+  },
+  {
+   "control_node_id": "TR0024",
+   "type": "transit",
+   "ports": [
+    "255:0:-2:3"
+   ],
+   "junction_id": null,
+   "x": -60.83589553833008,
+   "y": 28.01500129699707,
+   "z": 0.0,
+   "arm": [
+    255,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "255:0:-2:3"
+   ]
+  },
+  {
+   "control_node_id": "TR0025",
+   "type": "transit",
+   "ports": [
+    "20:0:-2:4"
+   ],
+   "junction_id": null,
+   "x": -20.726051330566406,
+   "y": 28.126447677612305,
+   "z": 0.0,
+   "arm": [
+    20,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "20:0:-2:4"
+   ]
+  },
+  {
+   "control_node_id": "TR0026",
+   "type": "transit",
+   "ports": [
+    "20:0:-2:18"
+   ],
+   "junction_id": null,
+   "x": 7.273841857910156,
+   "y": 28.204246520996094,
+   "z": 0.0,
+   "arm": [
+    20,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "20:0:-2:18"
+   ]
+  },
+  {
+   "control_node_id": "TR0027",
+   "type": "transit",
+   "ports": [
+    "848:0:-1:4"
+   ],
+   "junction_id": null,
+   "x": 33.48490524291992,
+   "y": 29.413618087768555,
+   "z": 0.0,
+   "arm": [
+    848,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "848:0:-1:4"
+   ]
+  },
+  {
+   "control_node_id": "TR0028",
+   "type": "transit",
+   "ports": [
+    "21:0:-2:4"
+   ],
+   "junction_id": null,
+   "x": 65.40361022949219,
+   "y": 28.365760803222656,
+   "z": 0.0,
+   "arm": [
+    21,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "21:0:-2:4"
+   ]
+  },
+  {
+   "control_node_id": "TR0029",
+   "type": "transit",
+   "ports": [
+    "608:0:-1:3"
+   ],
+   "junction_id": null,
+   "x": 88.83265686035156,
+   "y": 28.561765670776367,
+   "z": 0.0,
+   "arm": [
+    608,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "608:0:-1:3"
+   ]
+  },
+  {
+   "control_node_id": "TR0030",
+   "type": "transit",
+   "ports": [
+    "467:0:-2:4"
+   ],
+   "junction_id": null,
+   "x": -41.70928192138672,
+   "y": 34.53561019897461,
+   "z": 0.0,
+   "arm": [
+    467,
+    0,
+    -1
+   ],
+   "source_waypoint_ids": [],
+   "source_waypoint_names": [],
+   "seed_fine_nodes": [
+    "467:0:-2:4"
+   ]
+  }
+ ],
+ "edge_variants": [
+  {
+   "edge_id": "CE0001",
+   "from_control_node_id": "JX134S0A0_OUT",
+   "from_port_fine_node": "9:0:-1:0",
+   "to_control_node_id": "JX841S0A0_IN",
+   "to_port_fine_node": "9:0:-1:5",
+   "distance_m": 10.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "9:0:-1:0",
+    "9:0:-1:1",
+    "9:0:-1:2",
+    "9:0:-1:3",
+    "9:0:-1:4",
+    "9:0:-1:5"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0002",
+   "from_control_node_id": "JX134S0A0_OUT",
+   "from_port_fine_node": "9:0:-1:0",
+   "to_control_node_id": "TR0028",
+   "to_port_fine_node": "21:0:-2:4",
+   "distance_m": 41.212,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "9:0:-1:0",
+    "9:0:-1:1",
+    "9:0:-1:2",
+    "9:0:-1:3",
+    "9:0:-1:4",
+    "843:0:-1:0",
+    "843:0:-1:1",
+    "843:0:-1:2",
+    "843:0:-1:3",
+    "843:0:-1:4",
+    "843:0:-1:5",
+    "843:0:-1:6",
+    "843:0:-1:7",
+    "843:0:-1:8",
+    "843:0:-1:9",
+    "843:0:-1:10",
+    "843:0:-1:11",
+    "843:0:-1:12",
+    "21:0:-2:1",
+    "21:0:-2:2",
+    "21:0:-2:3",
+    "21:0:-2:4"
+   ],
+   "transit_join": true
+  },
+  {
+   "edge_id": "CE0003",
+   "from_control_node_id": "JX134S0A1_IN",
+   "from_port_fine_node": "9:0:1:0",
+   "to_control_node_id": "JX134S0A3_OUT",
+   "to_port_fine_node": "11:0:1:14",
+   "distance_m": 29.642,
+   "maneuver_class": "RIGHT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "9:0:1:0",
+    "152:0:1:12",
+    "152:0:1:11",
+    "152:0:1:10",
+    "152:0:1:9",
+    "152:0:1:8",
+    "152:0:1:7",
+    "152:0:1:6",
+    "152:0:1:5",
+    "152:0:1:4",
+    "152:0:1:3",
+    "152:0:1:2",
+    "152:0:1:1",
+    "11:0:1:14"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0004",
+   "from_control_node_id": "JX134S0A1_IN",
+   "from_port_fine_node": "9:0:1:0",
+   "to_control_node_id": "JX134S0A4_OUT",
+   "to_port_fine_node": "12:0:-1:0",
+   "distance_m": 22.685,
+   "maneuver_class": "LEFT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "9:0:1:0",
+    "179:0:1:12",
+    "179:0:1:11",
+    "179:0:1:10",
+    "179:0:1:9",
+    "179:0:1:8",
+    "179:0:1:7",
+    "179:0:1:6",
+    "179:0:1:5",
+    "179:0:1:4",
+    "179:0:1:3",
+    "179:0:1:2",
+    "179:0:1:1",
+    "12:0:-1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0005",
+   "from_control_node_id": "JX134S0A2_IN",
+   "from_port_fine_node": "11:0:-1:14",
+   "to_control_node_id": "JX134S0A0_OUT",
+   "to_port_fine_node": "9:0:-1:0",
+   "distance_m": 23.278,
+   "maneuver_class": "LEFT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "11:0:-1:14",
+    "160:0:-1:1",
+    "160:0:-1:2",
+    "160:0:-1:3",
+    "160:0:-1:4",
+    "160:0:-1:5",
+    "160:0:-1:6",
+    "160:0:-1:7",
+    "160:0:-1:8",
+    "160:0:-1:9",
+    "160:0:-1:10",
+    "160:0:-1:11",
+    "160:0:-1:12",
+    "9:0:-1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0006",
+   "from_control_node_id": "JX134S0A2_IN",
+   "from_port_fine_node": "11:0:-1:14",
+   "to_control_node_id": "JX134S0A4_OUT",
+   "to_port_fine_node": "12:0:-1:0",
+   "distance_m": 31.528,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "11:0:-1:14",
+    "151:0:-1:1",
+    "151:0:-1:2",
+    "151:0:-1:3",
+    "151:0:-1:4",
+    "151:0:-1:5",
+    "151:0:-1:6",
+    "151:0:-1:7",
+    "151:0:-1:8",
+    "151:0:-1:9",
+    "151:0:-1:10",
+    "151:0:-1:11",
+    "151:0:-1:12",
+    "151:0:-1:13",
+    "151:0:-1:14",
+    "12:0:-1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0007",
+   "from_control_node_id": "JX134S0A3_OUT",
+   "from_port_fine_node": "11:0:1:14",
+   "to_control_node_id": "JX664S0A5_IN",
+   "to_port_fine_node": "11:0:1:0",
+   "distance_m": 27.657,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "11:0:1:14",
+    "11:0:1:13",
+    "11:0:1:12",
+    "11:0:1:11",
+    "11:0:1:10",
+    "11:0:1:9",
+    "11:0:1:8",
+    "11:0:1:7",
+    "11:0:1:6",
+    "11:0:1:5",
+    "11:0:1:4",
+    "11:0:1:3",
+    "11:0:1:2",
+    "11:0:1:1",
+    "11:0:1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0008",
+   "from_control_node_id": "JX134S0A4_OUT",
+   "from_port_fine_node": "12:0:-1:0",
+   "to_control_node_id": "RC0001",
+   "to_port_fine_node": "12:0:-1:13",
+   "distance_m": 26.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "12:0:-1:0",
+    "12:0:-1:1",
+    "12:0:-1:2",
+    "12:0:-1:3",
+    "12:0:-1:4",
+    "12:0:-1:5",
+    "12:0:-1:6",
+    "12:0:-1:7",
+    "12:0:-1:8",
+    "12:0:-1:9",
+    "12:0:-1:10",
+    "12:0:-1:11",
+    "12:0:-1:12",
+    "12:0:-1:13"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0009",
+   "from_control_node_id": "JX134S0A5_IN",
+   "from_port_fine_node": "12:0:1:0",
+   "to_control_node_id": "JX134S0A0_OUT",
+   "to_port_fine_node": "9:0:-1:0",
+   "distance_m": 27.945,
+   "maneuver_class": "RIGHT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "12:0:1:0",
+    "172:0:1:12",
+    "172:0:1:11",
+    "172:0:1:10",
+    "172:0:1:9",
+    "172:0:1:8",
+    "172:0:1:7",
+    "172:0:1:6",
+    "172:0:1:5",
+    "172:0:1:4",
+    "172:0:1:3",
+    "172:0:1:2",
+    "172:0:1:1",
+    "9:0:-1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0010",
+   "from_control_node_id": "JX134S0A5_IN",
+   "from_port_fine_node": "12:0:1:0",
+   "to_control_node_id": "JX134S0A3_OUT",
+   "to_port_fine_node": "11:0:1:14",
+   "distance_m": 31.183,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "12:0:1:0",
+    "150:0:1:14",
+    "150:0:1:13",
+    "150:0:1:12",
+    "150:0:1:11",
+    "150:0:1:10",
+    "150:0:1:9",
+    "150:0:1:8",
+    "150:0:1:7",
+    "150:0:1:6",
+    "150:0:1:5",
+    "150:0:1:4",
+    "150:0:1:3",
+    "150:0:1:2",
+    "150:0:1:1",
+    "11:0:1:14"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0011",
+   "from_control_node_id": "JX189S0A0_IN",
+   "from_port_fine_node": "14:0:-1:5",
+   "to_control_node_id": "JX189S0A2_OUT",
+   "to_port_fine_node": "15:0:-1:0",
+   "distance_m": 44.33,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "14:0:-1:5",
+    "467:0:-1:1",
+    "467:0:-1:2",
+    "467:0:-1:3",
+    "467:0:-1:4",
+    "467:0:-1:5",
+    "467:0:-1:6",
+    "467:0:-1:7",
+    "467:0:-1:8",
+    "467:0:-1:9",
+    "467:0:-1:10",
+    "467:0:-1:11",
+    "467:0:-1:12",
+    "467:0:-1:13",
+    "467:0:-1:14",
+    "467:0:-1:15",
+    "467:0:-1:16",
+    "467:0:-1:17",
+    "467:0:-1:18",
+    "467:0:-1:19",
+    "467:0:-1:20",
+    "467:0:-1:21",
+    "15:0:-1:0"
+   ],
+   "semantic_added": "local_turn",
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0012",
+   "from_control_node_id": "JX189S0A0_IN",
+   "from_port_fine_node": "14:0:-1:5",
+   "to_control_node_id": "TR0001",
+   "to_port_fine_node": "467:0:-1:12",
+   "distance_m": 24.09,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "14:0:-1:5",
+    "467:0:-1:1",
+    "467:0:-1:2",
+    "467:0:-1:3",
+    "467:0:-1:4",
+    "467:0:-1:5",
+    "467:0:-1:6",
+    "467:0:-1:7",
+    "467:0:-1:8",
+    "467:0:-1:9",
+    "467:0:-1:10",
+    "467:0:-1:11",
+    "467:0:-1:12"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0013",
+   "from_control_node_id": "JX189S0A0_IN",
+   "from_port_fine_node": "14:0:-1:5",
+   "to_control_node_id": "TR0002",
+   "to_port_fine_node": "256:0:-1:12",
+   "distance_m": 25.757,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "14:0:-1:5",
+    "256:0:-1:1",
+    "256:0:-1:2",
+    "256:0:-1:3",
+    "256:0:-1:4",
+    "256:0:-1:5",
+    "256:0:-1:6",
+    "256:0:-1:7",
+    "256:0:-1:8",
+    "256:0:-1:9",
+    "256:0:-1:10",
+    "256:0:-1:11",
+    "256:0:-1:12"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0014",
+   "from_control_node_id": "JX189S0A1_OUT",
+   "from_port_fine_node": "14:0:1:5",
+   "to_control_node_id": "JX895S0A5_IN",
+   "to_port_fine_node": "14:0:1:0",
+   "distance_m": 9.062,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "14:0:1:5",
+    "14:0:1:4",
+    "14:0:1:3",
+    "14:0:1:2",
+    "14:0:1:1",
+    "14:0:1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0015",
+   "from_control_node_id": "JX189S0A2_OUT",
+   "from_port_fine_node": "15:0:-1:0",
+   "to_control_node_id": "JX189S0A2_OUT",
+   "to_port_fine_node": "15:0:-1:1",
+   "distance_m": 2.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "15:0:-1:0",
+    "15:0:-1:1"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0016",
+   "from_control_node_id": "JX189S0A2_OUT",
+   "from_port_fine_node": "15:0:-1:1",
+   "to_control_node_id": "RC0020",
+   "to_port_fine_node": "22:0:1:13",
+   "distance_m": 13.634,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "15:0:-1:1",
+    "16:0:-1:1",
+    "16:0:-1:2",
+    "16:0:-1:3",
+    "16:0:-1:4",
+    "16:0:-1:5",
+    "22:0:1:13"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0017",
+   "from_control_node_id": "JX189S0A2_OUT",
+   "from_port_fine_node": "15:0:-2:1",
+   "to_control_node_id": "TR0003",
+   "to_port_fine_node": "22:0:2:9",
+   "distance_m": 21.598,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "15:0:-2:1",
+    "16:0:-2:1",
+    "16:0:-2:2",
+    "16:0:-2:3",
+    "16:0:-2:4",
+    "16:0:-2:5",
+    "22:0:2:13",
+    "22:0:2:12",
+    "22:0:2:11",
+    "22:0:2:10",
+    "22:0:2:9"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0018",
+   "from_control_node_id": "JX189S0A3_IN",
+   "from_port_fine_node": "15:0:1:0",
+   "to_control_node_id": "JX189S0A1_OUT",
+   "to_port_fine_node": "14:0:1:5",
+   "distance_m": 44.348,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "15:0:1:0",
+    "466:0:1:21",
+    "466:0:1:20",
+    "466:0:1:19",
+    "466:0:1:18",
+    "466:0:1:17",
+    "466:0:1:16",
+    "466:0:1:15",
+    "466:0:1:14",
+    "466:0:1:13",
+    "466:0:1:12",
+    "466:0:1:11",
+    "466:0:1:10",
+    "466:0:1:9",
+    "466:0:1:8",
+    "466:0:1:7",
+    "466:0:1:6",
+    "466:0:1:5",
+    "466:0:1:4",
+    "466:0:1:3",
+    "466:0:1:2",
+    "466:0:1:1",
+    "14:0:1:5"
+   ],
+   "semantic_added": "local_turn",
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0019",
+   "from_control_node_id": "JX189S0A3_IN",
+   "from_port_fine_node": "15:0:1:0",
+   "to_control_node_id": "JX189S0A6_OUT",
+   "to_port_fine_node": "20:0:-1:0",
+   "distance_m": 37.742,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "15:0:1:0",
+    "375:0:1:17",
+    "375:0:1:16",
+    "375:0:1:15",
+    "375:0:1:14",
+    "375:0:1:13",
+    "375:0:1:12",
+    "375:0:1:11",
+    "375:0:1:10",
+    "375:0:1:9",
+    "375:0:1:8",
+    "375:0:1:7",
+    "375:0:1:6",
+    "375:0:1:5",
+    "375:0:1:4",
+    "375:0:1:3",
+    "375:0:1:2",
+    "375:0:1:1",
+    "20:0:-1:0"
+   ],
+   "semantic_added": "local_turn",
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0020",
+   "from_control_node_id": "JX189S0A3_IN",
+   "from_port_fine_node": "15:0:1:1",
+   "to_control_node_id": "JX189S0A3_IN",
+   "to_port_fine_node": "15:0:1:0",
+   "distance_m": 2.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "15:0:1:1",
+    "15:0:1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0021",
+   "from_control_node_id": "JX189S0A3_IN",
+   "from_port_fine_node": "15:0:1:1",
+   "to_control_node_id": "JX189S0A6_OUT",
+   "to_port_fine_node": "20:0:-1:0",
+   "distance_m": 39.742,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "15:0:1:1",
+    "375:0:1:17",
+    "375:0:1:16",
+    "375:0:1:15",
+    "375:0:1:14",
+    "375:0:1:13",
+    "375:0:1:12",
+    "375:0:1:11",
+    "375:0:1:10",
+    "375:0:1:9",
+    "375:0:1:8",
+    "375:0:1:7",
+    "375:0:1:6",
+    "375:0:1:5",
+    "375:0:1:4",
+    "375:0:1:3",
+    "375:0:1:2",
+    "375:0:1:1",
+    "20:0:-1:0"
+   ],
+   "semantic_added": "local_turn",
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0022",
+   "from_control_node_id": "JX189S0A3_IN",
+   "from_port_fine_node": "15:0:2:1",
+   "to_control_node_id": "TR0005",
+   "to_port_fine_node": "286:0:1:2",
+   "distance_m": 22.234,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "15:0:2:1",
+    "15:0:2:0",
+    "286:0:1:12",
+    "286:0:1:11",
+    "286:0:1:10",
+    "286:0:1:9",
+    "286:0:1:8",
+    "286:0:1:7",
+    "286:0:1:6",
+    "286:0:1:5",
+    "286:0:1:4",
+    "286:0:1:3",
+    "286:0:1:2"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0023",
+   "from_control_node_id": "JX189S0A4_IN",
+   "from_port_fine_node": "18:0:-1:4",
+   "to_control_node_id": "TR0006",
+   "to_port_fine_node": "296:0:-1:13",
+   "distance_m": 42.277,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "18:0:-1:4",
+    "18:0:-1:5",
+    "19:0:-1:1",
+    "19:0:-1:2",
+    "19:0:-1:3",
+    "19:0:-1:4",
+    "19:0:-1:5",
+    "296:0:-1:1",
+    "296:0:-1:2",
+    "296:0:-1:3",
+    "296:0:-1:4",
+    "296:0:-1:5",
+    "296:0:-1:6",
+    "296:0:-1:7",
+    "296:0:-1:8",
+    "296:0:-1:9",
+    "296:0:-1:10",
+    "296:0:-1:11",
+    "296:0:-1:12",
+    "296:0:-1:13"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0024",
+   "from_control_node_id": "JX189S0A4_IN",
+   "from_port_fine_node": "18:0:-1:4",
+   "to_control_node_id": "TR0007",
+   "to_port_fine_node": "315:0:-1:7",
+   "distance_m": 28.81,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "18:0:-1:4",
+    "18:0:-1:5",
+    "19:0:-1:1",
+    "19:0:-1:2",
+    "19:0:-1:3",
+    "19:0:-1:4",
+    "19:0:-1:5",
+    "315:0:-1:1",
+    "315:0:-1:2",
+    "315:0:-1:3",
+    "315:0:-1:4",
+    "315:0:-1:5",
+    "315:0:-1:6",
+    "315:0:-1:7"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0025",
+   "from_control_node_id": "JX189S0A4_IN",
+   "from_port_fine_node": "18:0:-1:4",
+   "to_control_node_id": "TR0008",
+   "to_port_fine_node": "255:0:-1:13",
+   "distance_m": 39.85,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "18:0:-1:4",
+    "18:0:-1:5",
+    "19:0:-1:1",
+    "19:0:-1:2",
+    "19:0:-1:3",
+    "19:0:-1:4",
+    "19:0:-1:5",
+    "255:0:-1:1",
+    "255:0:-1:2",
+    "255:0:-1:3",
+    "255:0:-1:4",
+    "255:0:-1:5",
+    "255:0:-1:6",
+    "255:0:-1:7",
+    "255:0:-1:8",
+    "255:0:-1:9",
+    "255:0:-1:10",
+    "255:0:-1:11",
+    "255:0:-1:12",
+    "255:0:-1:13"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0026",
+   "from_control_node_id": "JX189S0A5_OUT",
+   "from_port_fine_node": "18:0:4:4",
+   "to_control_node_id": "JX719S0A5_IN",
+   "to_port_fine_node": "18:0:4:0",
+   "distance_m": 8.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "18:0:4:4",
+    "18:0:4:3",
+    "18:0:4:2",
+    "18:0:4:1",
+    "18:0:4:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0027",
+   "from_control_node_id": "JX189S0A6_OUT",
+   "from_port_fine_node": "20:0:-1:0",
+   "to_control_node_id": "RC0017",
+   "to_port_fine_node": "20:0:-1:14",
+   "distance_m": 28.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "20:0:-1:0",
+    "20:0:-1:1",
+    "20:0:-1:2",
+    "20:0:-1:3",
+    "20:0:-1:4",
+    "20:0:-1:5",
+    "20:0:-1:6",
+    "20:0:-1:7",
+    "20:0:-1:8",
+    "20:0:-1:9",
+    "20:0:-1:10",
+    "20:0:-1:11",
+    "20:0:-1:12",
+    "20:0:-1:13",
+    "20:0:-1:14"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0028",
+   "from_control_node_id": "JX189S0A7_IN",
+   "from_port_fine_node": "20:0:4:0",
+   "to_control_node_id": "JX189S0A1_OUT",
+   "to_port_fine_node": "14:0:1:5",
+   "distance_m": 38.463,
+   "maneuver_class": "RIGHT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "20:0:4:0",
+    "338:0:1:17",
+    "338:0:1:16",
+    "338:0:1:15",
+    "338:0:1:14",
+    "338:0:1:13",
+    "338:0:1:12",
+    "338:0:1:11",
+    "338:0:1:10",
+    "338:0:1:9",
+    "338:0:1:8",
+    "338:0:1:7",
+    "338:0:1:6",
+    "338:0:1:5",
+    "338:0:1:4",
+    "338:0:1:3",
+    "338:0:1:2",
+    "338:0:1:1",
+    "14:0:1:5"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0029",
+   "from_control_node_id": "JX189S0A7_IN",
+   "from_port_fine_node": "20:0:4:0",
+   "to_control_node_id": "TR0009",
+   "to_port_fine_node": "19:0:4:4",
+   "distance_m": 41.35,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "20:0:4:0",
+    "254:0:4:18",
+    "254:0:4:17",
+    "254:0:4:16",
+    "254:0:4:15",
+    "254:0:4:14",
+    "254:0:4:13",
+    "254:0:4:12",
+    "254:0:4:11",
+    "254:0:4:10",
+    "254:0:4:9",
+    "254:0:4:8",
+    "254:0:4:7",
+    "254:0:4:6",
+    "254:0:4:5",
+    "254:0:4:4",
+    "254:0:4:3",
+    "254:0:4:2",
+    "254:0:4:1",
+    "19:0:4:5",
+    "19:0:4:4"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0030",
+   "from_control_node_id": "JX23S0A0_IN",
+   "from_port_fine_node": "6:0:-1:43",
+   "to_control_node_id": "JX23S0A2_OUT",
+   "to_port_fine_node": "7:0:-1:0",
+   "distance_m": 39.672,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "6:0:-1:43",
+    "89:0:-1:1",
+    "89:0:-1:2",
+    "89:0:-1:3",
+    "89:0:-1:4",
+    "89:0:-1:5",
+    "89:0:-1:6",
+    "89:0:-1:7",
+    "89:0:-1:8",
+    "89:0:-1:9",
+    "89:0:-1:10",
+    "89:0:-1:11",
+    "89:0:-1:12",
+    "89:0:-1:13",
+    "89:0:-1:14",
+    "89:0:-1:15",
+    "89:0:-1:16",
+    "89:0:-1:17",
+    "89:0:-1:18",
+    "89:0:-1:19",
+    "7:0:-1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0031",
+   "from_control_node_id": "JX23S0A1_OUT",
+   "from_port_fine_node": "6:0:1:43",
+   "to_control_node_id": "RC0046",
+   "to_port_fine_node": "6:0:1:29",
+   "distance_m": 28.575,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "6:0:1:43",
+    "6:0:1:42",
+    "6:0:1:41",
+    "6:0:1:40",
+    "6:0:1:39",
+    "6:0:1:38",
+    "6:0:1:37",
+    "6:0:1:36",
+    "6:0:1:35",
+    "6:0:1:34",
+    "6:0:1:33",
+    "6:0:1:32",
+    "6:0:1:31",
+    "6:0:1:30",
+    "6:0:1:29"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0032",
+   "from_control_node_id": "JX23S0A2_OUT",
+   "from_port_fine_node": "7:0:-1:0",
+   "to_control_node_id": "RC0048",
+   "to_port_fine_node": "7:0:-1:11",
+   "distance_m": 22.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "7:0:-1:0",
+    "7:0:-1:1",
+    "7:0:-1:2",
+    "7:0:-1:3",
+    "7:0:-1:4",
+    "7:0:-1:5",
+    "7:0:-1:6",
+    "7:0:-1:7",
+    "7:0:-1:8",
+    "7:0:-1:9",
+    "7:0:-1:10",
+    "7:0:-1:11"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0033",
+   "from_control_node_id": "JX23S0A3_IN",
+   "from_port_fine_node": "7:0:1:0",
+   "to_control_node_id": "JX23S0A1_OUT",
+   "to_port_fine_node": "6:0:1:43",
+   "distance_m": 39.392,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "7:0:1:0",
+    "90:0:1:19",
+    "90:0:1:18",
+    "90:0:1:17",
+    "90:0:1:16",
+    "90:0:1:15",
+    "90:0:1:14",
+    "90:0:1:13",
+    "90:0:1:12",
+    "90:0:1:11",
+    "90:0:1:10",
+    "90:0:1:9",
+    "90:0:1:8",
+    "90:0:1:7",
+    "90:0:1:6",
+    "90:0:1:5",
+    "90:0:1:4",
+    "90:0:1:3",
+    "90:0:1:2",
+    "90:0:1:1",
+    "6:0:1:43"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0034",
+   "from_control_node_id": "JX23S0A3_IN",
+   "from_port_fine_node": "7:0:1:0",
+   "to_control_node_id": "JX23S0A4_OUT",
+   "to_port_fine_node": "22:0:-1:0",
+   "distance_m": 35.521,
+   "maneuver_class": "RIGHT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "7:0:1:0",
+    "24:0:1:15",
+    "24:0:1:14",
+    "24:0:1:13",
+    "24:0:1:12",
+    "24:0:1:11",
+    "24:0:1:10",
+    "24:0:1:9",
+    "24:0:1:8",
+    "24:0:1:7",
+    "24:0:1:6",
+    "24:0:1:5",
+    "24:0:1:4",
+    "24:0:1:3",
+    "24:0:1:2",
+    "24:0:1:1",
+    "22:0:-1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0035",
+   "from_control_node_id": "JX23S0A4_OUT",
+   "from_port_fine_node": "22:0:-1:0",
+   "to_control_node_id": "RC0019",
+   "to_port_fine_node": "22:0:-1:13",
+   "distance_m": 26.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "22:0:-1:0",
+    "22:0:-1:1",
+    "22:0:-1:2",
+    "22:0:-1:3",
+    "22:0:-1:4",
+    "22:0:-1:5",
+    "22:0:-1:6",
+    "22:0:-1:7",
+    "22:0:-1:8",
+    "22:0:-1:9",
+    "22:0:-1:10",
+    "22:0:-1:11",
+    "22:0:-1:12",
+    "22:0:-1:13"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0036",
+   "from_control_node_id": "JX23S0A5_IN",
+   "from_port_fine_node": "22:0:1:0",
+   "to_control_node_id": "JX23S0A1_OUT",
+   "to_port_fine_node": "6:0:1:43",
+   "distance_m": 36.726,
+   "maneuver_class": "RIGHT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "22:0:1:0",
+    "105:0:1:16",
+    "105:0:1:15",
+    "105:0:1:14",
+    "105:0:1:13",
+    "105:0:1:12",
+    "105:0:1:11",
+    "105:0:1:10",
+    "105:0:1:9",
+    "105:0:1:8",
+    "105:0:1:7",
+    "105:0:1:6",
+    "105:0:1:5",
+    "105:0:1:4",
+    "105:0:1:3",
+    "105:0:1:2",
+    "105:0:1:1",
+    "6:0:1:43"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0037",
+   "from_control_node_id": "JX468S0A0_IN",
+   "from_port_fine_node": "4:0:-1:14",
+   "to_control_node_id": "JX468S0A2_OUT",
+   "to_port_fine_node": "5:0:-1:0",
+   "distance_m": 43.177,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "4:0:-1:14",
+    "515:0:-1:1",
+    "515:0:-1:2",
+    "515:0:-1:3",
+    "515:0:-1:4",
+    "515:0:-1:5",
+    "515:0:-1:6",
+    "515:0:-1:7",
+    "515:0:-1:8",
+    "515:0:-1:9",
+    "515:0:-1:10",
+    "515:0:-1:11",
+    "515:0:-1:12",
+    "515:0:-1:13",
+    "515:0:-1:14",
+    "515:0:-1:15",
+    "515:0:-1:16",
+    "515:0:-1:17",
+    "515:0:-1:18",
+    "515:0:-1:19",
+    "515:0:-1:20",
+    "515:0:-1:21",
+    "5:0:-1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0038",
+   "from_control_node_id": "JX468S0A1_OUT",
+   "from_port_fine_node": "4:0:1:14",
+   "to_control_node_id": "RC0016",
+   "to_port_fine_node": "8:0:-1:0",
+   "distance_m": 28.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "4:0:1:14",
+    "4:0:1:13",
+    "4:0:1:12",
+    "4:0:1:11",
+    "4:0:1:10",
+    "4:0:1:9",
+    "4:0:1:8",
+    "4:0:1:7",
+    "4:0:1:6",
+    "4:0:1:5",
+    "4:0:1:4",
+    "4:0:1:3",
+    "4:0:1:2",
+    "4:0:1:1",
+    "8:0:-1:0"
+   ],
+   "local_hole_fixed": true,
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0039",
+   "from_control_node_id": "JX468S0A1_OUT",
+   "from_port_fine_node": "4:0:1:14",
+   "to_control_node_id": "RC0037",
+   "to_port_fine_node": "4:0:1:0",
+   "distance_m": 28.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "4:0:1:14",
+    "4:0:1:13",
+    "4:0:1:12",
+    "4:0:1:11",
+    "4:0:1:10",
+    "4:0:1:9",
+    "4:0:1:8",
+    "4:0:1:7",
+    "4:0:1:6",
+    "4:0:1:5",
+    "4:0:1:4",
+    "4:0:1:3",
+    "4:0:1:2",
+    "4:0:1:1",
+    "4:0:1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0040",
+   "from_control_node_id": "JX468S0A2_OUT",
+   "from_port_fine_node": "5:0:-1:0",
+   "to_control_node_id": "RC0038",
+   "to_port_fine_node": "5:0:-1:14",
+   "distance_m": 26.832,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "5:0:-1:0",
+    "5:0:-1:1",
+    "5:0:-1:2",
+    "5:0:-1:3",
+    "5:0:-1:4",
+    "5:0:-1:5",
+    "5:0:-1:6",
+    "5:0:-1:7",
+    "5:0:-1:8",
+    "5:0:-1:9",
+    "5:0:-1:10",
+    "5:0:-1:11",
+    "5:0:-1:12",
+    "5:0:-1:13",
+    "5:0:-1:14"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0041",
+   "from_control_node_id": "JX468S0A3_IN",
+   "from_port_fine_node": "5:0:1:0",
+   "to_control_node_id": "JX468S0A1_OUT",
+   "to_port_fine_node": "4:0:1:14",
+   "distance_m": 43.942,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "5:0:1:0",
+    "516:0:1:21",
+    "516:0:1:20",
+    "516:0:1:19",
+    "516:0:1:18",
+    "516:0:1:17",
+    "516:0:1:16",
+    "516:0:1:15",
+    "516:0:1:14",
+    "516:0:1:13",
+    "516:0:1:12",
+    "516:0:1:11",
+    "516:0:1:10",
+    "516:0:1:9",
+    "516:0:1:8",
+    "516:0:1:7",
+    "516:0:1:6",
+    "516:0:1:5",
+    "516:0:1:4",
+    "516:0:1:3",
+    "516:0:1:2",
+    "516:0:1:1",
+    "4:0:1:14"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0042",
+   "from_control_node_id": "JX468S0A4_OUT",
+   "from_port_fine_node": "13:0:-1:0",
+   "to_control_node_id": "RC0003",
+   "to_port_fine_node": "13:0:-1:8",
+   "distance_m": 16.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "13:0:-1:0",
+    "13:0:-1:1",
+    "13:0:-1:2",
+    "13:0:-1:3",
+    "13:0:-1:4",
+    "13:0:-1:5",
+    "13:0:-1:6",
+    "13:0:-1:7",
+    "13:0:-1:8"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0043",
+   "from_control_node_id": "JX468S0A5_IN",
+   "from_port_fine_node": "13:0:1:0",
+   "to_control_node_id": "JX468S0A2_OUT",
+   "to_port_fine_node": "5:0:-1:0",
+   "distance_m": 34.039,
+   "maneuver_class": "LEFT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "13:0:1:0",
+    "469:0:1:18",
+    "469:0:1:17",
+    "469:0:1:16",
+    "469:0:1:15",
+    "469:0:1:14",
+    "469:0:1:13",
+    "469:0:1:12",
+    "469:0:1:11",
+    "469:0:1:10",
+    "469:0:1:9",
+    "469:0:1:8",
+    "469:0:1:7",
+    "469:0:1:6",
+    "469:0:1:5",
+    "469:0:1:4",
+    "469:0:1:3",
+    "469:0:1:2",
+    "469:0:1:1",
+    "5:0:-1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0044",
+   "from_control_node_id": "JX532S0A0_IN",
+   "from_port_fine_node": "2:0:-1:6",
+   "to_control_node_id": "JX532S0A5_OUT",
+   "to_port_fine_node": "21:0:4:13",
+   "distance_m": 41.003,
+   "maneuver_class": "RIGHT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "2:0:-1:6",
+    "597:0:-1:1",
+    "597:0:-1:2",
+    "597:0:-1:3",
+    "597:0:-1:4",
+    "597:0:-1:5",
+    "597:0:-1:6",
+    "597:0:-1:7",
+    "597:0:-1:8",
+    "597:0:-1:9",
+    "597:0:-1:10",
+    "597:0:-1:11",
+    "597:0:-1:12",
+    "597:0:-1:13",
+    "597:0:-1:14",
+    "597:0:-1:15",
+    "597:0:-1:16",
+    "597:0:-1:17",
+    "597:0:-1:18",
+    "21:0:4:13"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0045",
+   "from_control_node_id": "JX532S0A0_IN",
+   "from_port_fine_node": "2:0:-1:6",
+   "to_control_node_id": "TR0010",
+   "to_port_fine_node": "566:0:-1:12",
+   "distance_m": 24.048,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "2:0:-1:6",
+    "566:0:-1:1",
+    "566:0:-1:2",
+    "566:0:-1:3",
+    "566:0:-1:4",
+    "566:0:-1:5",
+    "566:0:-1:6",
+    "566:0:-1:7",
+    "566:0:-1:8",
+    "566:0:-1:9",
+    "566:0:-1:10",
+    "566:0:-1:11",
+    "566:0:-1:12"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0046",
+   "from_control_node_id": "JX532S0A1_OUT",
+   "from_port_fine_node": "2:0:1:6",
+   "to_control_node_id": "JX664S0A3_IN",
+   "to_port_fine_node": "2:0:1:0",
+   "distance_m": 11.054,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "2:0:1:6",
+    "2:0:1:5",
+    "2:0:1:4",
+    "2:0:1:3",
+    "2:0:1:2",
+    "2:0:1:1",
+    "2:0:1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0047",
+   "from_control_node_id": "JX532S0A2_OUT",
+   "from_port_fine_node": "3:0:-1:1",
+   "to_control_node_id": "RC0021",
+   "to_port_fine_node": "0:0:-1:0",
+   "distance_m": 2.909,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "3:0:-1:1",
+    "0:0:-1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0048",
+   "from_control_node_id": "JX532S0A3_IN",
+   "from_port_fine_node": "3:0:1:1",
+   "to_control_node_id": "TR0011",
+   "to_port_fine_node": "565:0:1:8",
+   "distance_m": 32.64,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "3:0:1:1",
+    "565:0:1:23",
+    "565:0:1:22",
+    "565:0:1:21",
+    "565:0:1:20",
+    "565:0:1:19",
+    "565:0:1:18",
+    "565:0:1:17",
+    "565:0:1:16",
+    "565:0:1:15",
+    "565:0:1:14",
+    "565:0:1:13",
+    "565:0:1:12",
+    "565:0:1:11",
+    "565:0:1:10",
+    "565:0:1:9",
+    "565:0:1:8"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0049",
+   "from_control_node_id": "JX532S0A3_IN",
+   "from_port_fine_node": "3:0:2:1",
+   "to_control_node_id": "TR0012",
+   "to_port_fine_node": "565:0:2:4",
+   "distance_m": 40.64,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "3:0:2:1",
+    "565:0:2:23",
+    "565:0:2:22",
+    "565:0:2:21",
+    "565:0:2:20",
+    "565:0:2:19",
+    "565:0:2:18",
+    "565:0:2:17",
+    "565:0:2:16",
+    "565:0:2:15",
+    "565:0:2:14",
+    "565:0:2:13",
+    "565:0:2:12",
+    "565:0:2:11",
+    "565:0:2:10",
+    "565:0:2:9",
+    "565:0:2:8",
+    "565:0:2:7",
+    "565:0:2:6",
+    "565:0:2:5",
+    "565:0:2:4"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0050",
+   "from_control_node_id": "JX532S0A4_IN",
+   "from_port_fine_node": "21:0:-1:13",
+   "to_control_node_id": "TR0014",
+   "to_port_fine_node": "637:0:-1:14",
+   "distance_m": 30.805,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "21:0:-1:13",
+    "637:0:-1:1",
+    "637:0:-1:2",
+    "637:0:-1:3",
+    "637:0:-1:4",
+    "637:0:-1:5",
+    "637:0:-1:6",
+    "637:0:-1:7",
+    "637:0:-1:8",
+    "637:0:-1:9",
+    "637:0:-1:10",
+    "637:0:-1:11",
+    "637:0:-1:12",
+    "637:0:-1:13",
+    "637:0:-1:14"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0051",
+   "from_control_node_id": "JX532S0A5_OUT",
+   "from_port_fine_node": "21:0:4:13",
+   "to_control_node_id": "JX841S0A5_IN",
+   "to_port_fine_node": "21:0:4:0",
+   "distance_m": 25.621,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "21:0:4:13",
+    "21:0:4:12",
+    "21:0:4:11",
+    "21:0:4:10",
+    "21:0:4:9",
+    "21:0:4:8",
+    "21:0:4:7",
+    "21:0:4:6",
+    "21:0:4:5",
+    "21:0:4:4",
+    "21:0:4:3",
+    "21:0:4:2",
+    "21:0:4:1",
+    "21:0:4:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0052",
+   "from_control_node_id": "JX664S0A0_IN",
+   "from_port_fine_node": "1:0:-1:60",
+   "to_control_node_id": "JX664S0A2_OUT",
+   "to_port_fine_node": "2:0:-1:0",
+   "distance_m": 30.54,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "1:0:-1:60",
+    "675:0:-1:1",
+    "675:0:-1:2",
+    "675:0:-1:3",
+    "675:0:-1:4",
+    "675:0:-1:5",
+    "675:0:-1:6",
+    "675:0:-1:7",
+    "675:0:-1:8",
+    "675:0:-1:9",
+    "675:0:-1:10",
+    "675:0:-1:11",
+    "675:0:-1:12",
+    "675:0:-1:13",
+    "675:0:-1:14",
+    "2:0:-1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0053",
+   "from_control_node_id": "JX664S0A1_OUT",
+   "from_port_fine_node": "1:0:1:60",
+   "to_control_node_id": "RC0052",
+   "to_port_fine_node": "1:0:1:45",
+   "distance_m": 28.854,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "1:0:1:60",
+    "1:0:1:59",
+    "1:0:1:58",
+    "1:0:1:57",
+    "1:0:1:56",
+    "1:0:1:55",
+    "1:0:1:54",
+    "1:0:1:53",
+    "1:0:1:52",
+    "1:0:1:51",
+    "1:0:1:50",
+    "1:0:1:49",
+    "1:0:1:48",
+    "1:0:1:47",
+    "1:0:1:46",
+    "1:0:1:45"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0054",
+   "from_control_node_id": "JX664S0A2_OUT",
+   "from_port_fine_node": "2:0:-1:0",
+   "to_control_node_id": "JX532S0A0_IN",
+   "to_port_fine_node": "2:0:-1:6",
+   "distance_m": 11.032,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "2:0:-1:0",
+    "2:0:-1:1",
+    "2:0:-1:2",
+    "2:0:-1:3",
+    "2:0:-1:4",
+    "2:0:-1:5",
+    "2:0:-1:6"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0055",
+   "from_control_node_id": "JX664S0A2_OUT",
+   "from_port_fine_node": "2:0:-1:0",
+   "to_control_node_id": "TR0010",
+   "to_port_fine_node": "566:0:-1:12",
+   "distance_m": 35.08,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "2:0:-1:0",
+    "2:0:-1:1",
+    "2:0:-1:2",
+    "2:0:-1:3",
+    "2:0:-1:4",
+    "2:0:-1:5",
+    "566:0:-1:1",
+    "566:0:-1:2",
+    "566:0:-1:3",
+    "566:0:-1:4",
+    "566:0:-1:5",
+    "566:0:-1:6",
+    "566:0:-1:7",
+    "566:0:-1:8",
+    "566:0:-1:9",
+    "566:0:-1:10",
+    "566:0:-1:11",
+    "566:0:-1:12"
+   ],
+   "transit_join": true
+  },
+  {
+   "edge_id": "CE0056",
+   "from_control_node_id": "JX664S0A3_IN",
+   "from_port_fine_node": "2:0:1:0",
+   "to_control_node_id": "JX664S0A1_OUT",
+   "to_port_fine_node": "1:0:1:60",
+   "distance_m": 30.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "2:0:1:0",
+    "676:0:1:14",
+    "676:0:1:13",
+    "676:0:1:12",
+    "676:0:1:11",
+    "676:0:1:10",
+    "676:0:1:9",
+    "676:0:1:8",
+    "676:0:1:7",
+    "676:0:1:6",
+    "676:0:1:5",
+    "676:0:1:4",
+    "676:0:1:3",
+    "676:0:1:2",
+    "676:0:1:1",
+    "1:0:1:60"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0057",
+   "from_control_node_id": "JX664S0A4_OUT",
+   "from_port_fine_node": "11:0:-1:0",
+   "to_control_node_id": "JX134S0A2_IN",
+   "to_port_fine_node": "11:0:-1:14",
+   "distance_m": 27.312,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "11:0:-1:0",
+    "11:0:-1:1",
+    "11:0:-1:2",
+    "11:0:-1:3",
+    "11:0:-1:4",
+    "11:0:-1:5",
+    "11:0:-1:6",
+    "11:0:-1:7",
+    "11:0:-1:8",
+    "11:0:-1:9",
+    "11:0:-1:10",
+    "11:0:-1:11",
+    "11:0:-1:12",
+    "11:0:-1:13",
+    "11:0:-1:14"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0058",
+   "from_control_node_id": "JX664S0A5_IN",
+   "from_port_fine_node": "11:0:1:0",
+   "to_control_node_id": "TR0015",
+   "to_port_fine_node": "1:0:2:56",
+   "distance_m": 30.024,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "11:0:1:0",
+    "712:0:1:11",
+    "712:0:1:10",
+    "712:0:1:9",
+    "712:0:1:8",
+    "712:0:1:7",
+    "712:0:1:6",
+    "712:0:1:5",
+    "712:0:1:4",
+    "712:0:1:3",
+    "712:0:1:2",
+    "712:0:1:1",
+    "1:0:2:59",
+    "1:0:2:58",
+    "1:0:2:57",
+    "1:0:2:56"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0059",
+   "from_control_node_id": "JX719S0A0_IN",
+   "from_port_fine_node": "5:0:-1:53",
+   "to_control_node_id": "JX719S0A4_OUT",
+   "to_port_fine_node": "18:0:-1:0",
+   "distance_m": 33.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "5:0:-1:53",
+    "795:0:-1:1",
+    "795:0:-1:2",
+    "795:0:-1:3",
+    "795:0:-1:4",
+    "795:0:-1:5",
+    "795:0:-1:6",
+    "795:0:-1:7",
+    "795:0:-1:8",
+    "795:0:-1:9",
+    "795:0:-1:10",
+    "795:0:-1:11",
+    "795:0:-1:12",
+    "795:0:-1:13",
+    "795:0:-1:14",
+    "795:0:-1:15",
+    "795:0:-1:16",
+    "18:0:-1:0"
+   ],
+   "semantic_added": "local_turn",
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0060",
+   "from_control_node_id": "JX719S0A0_IN",
+   "from_port_fine_node": "5:0:-1:53",
+   "to_control_node_id": "TR0021",
+   "to_port_fine_node": "736:0:-1:11",
+   "distance_m": 22.75,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "5:0:-1:53",
+    "736:0:-1:1",
+    "736:0:-1:2",
+    "736:0:-1:3",
+    "736:0:-1:4",
+    "736:0:-1:5",
+    "736:0:-1:6",
+    "736:0:-1:7",
+    "736:0:-1:8",
+    "736:0:-1:9",
+    "736:0:-1:10",
+    "736:0:-1:11"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0061",
+   "from_control_node_id": "JX719S0A1_OUT",
+   "from_port_fine_node": "5:0:1:53",
+   "to_control_node_id": "RC0041",
+   "to_port_fine_node": "5:0:1:39",
+   "distance_m": 28.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "5:0:1:53",
+    "5:0:1:52",
+    "5:0:1:51",
+    "5:0:1:50",
+    "5:0:1:49",
+    "5:0:1:48",
+    "5:0:1:47",
+    "5:0:1:46",
+    "5:0:1:45",
+    "5:0:1:44",
+    "5:0:1:43",
+    "5:0:1:42",
+    "5:0:1:41",
+    "5:0:1:40",
+    "5:0:1:39"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0062",
+   "from_control_node_id": "JX719S0A2_OUT",
+   "from_port_fine_node": "6:0:-1:0",
+   "to_control_node_id": "RC0044",
+   "to_port_fine_node": "6:0:-1:14",
+   "distance_m": 27.686,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "6:0:-1:0",
+    "6:0:-1:1",
+    "6:0:-1:2",
+    "6:0:-1:3",
+    "6:0:-1:4",
+    "6:0:-1:5",
+    "6:0:-1:6",
+    "6:0:-1:7",
+    "6:0:-1:8",
+    "6:0:-1:9",
+    "6:0:-1:10",
+    "6:0:-1:11",
+    "6:0:-1:12",
+    "6:0:-1:13",
+    "6:0:-1:14"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0063",
+   "from_control_node_id": "JX719S0A3_IN",
+   "from_port_fine_node": "6:0:1:0",
+   "to_control_node_id": "JX719S0A4_OUT",
+   "to_port_fine_node": "18:0:-1:0",
+   "distance_m": 41.422,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "6:0:1:0",
+    "801:0:1:18",
+    "801:0:1:17",
+    "801:0:1:16",
+    "801:0:1:15",
+    "801:0:1:14",
+    "801:0:1:13",
+    "801:0:1:12",
+    "801:0:1:11",
+    "801:0:1:10",
+    "801:0:1:9",
+    "801:0:1:8",
+    "801:0:1:7",
+    "801:0:1:6",
+    "801:0:1:5",
+    "801:0:1:4",
+    "801:0:1:3",
+    "801:0:1:2",
+    "801:0:1:1",
+    "18:0:-1:0"
+   ],
+   "semantic_added": "local_turn",
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0064",
+   "from_control_node_id": "JX719S0A3_IN",
+   "from_port_fine_node": "6:0:1:0",
+   "to_control_node_id": "TR0022",
+   "to_port_fine_node": "735:0:1:7",
+   "distance_m": 32.15,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "6:0:1:0",
+    "735:0:1:22",
+    "735:0:1:21",
+    "735:0:1:20",
+    "735:0:1:19",
+    "735:0:1:18",
+    "735:0:1:17",
+    "735:0:1:16",
+    "735:0:1:15",
+    "735:0:1:14",
+    "735:0:1:13",
+    "735:0:1:12",
+    "735:0:1:11",
+    "735:0:1:10",
+    "735:0:1:9",
+    "735:0:1:8",
+    "735:0:1:7"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0065",
+   "from_control_node_id": "JX719S0A3_IN",
+   "from_port_fine_node": "6:0:1:0",
+   "to_control_node_id": "TR0023",
+   "to_port_fine_node": "811:0:1:6",
+   "distance_m": 32.941,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "6:0:1:0",
+    "811:0:1:20",
+    "811:0:1:19",
+    "811:0:1:18",
+    "811:0:1:17",
+    "811:0:1:16",
+    "811:0:1:15",
+    "811:0:1:14",
+    "811:0:1:13",
+    "811:0:1:12",
+    "811:0:1:11",
+    "811:0:1:10",
+    "811:0:1:9",
+    "811:0:1:8",
+    "811:0:1:7",
+    "811:0:1:6"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0066",
+   "from_control_node_id": "JX719S0A4_OUT",
+   "from_port_fine_node": "18:0:-1:0",
+   "to_control_node_id": "JX189S0A4_IN",
+   "to_port_fine_node": "18:0:-1:4",
+   "distance_m": 8.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "18:0:-1:0",
+    "18:0:-1:1",
+    "18:0:-1:2",
+    "18:0:-1:3",
+    "18:0:-1:4"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0067",
+   "from_control_node_id": "JX719S0A4_OUT",
+   "from_port_fine_node": "18:0:-2:0",
+   "to_control_node_id": "TR0024",
+   "to_port_fine_node": "255:0:-2:3",
+   "distance_m": 27.85,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "18:0:-2:0",
+    "18:0:-2:1",
+    "18:0:-2:2",
+    "18:0:-2:3",
+    "18:0:-2:4",
+    "18:0:-2:5",
+    "19:0:-2:1",
+    "19:0:-2:2",
+    "19:0:-2:3",
+    "19:0:-2:4",
+    "19:0:-2:5",
+    "255:0:-2:1",
+    "255:0:-2:2",
+    "255:0:-2:3"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0068",
+   "from_control_node_id": "JX719S0A5_IN",
+   "from_port_fine_node": "18:0:4:0",
+   "to_control_node_id": "JX719S0A1_OUT",
+   "to_port_fine_node": "5:0:1:53",
+   "distance_m": 42.704,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "18:0:4:0",
+    "787:0:1:19",
+    "787:0:1:18",
+    "787:0:1:17",
+    "787:0:1:16",
+    "787:0:1:15",
+    "787:0:1:14",
+    "787:0:1:13",
+    "787:0:1:12",
+    "787:0:1:11",
+    "787:0:1:10",
+    "787:0:1:9",
+    "787:0:1:8",
+    "787:0:1:7",
+    "787:0:1:6",
+    "787:0:1:5",
+    "787:0:1:4",
+    "787:0:1:3",
+    "787:0:1:2",
+    "787:0:1:1",
+    "5:0:1:53"
+   ],
+   "semantic_added": "local_turn",
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0069",
+   "from_control_node_id": "JX719S0A5_IN",
+   "from_port_fine_node": "18:0:5:1",
+   "to_control_node_id": "JX719S0A2_OUT",
+   "to_port_fine_node": "6:0:-1:0",
+   "distance_m": 30.131,
+   "maneuver_class": "LEFT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "18:0:5:1",
+    "832:0:1:15",
+    "832:0:1:14",
+    "832:0:1:13",
+    "832:0:1:12",
+    "832:0:1:11",
+    "832:0:1:10",
+    "832:0:1:9",
+    "832:0:1:8",
+    "832:0:1:7",
+    "832:0:1:6",
+    "832:0:1:5",
+    "832:0:1:4",
+    "832:0:1:3",
+    "832:0:1:2",
+    "832:0:1:1",
+    "6:0:-1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0070",
+   "from_control_node_id": "JX841S0A0_IN",
+   "from_port_fine_node": "9:0:-1:5",
+   "to_control_node_id": "TR0028",
+   "to_port_fine_node": "21:0:-2:4",
+   "distance_m": 31.212,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "9:0:-1:5",
+    "843:0:-1:1",
+    "843:0:-1:2",
+    "843:0:-1:3",
+    "843:0:-1:4",
+    "843:0:-1:5",
+    "843:0:-1:6",
+    "843:0:-1:7",
+    "843:0:-1:8",
+    "843:0:-1:9",
+    "843:0:-1:10",
+    "843:0:-1:11",
+    "843:0:-1:12",
+    "21:0:-2:1",
+    "21:0:-2:2",
+    "21:0:-2:3",
+    "21:0:-2:4"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0071",
+   "from_control_node_id": "JX841S0A1_OUT",
+   "from_port_fine_node": "9:0:1:5",
+   "to_control_node_id": "JX134S0A1_IN",
+   "to_port_fine_node": "9:0:1:0",
+   "distance_m": 10.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "9:0:1:5",
+    "9:0:1:4",
+    "9:0:1:3",
+    "9:0:1:2",
+    "9:0:1:1",
+    "9:0:1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0072",
+   "from_control_node_id": "JX841S0A2_IN",
+   "from_port_fine_node": "20:0:-1:28",
+   "to_control_node_id": "JX841S0A4_OUT",
+   "to_port_fine_node": "21:0:-1:0",
+   "distance_m": 31.088,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "20:0:-1:28",
+    "875:0:-1:1",
+    "875:0:-1:2",
+    "875:0:-1:3",
+    "875:0:-1:4",
+    "875:0:-1:5",
+    "875:0:-1:6",
+    "875:0:-1:7",
+    "875:0:-1:8",
+    "875:0:-1:9",
+    "875:0:-1:10",
+    "875:0:-1:11",
+    "875:0:-1:12",
+    "875:0:-1:13",
+    "875:0:-1:14",
+    "875:0:-1:15",
+    "21:0:-1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0073",
+   "from_control_node_id": "JX841S0A3_OUT",
+   "from_port_fine_node": "20:0:4:28",
+   "to_control_node_id": "RC0018",
+   "to_port_fine_node": "20:0:4:14",
+   "distance_m": 27.049,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "20:0:4:28",
+    "20:0:4:27",
+    "20:0:4:26",
+    "20:0:4:25",
+    "20:0:4:24",
+    "20:0:4:23",
+    "20:0:4:22",
+    "20:0:4:21",
+    "20:0:4:20",
+    "20:0:4:19",
+    "20:0:4:18",
+    "20:0:4:17",
+    "20:0:4:16",
+    "20:0:4:15",
+    "20:0:4:14"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0074",
+   "from_control_node_id": "JX841S0A4_OUT",
+   "from_port_fine_node": "21:0:-1:0",
+   "to_control_node_id": "JX532S0A4_IN",
+   "to_port_fine_node": "21:0:-1:13",
+   "distance_m": 25.197,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "21:0:-1:0",
+    "21:0:-1:1",
+    "21:0:-1:2",
+    "21:0:-1:3",
+    "21:0:-1:4",
+    "21:0:-1:5",
+    "21:0:-1:6",
+    "21:0:-1:7",
+    "21:0:-1:8",
+    "21:0:-1:9",
+    "21:0:-1:10",
+    "21:0:-1:11",
+    "21:0:-1:12",
+    "21:0:-1:13"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0075",
+   "from_control_node_id": "JX841S0A5_IN",
+   "from_port_fine_node": "21:0:4:0",
+   "to_control_node_id": "JX841S0A3_OUT",
+   "to_port_fine_node": "20:0:4:28",
+   "distance_m": 31.081,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "21:0:4:0",
+    "876:0:4:14",
+    "876:0:4:13",
+    "876:0:4:12",
+    "876:0:4:11",
+    "876:0:4:10",
+    "876:0:4:9",
+    "876:0:4:8",
+    "876:0:4:7",
+    "876:0:4:6",
+    "876:0:4:5",
+    "876:0:4:4",
+    "876:0:4:3",
+    "876:0:4:2",
+    "876:0:4:1",
+    "20:0:4:28"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0076",
+   "from_control_node_id": "JX895S0A0_IN",
+   "from_port_fine_node": "12:0:-1:27",
+   "to_control_node_id": "TR0030",
+   "to_port_fine_node": "467:0:-2:4",
+   "distance_m": 41.06,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "12:0:-1:27",
+    "939:0:-1:1",
+    "939:0:-1:2",
+    "939:0:-1:3",
+    "939:0:-1:4",
+    "939:0:-1:5",
+    "939:0:-1:6",
+    "939:0:-1:7",
+    "939:0:-1:8",
+    "939:0:-1:9",
+    "939:0:-1:10",
+    "939:0:-1:11",
+    "939:0:-1:12",
+    "14:0:-2:0",
+    "14:0:-2:1",
+    "14:0:-2:2",
+    "14:0:-2:3",
+    "14:0:-2:4",
+    "467:0:-2:1",
+    "467:0:-2:2",
+    "467:0:-2:3",
+    "467:0:-2:4"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0077",
+   "from_control_node_id": "JX895S0A1_OUT",
+   "from_port_fine_node": "12:0:1:27",
+   "to_control_node_id": "RC0002",
+   "to_port_fine_node": "12:0:1:13",
+   "distance_m": 28.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "12:0:1:27",
+    "12:0:1:26",
+    "12:0:1:25",
+    "12:0:1:24",
+    "12:0:1:23",
+    "12:0:1:22",
+    "12:0:1:21",
+    "12:0:1:20",
+    "12:0:1:19",
+    "12:0:1:18",
+    "12:0:1:17",
+    "12:0:1:16",
+    "12:0:1:15",
+    "12:0:1:14",
+    "12:0:1:13"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0078",
+   "from_control_node_id": "JX895S0A2_IN",
+   "from_port_fine_node": "13:0:-1:16",
+   "to_control_node_id": "JX895S0A4_OUT",
+   "to_port_fine_node": "14:0:-1:0",
+   "distance_m": 31.24,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "13:0:-1:16",
+    "934:0:-1:1",
+    "934:0:-1:2",
+    "934:0:-1:3",
+    "934:0:-1:4",
+    "934:0:-1:5",
+    "934:0:-1:6",
+    "934:0:-1:7",
+    "934:0:-1:8",
+    "934:0:-1:9",
+    "934:0:-1:10",
+    "934:0:-1:11",
+    "934:0:-1:12",
+    "934:0:-1:13",
+    "934:0:-1:14",
+    "14:0:-1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0079",
+   "from_control_node_id": "JX895S0A3_OUT",
+   "from_port_fine_node": "13:0:1:16",
+   "to_control_node_id": "RC0004",
+   "to_port_fine_node": "13:0:1:8",
+   "distance_m": 16.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "13:0:1:16",
+    "13:0:1:15",
+    "13:0:1:14",
+    "13:0:1:13",
+    "13:0:1:12",
+    "13:0:1:11",
+    "13:0:1:10",
+    "13:0:1:9",
+    "13:0:1:8"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0080",
+   "from_control_node_id": "JX895S0A4_OUT",
+   "from_port_fine_node": "14:0:-1:0",
+   "to_control_node_id": "JX189S0A0_IN",
+   "to_port_fine_node": "14:0:-1:5",
+   "distance_m": 9.08,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "14:0:-1:0",
+    "14:0:-1:1",
+    "14:0:-1:2",
+    "14:0:-1:3",
+    "14:0:-1:4",
+    "14:0:-1:5"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0081",
+   "from_control_node_id": "JX895S0A4_OUT",
+   "from_port_fine_node": "14:0:-1:0",
+   "to_control_node_id": "TR0001",
+   "to_port_fine_node": "467:0:-1:12",
+   "distance_m": 33.17,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "14:0:-1:0",
+    "14:0:-1:1",
+    "14:0:-1:2",
+    "14:0:-1:3",
+    "14:0:-1:4",
+    "467:0:-1:1",
+    "467:0:-1:2",
+    "467:0:-1:3",
+    "467:0:-1:4",
+    "467:0:-1:5",
+    "467:0:-1:6",
+    "467:0:-1:7",
+    "467:0:-1:8",
+    "467:0:-1:9",
+    "467:0:-1:10",
+    "467:0:-1:11",
+    "467:0:-1:12"
+   ],
+   "transit_join": true
+  },
+  {
+   "edge_id": "CE0082",
+   "from_control_node_id": "JX895S0A4_OUT",
+   "from_port_fine_node": "14:0:-1:0",
+   "to_control_node_id": "TR0002",
+   "to_port_fine_node": "256:0:-1:12",
+   "distance_m": 34.837,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "14:0:-1:0",
+    "14:0:-1:1",
+    "14:0:-1:2",
+    "14:0:-1:3",
+    "14:0:-1:4",
+    "256:0:-1:1",
+    "256:0:-1:2",
+    "256:0:-1:3",
+    "256:0:-1:4",
+    "256:0:-1:5",
+    "256:0:-1:6",
+    "256:0:-1:7",
+    "256:0:-1:8",
+    "256:0:-1:9",
+    "256:0:-1:10",
+    "256:0:-1:11",
+    "256:0:-1:12"
+   ],
+   "transit_join": true
+  },
+  {
+   "edge_id": "CE0083",
+   "from_control_node_id": "JX895S0A5_IN",
+   "from_port_fine_node": "14:0:1:0",
+   "to_control_node_id": "JX895S0A3_OUT",
+   "to_port_fine_node": "13:0:1:16",
+   "distance_m": 31.24,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": true,
+   "first_edge_type": "JUNCTION_ENTER",
+   "fine_path": [
+    "14:0:1:0",
+    "933:0:1:14",
+    "933:0:1:13",
+    "933:0:1:12",
+    "933:0:1:11",
+    "933:0:1:10",
+    "933:0:1:9",
+    "933:0:1:8",
+    "933:0:1:7",
+    "933:0:1:6",
+    "933:0:1:5",
+    "933:0:1:4",
+    "933:0:1:3",
+    "933:0:1:2",
+    "933:0:1:1",
+    "13:0:1:16"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0084",
+   "from_control_node_id": "RC0001",
+   "from_port_fine_node": "12:0:-1:13",
+   "to_control_node_id": "JX895S0A0_IN",
+   "to_port_fine_node": "12:0:-1:27",
+   "distance_m": 28.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "12:0:-1:13",
+    "12:0:-1:14",
+    "12:0:-1:15",
+    "12:0:-1:16",
+    "12:0:-1:17",
+    "12:0:-1:18",
+    "12:0:-1:19",
+    "12:0:-1:20",
+    "12:0:-1:21",
+    "12:0:-1:22",
+    "12:0:-1:23",
+    "12:0:-1:24",
+    "12:0:-1:25",
+    "12:0:-1:26",
+    "12:0:-1:27"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0085",
+   "from_control_node_id": "RC0002",
+   "from_port_fine_node": "12:0:1:13",
+   "to_control_node_id": "JX134S0A5_IN",
+   "to_port_fine_node": "12:0:1:0",
+   "distance_m": 26.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "12:0:1:13",
+    "12:0:1:12",
+    "12:0:1:11",
+    "12:0:1:10",
+    "12:0:1:9",
+    "12:0:1:8",
+    "12:0:1:7",
+    "12:0:1:6",
+    "12:0:1:5",
+    "12:0:1:4",
+    "12:0:1:3",
+    "12:0:1:2",
+    "12:0:1:1",
+    "12:0:1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0086",
+   "from_control_node_id": "RC0003",
+   "from_port_fine_node": "13:0:-1:8",
+   "to_control_node_id": "JX895S0A2_IN",
+   "to_port_fine_node": "13:0:-1:16",
+   "distance_m": 16.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "13:0:-1:8",
+    "13:0:-1:9",
+    "13:0:-1:10",
+    "13:0:-1:11",
+    "13:0:-1:12",
+    "13:0:-1:13",
+    "13:0:-1:14",
+    "13:0:-1:15",
+    "13:0:-1:16"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0087",
+   "from_control_node_id": "RC0004",
+   "from_port_fine_node": "13:0:1:8",
+   "to_control_node_id": "JX468S0A5_IN",
+   "to_port_fine_node": "13:0:1:0",
+   "distance_m": 16.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "13:0:1:8",
+    "13:0:1:7",
+    "13:0:1:6",
+    "13:0:1:5",
+    "13:0:1:4",
+    "13:0:1:3",
+    "13:0:1:2",
+    "13:0:1:1",
+    "13:0:1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0088",
+   "from_control_node_id": "RC0011",
+   "from_port_fine_node": "1:0:-1:1",
+   "to_control_node_id": "RC0013",
+   "to_port_fine_node": "1:0:-1:16",
+   "distance_m": 30.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "1:0:-1:1",
+    "1:0:-1:2",
+    "1:0:-1:3",
+    "1:0:-1:4",
+    "1:0:-1:5",
+    "1:0:-1:6",
+    "1:0:-1:7",
+    "1:0:-1:8",
+    "1:0:-1:9",
+    "1:0:-1:10",
+    "1:0:-1:11",
+    "1:0:-1:12",
+    "1:0:-1:13",
+    "1:0:-1:14",
+    "1:0:-1:15",
+    "1:0:-1:16"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0089",
+   "from_control_node_id": "RC0011",
+   "from_port_fine_node": "8:0:-1:9",
+   "to_control_node_id": "RC0011",
+   "to_port_fine_node": "1:0:-1:1",
+   "distance_m": 3.542,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "8:0:-1:9",
+    "1:0:-1:0",
+    "1:0:-1:1"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0090",
+   "from_control_node_id": "RC0013",
+   "from_port_fine_node": "1:0:-1:16",
+   "to_control_node_id": "RC0014",
+   "to_port_fine_node": "1:0:-1:31",
+   "distance_m": 30.802,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "1:0:-1:16",
+    "1:0:-1:17",
+    "1:0:-1:18",
+    "1:0:-1:19",
+    "1:0:-1:20",
+    "1:0:-1:21",
+    "1:0:-1:22",
+    "1:0:-1:23",
+    "1:0:-1:24",
+    "1:0:-1:25",
+    "1:0:-1:26",
+    "1:0:-1:27",
+    "1:0:-1:28",
+    "1:0:-1:29",
+    "1:0:-1:30",
+    "1:0:-1:31"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0091",
+   "from_control_node_id": "RC0014",
+   "from_port_fine_node": "1:0:-1:31",
+   "to_control_node_id": "RC0015",
+   "to_port_fine_node": "1:0:-1:45",
+   "distance_m": 29.195,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "1:0:-1:31",
+    "1:0:-1:32",
+    "1:0:-1:33",
+    "1:0:-1:34",
+    "1:0:-1:35",
+    "1:0:-1:36",
+    "1:0:-1:37",
+    "1:0:-1:38",
+    "1:0:-1:39",
+    "1:0:-1:40",
+    "1:0:-1:41",
+    "1:0:-1:42",
+    "1:0:-1:43",
+    "1:0:-1:44",
+    "1:0:-1:45"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0092",
+   "from_control_node_id": "RC0015",
+   "from_port_fine_node": "1:0:-1:45",
+   "to_control_node_id": "JX664S0A0_IN",
+   "to_port_fine_node": "1:0:-1:60",
+   "distance_m": 29.803,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "1:0:-1:45",
+    "1:0:-1:46",
+    "1:0:-1:47",
+    "1:0:-1:48",
+    "1:0:-1:49",
+    "1:0:-1:50",
+    "1:0:-1:51",
+    "1:0:-1:52",
+    "1:0:-1:53",
+    "1:0:-1:54",
+    "1:0:-1:55",
+    "1:0:-1:56",
+    "1:0:-1:57",
+    "1:0:-1:58",
+    "1:0:-1:59",
+    "1:0:-1:60"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0093",
+   "from_control_node_id": "RC0016",
+   "from_port_fine_node": "8:0:-1:0",
+   "to_control_node_id": "RC0011",
+   "to_port_fine_node": "8:0:-1:9",
+   "distance_m": 18.001,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "8:0:-1:0",
+    "8:0:-1:1",
+    "8:0:-1:2",
+    "8:0:-1:3",
+    "8:0:-1:4",
+    "8:0:-1:5",
+    "8:0:-1:6",
+    "8:0:-1:7",
+    "8:0:-1:8",
+    "8:0:-1:9"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0094",
+   "from_control_node_id": "RC0017",
+   "from_port_fine_node": "20:0:-1:14",
+   "to_control_node_id": "JX841S0A2_IN",
+   "to_port_fine_node": "20:0:-1:28",
+   "distance_m": 27.042,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "20:0:-1:14",
+    "20:0:-1:15",
+    "20:0:-1:16",
+    "20:0:-1:17",
+    "20:0:-1:18",
+    "20:0:-1:19",
+    "20:0:-1:20",
+    "20:0:-1:21",
+    "20:0:-1:22",
+    "20:0:-1:23",
+    "20:0:-1:24",
+    "20:0:-1:25",
+    "20:0:-1:26",
+    "20:0:-1:27",
+    "20:0:-1:28"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0095",
+   "from_control_node_id": "RC0018",
+   "from_port_fine_node": "20:0:4:14",
+   "to_control_node_id": "JX189S0A7_IN",
+   "to_port_fine_node": "20:0:4:0",
+   "distance_m": 28.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "20:0:4:14",
+    "20:0:4:13",
+    "20:0:4:12",
+    "20:0:4:11",
+    "20:0:4:10",
+    "20:0:4:9",
+    "20:0:4:8",
+    "20:0:4:7",
+    "20:0:4:6",
+    "20:0:4:5",
+    "20:0:4:4",
+    "20:0:4:3",
+    "20:0:4:2",
+    "20:0:4:1",
+    "20:0:4:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0096",
+   "from_control_node_id": "RC0019",
+   "from_port_fine_node": "22:0:-1:13",
+   "to_control_node_id": "JX189S0A3_IN",
+   "to_port_fine_node": "15:0:1:1",
+   "distance_m": 13.67,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "22:0:-1:13",
+    "16:0:1:5",
+    "16:0:1:4",
+    "16:0:1:3",
+    "16:0:1:2",
+    "16:0:1:1",
+    "15:0:1:1"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0097",
+   "from_control_node_id": "RC0020",
+   "from_port_fine_node": "22:0:1:13",
+   "to_control_node_id": "JX23S0A5_IN",
+   "to_port_fine_node": "22:0:1:0",
+   "distance_m": 26.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "22:0:1:13",
+    "22:0:1:12",
+    "22:0:1:11",
+    "22:0:1:10",
+    "22:0:1:9",
+    "22:0:1:8",
+    "22:0:1:7",
+    "22:0:1:6",
+    "22:0:1:5",
+    "22:0:1:4",
+    "22:0:1:3",
+    "22:0:1:2",
+    "22:0:1:1",
+    "22:0:1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0098",
+   "from_control_node_id": "RC0021",
+   "from_port_fine_node": "0:0:-1:0",
+   "to_control_node_id": "RC0022",
+   "to_port_fine_node": "10:0:-1:1",
+   "distance_m": 15.385,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "0:0:-1:0",
+    "0:0:-1:1",
+    "0:0:-1:2",
+    "0:0:-1:3",
+    "0:0:-1:4",
+    "0:0:-1:5",
+    "0:0:-1:6",
+    "10:0:-1:1"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0099",
+   "from_control_node_id": "RC0022",
+   "from_port_fine_node": "10:0:-1:1",
+   "to_control_node_id": "RC0023",
+   "to_port_fine_node": "10:0:-1:15",
+   "distance_m": 29.24,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "10:0:-1:1",
+    "10:0:-1:2",
+    "10:0:-1:3",
+    "10:0:-1:4",
+    "10:0:-1:5",
+    "10:0:-1:6",
+    "10:0:-1:7",
+    "10:0:-1:8",
+    "10:0:-1:9",
+    "10:0:-1:10",
+    "10:0:-1:11",
+    "10:0:-1:12",
+    "10:0:-1:13",
+    "10:0:-1:14",
+    "10:0:-1:15"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0100",
+   "from_control_node_id": "RC0023",
+   "from_port_fine_node": "10:0:-1:15",
+   "to_control_node_id": "RC0024",
+   "to_port_fine_node": "10:0:-1:29",
+   "distance_m": 29.24,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "10:0:-1:15",
+    "10:0:-1:16",
+    "10:0:-1:17",
+    "10:0:-1:18",
+    "10:0:-1:19",
+    "10:0:-1:20",
+    "10:0:-1:21",
+    "10:0:-1:22",
+    "10:0:-1:23",
+    "10:0:-1:24",
+    "10:0:-1:25",
+    "10:0:-1:26",
+    "10:0:-1:27",
+    "10:0:-1:28",
+    "10:0:-1:29"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0101",
+   "from_control_node_id": "RC0024",
+   "from_port_fine_node": "10:0:-1:29",
+   "to_control_node_id": "RC0025",
+   "to_port_fine_node": "10:0:-1:44",
+   "distance_m": 30.2,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "10:0:-1:29",
+    "10:0:-1:30",
+    "10:0:-1:31",
+    "10:0:-1:32",
+    "10:0:-1:33",
+    "10:0:-1:34",
+    "10:0:-1:35",
+    "10:0:-1:36",
+    "10:0:-1:37",
+    "10:0:-1:38",
+    "10:0:-1:39",
+    "10:0:-1:40",
+    "10:0:-1:41",
+    "10:0:-1:42",
+    "10:0:-1:43",
+    "10:0:-1:44"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0102",
+   "from_control_node_id": "RC0025",
+   "from_port_fine_node": "10:0:-1:44",
+   "to_control_node_id": "RC0026",
+   "to_port_fine_node": "10:0:-1:59",
+   "distance_m": 30.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "10:0:-1:44",
+    "10:0:-1:45",
+    "10:0:-1:46",
+    "10:0:-1:47",
+    "10:0:-1:48",
+    "10:0:-1:49",
+    "10:0:-1:50",
+    "10:0:-1:51",
+    "10:0:-1:52",
+    "10:0:-1:53",
+    "10:0:-1:54",
+    "10:0:-1:55",
+    "10:0:-1:56",
+    "10:0:-1:57",
+    "10:0:-1:58",
+    "10:0:-1:59"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0103",
+   "from_control_node_id": "RC0026",
+   "from_port_fine_node": "10:0:-1:59",
+   "to_control_node_id": "RC0026",
+   "to_port_fine_node": "10:0:-1:60",
+   "distance_m": 2.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "10:0:-1:59",
+    "10:0:-1:60"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0104",
+   "from_control_node_id": "RC0026",
+   "from_port_fine_node": "10:0:-1:60",
+   "to_control_node_id": "RC0049",
+   "to_port_fine_node": "7:0:1:11",
+   "distance_m": 13.577,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "10:0:-1:60",
+    "17:0:-1:1",
+    "17:0:-1:2",
+    "17:0:-1:3",
+    "17:0:-1:4",
+    "17:0:-1:5",
+    "7:0:1:11"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0105",
+   "from_control_node_id": "RC0028",
+   "from_port_fine_node": "0:0:1:0",
+   "to_control_node_id": "JX532S0A3_IN",
+   "to_port_fine_node": "3:0:1:1",
+   "distance_m": 2.909,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "0:0:1:0",
+    "3:0:1:1"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0106",
+   "from_control_node_id": "RC0030",
+   "from_port_fine_node": "10:0:1:59",
+   "to_control_node_id": "RC0031",
+   "to_port_fine_node": "10:0:1:45",
+   "distance_m": 28.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "10:0:1:59",
+    "10:0:1:58",
+    "10:0:1:57",
+    "10:0:1:56",
+    "10:0:1:55",
+    "10:0:1:54",
+    "10:0:1:53",
+    "10:0:1:52",
+    "10:0:1:51",
+    "10:0:1:50",
+    "10:0:1:49",
+    "10:0:1:48",
+    "10:0:1:47",
+    "10:0:1:46",
+    "10:0:1:45"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0107",
+   "from_control_node_id": "RC0030",
+   "from_port_fine_node": "10:0:1:60",
+   "to_control_node_id": "RC0030",
+   "to_port_fine_node": "10:0:1:59",
+   "distance_m": 2.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "10:0:1:60",
+    "10:0:1:59"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0108",
+   "from_control_node_id": "RC0031",
+   "from_port_fine_node": "10:0:1:45",
+   "to_control_node_id": "RC0032",
+   "to_port_fine_node": "10:0:1:31",
+   "distance_m": 27.978,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "10:0:1:45",
+    "10:0:1:44",
+    "10:0:1:43",
+    "10:0:1:42",
+    "10:0:1:41",
+    "10:0:1:40",
+    "10:0:1:39",
+    "10:0:1:38",
+    "10:0:1:37",
+    "10:0:1:36",
+    "10:0:1:35",
+    "10:0:1:34",
+    "10:0:1:33",
+    "10:0:1:32",
+    "10:0:1:31"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0109",
+   "from_control_node_id": "RC0032",
+   "from_port_fine_node": "10:0:1:31",
+   "to_control_node_id": "RC0033",
+   "to_port_fine_node": "10:0:1:16",
+   "distance_m": 28.665,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "10:0:1:31",
+    "10:0:1:30",
+    "10:0:1:29",
+    "10:0:1:28",
+    "10:0:1:27",
+    "10:0:1:26",
+    "10:0:1:25",
+    "10:0:1:24",
+    "10:0:1:23",
+    "10:0:1:22",
+    "10:0:1:21",
+    "10:0:1:20",
+    "10:0:1:19",
+    "10:0:1:18",
+    "10:0:1:17",
+    "10:0:1:16"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0110",
+   "from_control_node_id": "RC0033",
+   "from_port_fine_node": "10:0:1:16",
+   "to_control_node_id": "RC0034",
+   "to_port_fine_node": "10:0:1:1",
+   "distance_m": 28.665,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "10:0:1:16",
+    "10:0:1:15",
+    "10:0:1:14",
+    "10:0:1:13",
+    "10:0:1:12",
+    "10:0:1:11",
+    "10:0:1:10",
+    "10:0:1:9",
+    "10:0:1:8",
+    "10:0:1:7",
+    "10:0:1:6",
+    "10:0:1:5",
+    "10:0:1:4",
+    "10:0:1:3",
+    "10:0:1:2",
+    "10:0:1:1"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0111",
+   "from_control_node_id": "RC0034",
+   "from_port_fine_node": "10:0:1:1",
+   "to_control_node_id": "RC0028",
+   "to_port_fine_node": "0:0:1:0",
+   "distance_m": 15.235,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "10:0:1:1",
+    "0:0:1:6",
+    "0:0:1:5",
+    "0:0:1:4",
+    "0:0:1:3",
+    "0:0:1:2",
+    "0:0:1:1",
+    "0:0:1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0112",
+   "from_control_node_id": "RC0036",
+   "from_port_fine_node": "4:0:-1:0",
+   "to_control_node_id": "JX468S0A0_IN",
+   "to_port_fine_node": "4:0:-1:14",
+   "distance_m": 28.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "4:0:-1:0",
+    "4:0:-1:1",
+    "4:0:-1:2",
+    "4:0:-1:3",
+    "4:0:-1:4",
+    "4:0:-1:5",
+    "4:0:-1:6",
+    "4:0:-1:7",
+    "4:0:-1:8",
+    "4:0:-1:9",
+    "4:0:-1:10",
+    "4:0:-1:11",
+    "4:0:-1:12",
+    "4:0:-1:13",
+    "4:0:-1:14"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0113",
+   "from_control_node_id": "RC0037",
+   "from_port_fine_node": "4:0:1:0",
+   "to_control_node_id": "RC0011",
+   "to_port_fine_node": "8:0:-1:9",
+   "distance_m": 18.001,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "4:0:1:0",
+    "8:0:-1:1",
+    "8:0:-1:2",
+    "8:0:-1:3",
+    "8:0:-1:4",
+    "8:0:-1:5",
+    "8:0:-1:6",
+    "8:0:-1:7",
+    "8:0:-1:8",
+    "8:0:-1:9"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0114",
+   "from_control_node_id": "RC0038",
+   "from_port_fine_node": "5:0:-1:14",
+   "to_control_node_id": "RC0039",
+   "to_port_fine_node": "5:0:-1:27",
+   "distance_m": 25.299,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "5:0:-1:14",
+    "5:0:-1:15",
+    "5:0:-1:16",
+    "5:0:-1:17",
+    "5:0:-1:18",
+    "5:0:-1:19",
+    "5:0:-1:20",
+    "5:0:-1:21",
+    "5:0:-1:22",
+    "5:0:-1:23",
+    "5:0:-1:24",
+    "5:0:-1:25",
+    "5:0:-1:26",
+    "5:0:-1:27"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0115",
+   "from_control_node_id": "RC0039",
+   "from_port_fine_node": "5:0:-1:27",
+   "to_control_node_id": "RC0040",
+   "to_port_fine_node": "5:0:-1:40",
+   "distance_m": 25.49,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "5:0:-1:27",
+    "5:0:-1:28",
+    "5:0:-1:29",
+    "5:0:-1:30",
+    "5:0:-1:31",
+    "5:0:-1:32",
+    "5:0:-1:33",
+    "5:0:-1:34",
+    "5:0:-1:35",
+    "5:0:-1:36",
+    "5:0:-1:37",
+    "5:0:-1:38",
+    "5:0:-1:39",
+    "5:0:-1:40"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0116",
+   "from_control_node_id": "RC0040",
+   "from_port_fine_node": "5:0:-1:40",
+   "to_control_node_id": "JX719S0A0_IN",
+   "to_port_fine_node": "5:0:-1:53",
+   "distance_m": 26.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "5:0:-1:40",
+    "5:0:-1:41",
+    "5:0:-1:42",
+    "5:0:-1:43",
+    "5:0:-1:44",
+    "5:0:-1:45",
+    "5:0:-1:46",
+    "5:0:-1:47",
+    "5:0:-1:48",
+    "5:0:-1:49",
+    "5:0:-1:50",
+    "5:0:-1:51",
+    "5:0:-1:52",
+    "5:0:-1:53"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0117",
+   "from_control_node_id": "RC0041",
+   "from_port_fine_node": "5:0:1:39",
+   "to_control_node_id": "RC0042",
+   "to_port_fine_node": "5:0:1:26",
+   "distance_m": 26.558,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "5:0:1:39",
+    "5:0:1:38",
+    "5:0:1:37",
+    "5:0:1:36",
+    "5:0:1:35",
+    "5:0:1:34",
+    "5:0:1:33",
+    "5:0:1:32",
+    "5:0:1:31",
+    "5:0:1:30",
+    "5:0:1:29",
+    "5:0:1:28",
+    "5:0:1:27",
+    "5:0:1:26"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0118",
+   "from_control_node_id": "RC0042",
+   "from_port_fine_node": "5:0:1:26",
+   "to_control_node_id": "RC0043",
+   "to_port_fine_node": "5:0:1:13",
+   "distance_m": 26.733,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "5:0:1:26",
+    "5:0:1:25",
+    "5:0:1:24",
+    "5:0:1:23",
+    "5:0:1:22",
+    "5:0:1:21",
+    "5:0:1:20",
+    "5:0:1:19",
+    "5:0:1:18",
+    "5:0:1:17",
+    "5:0:1:16",
+    "5:0:1:15",
+    "5:0:1:14",
+    "5:0:1:13"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0119",
+   "from_control_node_id": "RC0043",
+   "from_port_fine_node": "5:0:1:13",
+   "to_control_node_id": "JX468S0A3_IN",
+   "to_port_fine_node": "5:0:1:0",
+   "distance_m": 27.08,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "5:0:1:13",
+    "5:0:1:12",
+    "5:0:1:11",
+    "5:0:1:10",
+    "5:0:1:9",
+    "5:0:1:8",
+    "5:0:1:7",
+    "5:0:1:6",
+    "5:0:1:5",
+    "5:0:1:4",
+    "5:0:1:3",
+    "5:0:1:2",
+    "5:0:1:1",
+    "5:0:1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0120",
+   "from_control_node_id": "RC0044",
+   "from_port_fine_node": "6:0:-1:14",
+   "to_control_node_id": "RC0045",
+   "to_port_fine_node": "6:0:-1:28",
+   "distance_m": 26.874,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "6:0:-1:14",
+    "6:0:-1:15",
+    "6:0:-1:16",
+    "6:0:-1:17",
+    "6:0:-1:18",
+    "6:0:-1:19",
+    "6:0:-1:20",
+    "6:0:-1:21",
+    "6:0:-1:22",
+    "6:0:-1:23",
+    "6:0:-1:24",
+    "6:0:-1:25",
+    "6:0:-1:26",
+    "6:0:-1:27",
+    "6:0:-1:28"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0121",
+   "from_control_node_id": "RC0045",
+   "from_port_fine_node": "6:0:-1:28",
+   "to_control_node_id": "JX23S0A0_IN",
+   "to_port_fine_node": "6:0:-1:43",
+   "distance_m": 27.774,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "6:0:-1:28",
+    "6:0:-1:29",
+    "6:0:-1:30",
+    "6:0:-1:31",
+    "6:0:-1:32",
+    "6:0:-1:33",
+    "6:0:-1:34",
+    "6:0:-1:35",
+    "6:0:-1:36",
+    "6:0:-1:37",
+    "6:0:-1:38",
+    "6:0:-1:39",
+    "6:0:-1:40",
+    "6:0:-1:41",
+    "6:0:-1:42",
+    "6:0:-1:43"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0122",
+   "from_control_node_id": "RC0046",
+   "from_port_fine_node": "6:0:1:29",
+   "to_control_node_id": "RC0047",
+   "to_port_fine_node": "6:0:1:15",
+   "distance_m": 29.145,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "6:0:1:29",
+    "6:0:1:28",
+    "6:0:1:27",
+    "6:0:1:26",
+    "6:0:1:25",
+    "6:0:1:24",
+    "6:0:1:23",
+    "6:0:1:22",
+    "6:0:1:21",
+    "6:0:1:20",
+    "6:0:1:19",
+    "6:0:1:18",
+    "6:0:1:17",
+    "6:0:1:16",
+    "6:0:1:15"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0123",
+   "from_control_node_id": "RC0047",
+   "from_port_fine_node": "6:0:1:15",
+   "to_control_node_id": "JX719S0A3_IN",
+   "to_port_fine_node": "6:0:1:0",
+   "distance_m": 30.389,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "6:0:1:15",
+    "6:0:1:14",
+    "6:0:1:13",
+    "6:0:1:12",
+    "6:0:1:11",
+    "6:0:1:10",
+    "6:0:1:9",
+    "6:0:1:8",
+    "6:0:1:7",
+    "6:0:1:6",
+    "6:0:1:5",
+    "6:0:1:4",
+    "6:0:1:3",
+    "6:0:1:2",
+    "6:0:1:1",
+    "6:0:1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0124",
+   "from_control_node_id": "RC0048",
+   "from_port_fine_node": "7:0:-1:11",
+   "to_control_node_id": "RC0030",
+   "to_port_fine_node": "10:0:1:60",
+   "distance_m": 13.615,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "7:0:-1:11",
+    "17:0:1:5",
+    "17:0:1:4",
+    "17:0:1:3",
+    "17:0:1:2",
+    "17:0:1:1",
+    "10:0:1:60"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0125",
+   "from_control_node_id": "RC0049",
+   "from_port_fine_node": "7:0:1:11",
+   "to_control_node_id": "JX23S0A3_IN",
+   "to_port_fine_node": "7:0:1:0",
+   "distance_m": 22.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "7:0:1:11",
+    "7:0:1:10",
+    "7:0:1:9",
+    "7:0:1:8",
+    "7:0:1:7",
+    "7:0:1:6",
+    "7:0:1:5",
+    "7:0:1:4",
+    "7:0:1:3",
+    "7:0:1:2",
+    "7:0:1:1",
+    "7:0:1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0126",
+   "from_control_node_id": "RC0050",
+   "from_port_fine_node": "1:0:1:1",
+   "to_control_node_id": "RC0050",
+   "to_port_fine_node": "8:0:1:9",
+   "distance_m": 3.541,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "1:0:1:1",
+    "1:0:1:0",
+    "8:0:1:9"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0127",
+   "from_control_node_id": "RC0050",
+   "from_port_fine_node": "8:0:1:9",
+   "to_control_node_id": "RC0036",
+   "to_port_fine_node": "4:0:-1:0",
+   "distance_m": 17.999,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "8:0:1:9",
+    "8:0:1:8",
+    "8:0:1:7",
+    "8:0:1:6",
+    "8:0:1:5",
+    "8:0:1:4",
+    "8:0:1:3",
+    "8:0:1:2",
+    "8:0:1:1",
+    "4:0:-1:0"
+   ],
+   "local_hole_fixed": true,
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0128",
+   "from_control_node_id": "RC0050",
+   "from_port_fine_node": "8:0:1:9",
+   "to_control_node_id": "RC0055",
+   "to_port_fine_node": "8:0:1:0",
+   "distance_m": 17.999,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "8:0:1:9",
+    "8:0:1:8",
+    "8:0:1:7",
+    "8:0:1:6",
+    "8:0:1:5",
+    "8:0:1:4",
+    "8:0:1:3",
+    "8:0:1:2",
+    "8:0:1:1",
+    "8:0:1:0"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0129",
+   "from_control_node_id": "RC0052",
+   "from_port_fine_node": "1:0:1:45",
+   "to_control_node_id": "RC0053",
+   "to_port_fine_node": "1:0:1:30",
+   "distance_m": 28.703,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "1:0:1:45",
+    "1:0:1:44",
+    "1:0:1:43",
+    "1:0:1:42",
+    "1:0:1:41",
+    "1:0:1:40",
+    "1:0:1:39",
+    "1:0:1:38",
+    "1:0:1:37",
+    "1:0:1:36",
+    "1:0:1:35",
+    "1:0:1:34",
+    "1:0:1:33",
+    "1:0:1:32",
+    "1:0:1:31",
+    "1:0:1:30"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0130",
+   "from_control_node_id": "RC0053",
+   "from_port_fine_node": "1:0:1:30",
+   "to_control_node_id": "RC0054",
+   "to_port_fine_node": "1:0:1:15",
+   "distance_m": 29.29,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "1:0:1:30",
+    "1:0:1:29",
+    "1:0:1:28",
+    "1:0:1:27",
+    "1:0:1:26",
+    "1:0:1:25",
+    "1:0:1:24",
+    "1:0:1:23",
+    "1:0:1:22",
+    "1:0:1:21",
+    "1:0:1:20",
+    "1:0:1:19",
+    "1:0:1:18",
+    "1:0:1:17",
+    "1:0:1:16",
+    "1:0:1:15"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0131",
+   "from_control_node_id": "RC0054",
+   "from_port_fine_node": "1:0:1:15",
+   "to_control_node_id": "RC0050",
+   "to_port_fine_node": "1:0:1:1",
+   "distance_m": 28.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "1:0:1:15",
+    "1:0:1:14",
+    "1:0:1:13",
+    "1:0:1:12",
+    "1:0:1:11",
+    "1:0:1:10",
+    "1:0:1:9",
+    "1:0:1:8",
+    "1:0:1:7",
+    "1:0:1:6",
+    "1:0:1:5",
+    "1:0:1:4",
+    "1:0:1:3",
+    "1:0:1:2",
+    "1:0:1:1"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0132",
+   "from_control_node_id": "RC0055",
+   "from_port_fine_node": "8:0:1:0",
+   "to_control_node_id": "JX468S0A0_IN",
+   "to_port_fine_node": "4:0:-1:14",
+   "distance_m": 28.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "8:0:1:0",
+    "4:0:-1:1",
+    "4:0:-1:2",
+    "4:0:-1:3",
+    "4:0:-1:4",
+    "4:0:-1:5",
+    "4:0:-1:6",
+    "4:0:-1:7",
+    "4:0:-1:8",
+    "4:0:-1:9",
+    "4:0:-1:10",
+    "4:0:-1:11",
+    "4:0:-1:12",
+    "4:0:-1:13",
+    "4:0:-1:14"
+   ],
+   "rescue": false
+  },
+  {
+   "edge_id": "CE0133",
+   "from_control_node_id": "TR0001",
+   "from_port_fine_node": "467:0:-1:12",
+   "to_control_node_id": "JX189S0A2_OUT",
+   "to_port_fine_node": "15:0:-1:1",
+   "distance_m": 22.24,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "467:0:-1:12",
+    "467:0:-1:13",
+    "467:0:-1:14",
+    "467:0:-1:15",
+    "467:0:-1:16",
+    "467:0:-1:17",
+    "467:0:-1:18",
+    "467:0:-1:19",
+    "467:0:-1:20",
+    "467:0:-1:21",
+    "467:0:-1:22",
+    "15:0:-1:1"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0134",
+   "from_control_node_id": "TR0002",
+   "from_port_fine_node": "256:0:-1:12",
+   "to_control_node_id": "JX189S0A5_OUT",
+   "to_port_fine_node": "18:0:4:4",
+   "distance_m": 27.244,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "256:0:-1:12",
+    "256:0:-1:13",
+    "256:0:-1:14",
+    "256:0:-1:15",
+    "256:0:-1:16",
+    "256:0:-1:17",
+    "19:0:4:5",
+    "19:0:4:4",
+    "19:0:4:3",
+    "19:0:4:2",
+    "19:0:4:1",
+    "19:0:4:0",
+    "18:0:4:4"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0135",
+   "from_control_node_id": "TR0002",
+   "from_port_fine_node": "256:0:-1:12",
+   "to_control_node_id": "TR0009",
+   "to_port_fine_node": "19:0:4:4",
+   "distance_m": 16.634,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "256:0:-1:12",
+    "256:0:-1:13",
+    "256:0:-1:14",
+    "256:0:-1:15",
+    "256:0:-1:16",
+    "256:0:-1:17",
+    "19:0:4:5",
+    "19:0:4:4"
+   ],
+   "transit_join": true
+  },
+  {
+   "edge_id": "CE0136",
+   "from_control_node_id": "TR0003",
+   "from_port_fine_node": "22:0:2:9",
+   "to_control_node_id": "TR0004",
+   "to_port_fine_node": "33:0:1:11",
+   "distance_m": 24.568,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "22:0:2:9",
+    "22:0:2:8",
+    "22:0:2:7",
+    "22:0:2:6",
+    "22:0:2:5",
+    "22:0:2:4",
+    "22:0:2:3",
+    "22:0:2:2",
+    "22:0:2:1",
+    "22:0:2:0",
+    "33:0:1:13",
+    "33:0:1:12",
+    "33:0:1:11"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0137",
+   "from_control_node_id": "TR0004",
+   "from_port_fine_node": "33:0:1:11",
+   "to_control_node_id": "JX23S0A2_OUT",
+   "to_port_fine_node": "7:0:-1:0",
+   "distance_m": 19.503,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "33:0:1:11",
+    "33:0:1:10",
+    "33:0:1:9",
+    "33:0:1:8",
+    "33:0:1:7",
+    "33:0:1:6",
+    "33:0:1:5",
+    "33:0:1:4",
+    "33:0:1:3",
+    "33:0:1:2",
+    "33:0:1:1",
+    "7:0:-1:0"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0138",
+   "from_control_node_id": "TR0005",
+   "from_port_fine_node": "286:0:1:2",
+   "to_control_node_id": "JX719S0A5_IN",
+   "to_port_fine_node": "18:0:5:1",
+   "distance_m": 23.692,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "286:0:1:2",
+    "286:0:1:1",
+    "19:0:5:5",
+    "19:0:5:4",
+    "19:0:5:3",
+    "19:0:5:2",
+    "19:0:5:1",
+    "19:0:5:0",
+    "18:0:5:4",
+    "18:0:5:3",
+    "18:0:5:2",
+    "18:0:5:1"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0139",
+   "from_control_node_id": "TR0006",
+   "from_port_fine_node": "296:0:-1:13",
+   "to_control_node_id": "JX189S0A2_OUT",
+   "to_port_fine_node": "15:0:-1:0",
+   "distance_m": 11.273,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "296:0:-1:13",
+    "296:0:-1:14",
+    "296:0:-1:15",
+    "296:0:-1:16",
+    "296:0:-1:17",
+    "15:0:-1:0"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0140",
+   "from_control_node_id": "TR0007",
+   "from_port_fine_node": "315:0:-1:7",
+   "to_control_node_id": "JX189S0A2_OUT",
+   "to_port_fine_node": "15:0:-2:1",
+   "distance_m": 28.874,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "315:0:-1:7",
+    "315:0:-1:8",
+    "315:0:-1:9",
+    "315:0:-1:10",
+    "315:0:-1:11",
+    "315:0:-1:12",
+    "315:0:-1:13",
+    "315:0:-1:14",
+    "315:0:-1:15",
+    "315:0:-1:16",
+    "315:0:-1:17",
+    "315:0:-1:18",
+    "315:0:-1:19",
+    "15:0:-2:1"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0141",
+   "from_control_node_id": "TR0008",
+   "from_port_fine_node": "255:0:-1:13",
+   "to_control_node_id": "JX189S0A6_OUT",
+   "to_port_fine_node": "20:0:-1:0",
+   "distance_m": 12.11,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "255:0:-1:13",
+    "255:0:-1:14",
+    "255:0:-1:15",
+    "255:0:-1:16",
+    "255:0:-1:17",
+    "255:0:-1:18",
+    "20:0:-1:0"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0142",
+   "from_control_node_id": "TR0009",
+   "from_port_fine_node": "19:0:4:4",
+   "to_control_node_id": "JX189S0A5_OUT",
+   "to_port_fine_node": "18:0:4:4",
+   "distance_m": 10.61,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "19:0:4:4",
+    "19:0:4:3",
+    "19:0:4:2",
+    "19:0:4:1",
+    "19:0:4:0",
+    "18:0:4:4"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0143",
+   "from_control_node_id": "TR0010",
+   "from_port_fine_node": "566:0:-1:12",
+   "to_control_node_id": "JX532S0A2_OUT",
+   "to_port_fine_node": "3:0:-1:1",
+   "distance_m": 24.64,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "566:0:-1:12",
+    "566:0:-1:13",
+    "566:0:-1:14",
+    "566:0:-1:15",
+    "566:0:-1:16",
+    "566:0:-1:17",
+    "566:0:-1:18",
+    "566:0:-1:19",
+    "566:0:-1:20",
+    "566:0:-1:21",
+    "566:0:-1:22",
+    "566:0:-1:23",
+    "3:0:-1:1"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0144",
+   "from_control_node_id": "TR0011",
+   "from_port_fine_node": "565:0:1:8",
+   "to_control_node_id": "JX532S0A1_OUT",
+   "to_port_fine_node": "2:0:1:6",
+   "distance_m": 16.026,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "565:0:1:8",
+    "565:0:1:7",
+    "565:0:1:6",
+    "565:0:1:5",
+    "565:0:1:4",
+    "565:0:1:3",
+    "565:0:1:2",
+    "565:0:1:1",
+    "2:0:1:6"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0145",
+   "from_control_node_id": "TR0012",
+   "from_port_fine_node": "565:0:2:4",
+   "to_control_node_id": "TR0013",
+   "to_port_fine_node": "703:0:1:9",
+   "distance_m": 25.268,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "565:0:2:4",
+    "565:0:2:3",
+    "565:0:2:2",
+    "565:0:2:1",
+    "2:0:2:5",
+    "2:0:2:4",
+    "2:0:2:3",
+    "2:0:2:2",
+    "2:0:2:1",
+    "2:0:2:0",
+    "703:0:1:11",
+    "703:0:1:10",
+    "703:0:1:9"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0146",
+   "from_control_node_id": "TR0013",
+   "from_port_fine_node": "703:0:1:9",
+   "to_control_node_id": "JX664S0A4_OUT",
+   "to_port_fine_node": "11:0:-1:0",
+   "distance_m": 15.742,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "703:0:1:9",
+    "703:0:1:8",
+    "703:0:1:7",
+    "703:0:1:6",
+    "703:0:1:5",
+    "703:0:1:4",
+    "703:0:1:3",
+    "703:0:1:2",
+    "703:0:1:1",
+    "11:0:-1:0"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0147",
+   "from_control_node_id": "TR0014",
+   "from_port_fine_node": "637:0:-1:14",
+   "to_control_node_id": "JX532S0A2_OUT",
+   "to_port_fine_node": "3:0:-1:1",
+   "distance_m": 17.377,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "637:0:-1:14",
+    "637:0:-1:15",
+    "637:0:-1:16",
+    "637:0:-1:17",
+    "637:0:-1:18",
+    "637:0:-1:19",
+    "637:0:-1:20",
+    "637:0:-1:21",
+    "3:0:-1:1"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0148",
+   "from_control_node_id": "TR0015",
+   "from_port_fine_node": "1:0:2:56",
+   "to_control_node_id": "TR0016",
+   "to_port_fine_node": "1:0:2:40",
+   "distance_m": 28.685,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "1:0:2:56",
+    "1:0:2:55",
+    "1:0:2:54",
+    "1:0:2:53",
+    "1:0:2:52",
+    "1:0:2:51",
+    "1:0:2:50",
+    "1:0:2:49",
+    "1:0:2:48",
+    "1:0:2:47",
+    "1:0:2:46",
+    "1:0:2:45",
+    "1:0:2:44",
+    "1:0:2:43",
+    "1:0:2:42",
+    "1:0:2:41",
+    "1:0:2:40"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0149",
+   "from_control_node_id": "TR0016",
+   "from_port_fine_node": "1:0:2:40",
+   "to_control_node_id": "TR0017",
+   "to_port_fine_node": "1:0:2:22",
+   "distance_m": 31.069,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "1:0:2:40",
+    "1:0:2:39",
+    "1:0:2:38",
+    "1:0:2:37",
+    "1:0:2:36",
+    "1:0:2:35",
+    "1:0:2:34",
+    "1:0:2:33",
+    "1:0:2:32",
+    "1:0:2:31",
+    "1:0:2:30",
+    "1:0:2:29",
+    "1:0:2:28",
+    "1:0:2:27",
+    "1:0:2:26",
+    "1:0:2:25",
+    "1:0:2:24",
+    "1:0:2:23",
+    "1:0:2:22"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0150",
+   "from_control_node_id": "TR0017",
+   "from_port_fine_node": "1:0:2:22",
+   "to_control_node_id": "TR0018",
+   "to_port_fine_node": "1:0:2:8",
+   "distance_m": 28.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "1:0:2:22",
+    "1:0:2:21",
+    "1:0:2:20",
+    "1:0:2:19",
+    "1:0:2:18",
+    "1:0:2:17",
+    "1:0:2:16",
+    "1:0:2:15",
+    "1:0:2:14",
+    "1:0:2:13",
+    "1:0:2:12",
+    "1:0:2:11",
+    "1:0:2:10",
+    "1:0:2:9",
+    "1:0:2:8"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0151",
+   "from_control_node_id": "TR0018",
+   "from_port_fine_node": "1:0:2:8",
+   "to_control_node_id": "TR0019",
+   "to_port_fine_node": "4:0:-2:4",
+   "distance_m": 43.539,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "1:0:2:8",
+    "1:0:2:7",
+    "1:0:2:6",
+    "1:0:2:5",
+    "1:0:2:4",
+    "1:0:2:3",
+    "1:0:2:2",
+    "1:0:2:1",
+    "8:0:2:9",
+    "8:0:2:8",
+    "8:0:2:7",
+    "8:0:2:6",
+    "8:0:2:5",
+    "8:0:2:4",
+    "8:0:2:3",
+    "8:0:2:2",
+    "8:0:2:1",
+    "4:0:-2:0",
+    "4:0:-2:1",
+    "4:0:-2:2",
+    "4:0:-2:3",
+    "4:0:-2:4"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0152",
+   "from_control_node_id": "TR0019",
+   "from_port_fine_node": "4:0:-2:4",
+   "to_control_node_id": "TR0020",
+   "to_port_fine_node": "486:0:-1:4",
+   "distance_m": 27.784,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "4:0:-2:4",
+    "4:0:-2:5",
+    "4:0:-2:6",
+    "4:0:-2:7",
+    "4:0:-2:8",
+    "4:0:-2:9",
+    "4:0:-2:10",
+    "4:0:-2:11",
+    "4:0:-2:12",
+    "4:0:-2:13",
+    "4:0:-2:14",
+    "486:0:-1:1",
+    "486:0:-1:2",
+    "486:0:-1:3",
+    "486:0:-1:4"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0153",
+   "from_control_node_id": "TR0020",
+   "from_port_fine_node": "486:0:-1:4",
+   "to_control_node_id": "JX468S0A4_OUT",
+   "to_port_fine_node": "13:0:-1:0",
+   "distance_m": 18.307,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "486:0:-1:4",
+    "486:0:-1:5",
+    "486:0:-1:6",
+    "486:0:-1:7",
+    "486:0:-1:8",
+    "486:0:-1:9",
+    "486:0:-1:10",
+    "486:0:-1:11",
+    "486:0:-1:12",
+    "486:0:-1:13",
+    "13:0:-1:0"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0154",
+   "from_control_node_id": "TR0021",
+   "from_port_fine_node": "736:0:-1:11",
+   "to_control_node_id": "JX719S0A2_OUT",
+   "to_port_fine_node": "6:0:-1:0",
+   "distance_m": 24.15,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "736:0:-1:11",
+    "736:0:-1:12",
+    "736:0:-1:13",
+    "736:0:-1:14",
+    "736:0:-1:15",
+    "736:0:-1:16",
+    "736:0:-1:17",
+    "736:0:-1:18",
+    "736:0:-1:19",
+    "736:0:-1:20",
+    "736:0:-1:21",
+    "736:0:-1:22",
+    "6:0:-1:0"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0155",
+   "from_control_node_id": "TR0022",
+   "from_port_fine_node": "735:0:1:7",
+   "to_control_node_id": "JX719S0A1_OUT",
+   "to_port_fine_node": "5:0:1:53",
+   "distance_m": 14.75,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "735:0:1:7",
+    "735:0:1:6",
+    "735:0:1:5",
+    "735:0:1:4",
+    "735:0:1:3",
+    "735:0:1:2",
+    "735:0:1:1",
+    "5:0:1:53"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0156",
+   "from_control_node_id": "TR0023",
+   "from_port_fine_node": "811:0:1:6",
+   "to_control_node_id": "JX719S0A4_OUT",
+   "to_port_fine_node": "18:0:-2:0",
+   "distance_m": 12.663,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "811:0:1:6",
+    "811:0:1:5",
+    "811:0:1:4",
+    "811:0:1:3",
+    "811:0:1:2",
+    "811:0:1:1",
+    "18:0:-2:0"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0157",
+   "from_control_node_id": "TR0023",
+   "from_port_fine_node": "811:0:1:6",
+   "to_control_node_id": "TR0024",
+   "to_port_fine_node": "255:0:-2:3",
+   "distance_m": 40.513,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "811:0:1:6",
+    "811:0:1:5",
+    "811:0:1:4",
+    "811:0:1:3",
+    "811:0:1:2",
+    "811:0:1:1",
+    "811:0:1:0",
+    "18:0:-2:1",
+    "18:0:-2:2",
+    "18:0:-2:3",
+    "18:0:-2:4",
+    "18:0:-2:5",
+    "19:0:-2:1",
+    "19:0:-2:2",
+    "19:0:-2:3",
+    "19:0:-2:4",
+    "19:0:-2:5",
+    "255:0:-2:1",
+    "255:0:-2:2",
+    "255:0:-2:3"
+   ],
+   "transit_join": true
+  },
+  {
+   "edge_id": "CE0158",
+   "from_control_node_id": "TR0024",
+   "from_port_fine_node": "255:0:-2:3",
+   "to_control_node_id": "TR0025",
+   "to_port_fine_node": "20:0:-2:4",
+   "distance_m": 40.11,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "255:0:-2:3",
+    "255:0:-2:4",
+    "255:0:-2:5",
+    "255:0:-2:6",
+    "255:0:-2:7",
+    "255:0:-2:8",
+    "255:0:-2:9",
+    "255:0:-2:10",
+    "255:0:-2:11",
+    "255:0:-2:12",
+    "255:0:-2:13",
+    "255:0:-2:14",
+    "255:0:-2:15",
+    "255:0:-2:16",
+    "255:0:-2:17",
+    "255:0:-2:18",
+    "255:0:-2:19",
+    "20:0:-2:1",
+    "20:0:-2:2",
+    "20:0:-2:3",
+    "20:0:-2:4"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0159",
+   "from_control_node_id": "TR0025",
+   "from_port_fine_node": "20:0:-2:4",
+   "to_control_node_id": "TR0026",
+   "to_port_fine_node": "20:0:-2:18",
+   "distance_m": 28.0,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "20:0:-2:4",
+    "20:0:-2:5",
+    "20:0:-2:6",
+    "20:0:-2:7",
+    "20:0:-2:8",
+    "20:0:-2:9",
+    "20:0:-2:10",
+    "20:0:-2:11",
+    "20:0:-2:12",
+    "20:0:-2:13",
+    "20:0:-2:14",
+    "20:0:-2:15",
+    "20:0:-2:16",
+    "20:0:-2:17",
+    "20:0:-2:18"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0160",
+   "from_control_node_id": "TR0026",
+   "from_port_fine_node": "20:0:-2:18",
+   "to_control_node_id": "TR0027",
+   "to_port_fine_node": "848:0:-1:4",
+   "distance_m": 26.374,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "20:0:-2:18",
+    "20:0:-2:19",
+    "20:0:-2:20",
+    "20:0:-2:21",
+    "20:0:-2:22",
+    "20:0:-2:23",
+    "20:0:-2:24",
+    "20:0:-2:25",
+    "20:0:-2:26",
+    "20:0:-2:27",
+    "848:0:-1:1",
+    "848:0:-1:2",
+    "848:0:-1:3",
+    "848:0:-1:4"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0161",
+   "from_control_node_id": "TR0027",
+   "from_port_fine_node": "848:0:-1:4",
+   "to_control_node_id": "JX841S0A1_OUT",
+   "to_port_fine_node": "9:0:1:5",
+   "distance_m": 15.943,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "848:0:-1:4",
+    "848:0:-1:5",
+    "848:0:-1:6",
+    "848:0:-1:7",
+    "848:0:-1:8",
+    "848:0:-1:9",
+    "848:0:-1:10",
+    "848:0:-1:11",
+    "848:0:-1:12",
+    "9:0:1:5"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0162",
+   "from_control_node_id": "TR0028",
+   "from_port_fine_node": "21:0:-2:4",
+   "to_control_node_id": "TR0029",
+   "to_port_fine_node": "608:0:-1:3",
+   "distance_m": 23.434,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "21:0:-2:4",
+    "21:0:-2:5",
+    "21:0:-2:6",
+    "21:0:-2:7",
+    "21:0:-2:8",
+    "21:0:-2:9",
+    "21:0:-2:10",
+    "21:0:-2:11",
+    "21:0:-2:12",
+    "608:0:-1:1",
+    "608:0:-1:2",
+    "608:0:-1:3"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0163",
+   "from_control_node_id": "TR0029",
+   "from_port_fine_node": "608:0:-1:3",
+   "to_control_node_id": "JX532S0A1_OUT",
+   "to_port_fine_node": "2:0:1:6",
+   "distance_m": 21.666,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "608:0:-1:3",
+    "608:0:-1:4",
+    "608:0:-1:5",
+    "608:0:-1:6",
+    "608:0:-1:7",
+    "608:0:-1:8",
+    "608:0:-1:9",
+    "608:0:-1:10",
+    "608:0:-1:11",
+    "608:0:-1:12",
+    "608:0:-1:13",
+    "608:0:-1:14",
+    "2:0:1:6"
+   ],
+   "rescue": false,
+   "split_from": null
+  },
+  {
+   "edge_id": "CE0164",
+   "from_control_node_id": "TR0030",
+   "from_port_fine_node": "467:0:-2:4",
+   "to_control_node_id": "JX189S0A2_OUT",
+   "to_port_fine_node": "15:0:-2:1",
+   "distance_m": 38.24,
+   "maneuver_class": "STRAIGHT",
+   "via_junction": false,
+   "first_edge_type": "LANE_FOLLOW",
+   "fine_path": [
+    "467:0:-2:4",
+    "467:0:-2:5",
+    "467:0:-2:6",
+    "467:0:-2:7",
+    "467:0:-2:8",
+    "467:0:-2:9",
+    "467:0:-2:10",
+    "467:0:-2:11",
+    "467:0:-2:12",
+    "467:0:-2:13",
+    "467:0:-2:14",
+    "467:0:-2:15",
+    "467:0:-2:16",
+    "467:0:-2:17",
+    "467:0:-2:18",
+    "467:0:-2:19",
+    "467:0:-2:20",
+    "467:0:-2:21",
+    "467:0:-2:22",
+    "15:0:-2:1"
+   ],
+   "rescue": false,
+   "split_from": null
+  }
+ ],
+ "branch_gaps": [],
+ "known_exceptions": {
+  "dead_ports": [],
+  "edge_classes": {
+   "link_edges": 135,
+   "link_max_m": 43.5,
+   "micro_link_lt5m": 8,
+   "turning_edges": 29,
+   "agent_edge_max_m": 44.3,
+   "rescue_segments": 0,
+   "rescue_edges_gt300m": [],
+   "phase3_fixed": 15,
+   "ports_merged": 11,
+   "semantic_added_micro": 0,
+   "semantic_added_turn": 14,
+   "transit_nodes": 30,
+   "long_edges_split": 19,
+   "transit_join_edges": 6,
+   "local_holes_fixed": 2,
+   "local_detours_fixed": 0
+  }
+ }
+}

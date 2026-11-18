@@ -1,0 +1,40 @@
+{
+  "allow_straight_line_fallback": false,
+  "asset_sha256": "8602e43a74a30f8f5d171a5dc95418cfd1867c6574865362d2038398aff8461d",
+  "build_config_sha256": "25c55819f3202805622e60fe87c6705358cc07a25801b3ffad802539b1988577",
+  "build_timestamp": "2026-07-21T00:28:37.326517",
+  "carla_air_version": "0.1.7",
+  "carla_asset_name": "/Game/Carla/Maps/Town03_Opt",
+  "carla_client_version": "unknown",
+  "carla_map_reported_name": "Carla/Maps/Town03_Opt",
+  "carla_server_version": "adaf011-dirty",
+  "decision_edge_count": 2217,
+  "decision_node_count": 1637,
+  "decision_spacing_m": 10.0,
+  "file_hashes": {
+    "decision_edges": "daaf0febd7fea16f4fa03da05de9a2538fe065308f08c26d6bd1e3997e0cd9cf",
+    "decision_nodes": "ddb878f4238ab90f581c1a2c2fc611ec0294ff096091f983fe08bdb435f0b630",
+    "fine_edges": "4e3c4430eb5e45fd4d280e7eca5aa0c29b116a69156c6508903e03483f503788",
+    "fine_nodes": "4f818ca0f70386d7e208c7873a6e835d082e6992cc311c4fd52a0effe57804ed"
+  },
+  "fine_edge_count": 8300,
+  "fine_node_count": 7290,
+  "fine_resolution_m": 2.0,
+  "generator_commit": "offline-build",
+  "graph_id": "Town03-odrabf177bc-r2-d10-lcnon-v2",
+  "included_lane_types": [
+    "Driving"
+  ],
+  "junction_lookahead_m": 30.0,
+  "lane_change_policy": "none",
+  "map_key": "Town03",
+  "normal_edges_use_previous": false,
+  "opendrive_sha256": "abf177bcd9b66cfefb7ac4919f6456815f1384f4229f1343c8a6a90bbb7713c9",
+  "schema_version": 2,
+  "source_bundle_sha256": "1a94a83f6a7b6077a8d885f4f66a8ac1eb4f54154e3174adbedfa1cc826e357b",
+  "status": "frozen",
+  "target_maps": [
+    "Town03"
+  ],
+  "validation_status": "passed"
+}

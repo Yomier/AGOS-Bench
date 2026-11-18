@@ -1,0 +1,195 @@
+benchmark:
+  dataset_id: AGOS_PAPER_TEST300_CARS34_V1_20261017
+  navigation_oracle_required: true
+  observation_contract: AGOS_ONLINE_VISUAL_MAP_V1
+  success_protocol_id: AGOS_CONFIRM30_V1
+benchmark_mode: easy
+candidate:
+  duplicate_suppression_radius_m: 30
+  max_candidates_per_suppression_region: 1
+  max_candidates_total: null
+  region_source: uav_grid_projection
+  share_on_topdown_map: true
+  single_active_candidate: true
+  use_ground_elevation: true
+carla:
+  airsim_port: 54651
+  host: 127.0.0.1
+  rpc_port: 15200
+  carla_user: carla
+diagnostic:
+  oracle_candidate_injection: false
+  save_all_uav_frames: false
+  save_ugv_views_per_step: false
+  shield: none
+distractors:
+  count_hard_max: 3
+  count_hard_min: 2
+  count_mid: 0
+  max_distance_from_target_m: 200
+  min_distance_from_target_m: 30
+  prefer_same_type_different_color: true
+episode:
+  seed_base: 20260725
+evaluation:
+  deployment_validation_protocol: AGOS_DEPLOYMENT_LAYERED_V3
+eval:
+  max_sim_time_s: 999999.0
+  max_steps: 80
+  max_vlm_calls: 1000
+generation_quality:
+  enabled: true
+  max_actor_tilt_deg: 10.0
+  max_actor_xy_error_m: 2.0
+  max_actor_z_error_m: 2.0
+  min_road_supported_fraction: 0.7
+  raster_spacing_m: 10.0
+  road_support_radius_m: 40.0
+  target_boundary_margin_m: 20.0
+memory:
+  max_entries: 5
+method_revision: COOP_EVENT_V10
+metrics:
+  ccg_definition: hit_candidates_over_created_candidates
+  osr_distance_m: 30
+  ugv_spl_enabled: true
+objects:
+  distractor_count: 0
+  target_categories:
+  - vehicle
+perception:
+  los_fail_closed: true
+region:
+  random_region_per_episode: true
+  size_m: 150
+road_graph:
+  registry: ${AGOS_ASSET_ROOT}/navigation/road_graphs_v2/road_graph_registry.json
+  required: true
+spawn:
+  avoid_spawn_collision: true
+  min_start_target_distance_m: 10
+  target_on_road: true
+  uav_on_grid_waypoint: true
+  ugv_on_road_waypoint: true
+success:
+  max_confirm_distance_m: 30.0
+  require_gt_visible_in_stop_6view: true
+  require_los: true
+  require_model_confirm: true
+  require_stop_observe: false
+target_reference:
+  distance_m: 12.0
+  elevation_max_deg: 75.0
+  elevation_min_deg: 10.0
+  max_attempts: 13
+  mode: random_single
+teammate_reference:
+  mode: pure_topdown
+time_model:
+  annotate_candidate_s: 5.0
+  confirm_s: 5.0
+  move_observation_s: 1.0
+  normal_turn_s: 2.0
+  reject_s: 5.0
+  stop_observe_s: 10.0
+  u_turn_s: 4.0
+  version: lite_time_v2
+  wait_s: 10.0
+uav:
+  altitude_m: 80
+  fixed_yaw: true
+  fixed_yaw_deg: 0
+  fov_deg: 90
+  grid_cols: 5
+  grid_rows: 5
+  image_height: 576
+  image_width: 1024
+  max_candidate_annotations: 999
+  speed_mps: 5.0
+  waypoint_spacing_m: 40
+ugv:
+  action_space: sparse_nav_v1
+  approach_distance_max_m: 50
+  approach_distance_min_m: 30
+  approach_fallback_max_m: 60
+  approach_fallback_min_m: 25
+  approach_route_max_m: null
+  confirm_budget: 1
+  confirmable_service_arrival_enabled: false
+  forward_distance_options_m:
+  - 10
+  - 20
+  front_camera_fov_deg: 90
+  front_image_height: 540
+  front_image_width: 960
+  go_to_candidate_enabled: false
+  intersection_max_distance_m: 50
+  road_waypoint_spacing_m: 10
+  sparse_intersection_max_distance_m: 50.0
+  speed_mps: 5.0
+  stop_camera_fov_deg: 90
+  stop_observe_views: 6
+  stop_observe_yaws:
+  - -45
+  - 0
+  - 45
+  - -135
+  - 180
+  - 135
+  stop_panel_height: 270
+  stop_panel_width: 480
+variant_id: COOP_EVENT_V1
+version: lite_v1_easy
+visibility:
+  min_bbox_area_ratio: 0.0005
+  min_bbox_long_side_px: 12
+  require_los: true
+vlm:
+  api_key_env: VLLM_API_KEY
+  api_url: ${AGOS_VLM_URL}
+  max_output_tokens: 1024
+  max_retries_per_call: 3
+  chat_template_kwargs:
+    enable_thinking: false
+  model: ${AGOS_VLM_MODEL}
+  retry_backoff_base: 2
+  retry_backoff_max: 30
+  seed: 20260725
+  temperature: 0.0
+  timeout_s: 120
+  top_p: 1.0
+  wait_forever: false
+visual_input_revision: EDGE_COMPACT_V1_20261015
+cooperative_search:
+  verify_system_v2: true
+  revision: coop-event-v10
+  footprint_radius_m: 25
+  uav_speed_mps: 10
+  ugv_speed_mps: 6
+  intersection_max_distance_m: 50
+  routine_per_role: 1
+  routine_progress: 0.5
+  wake_identity_min: 0.55
+  evidence_viewpoint_m: 20
+  gsam_endpoint: ${AGOS_SIDECAR_URL}/v1/gsam
+  ugv_endpoint: ${AGOS_SIDECAR_URL}/v1/ugv_views
+  tool_timeout_s: 120
+  box_threshold: 0.2
+  text_threshold: 0.18
+  arm: agos_c
+paper_experiment:
+  group_id: COOP_AGOS_C
+  suite: pilot
+  dataset_id: AGOS_PAPER_TEST300_CARS34_V1_20261017
+  facilities_revision: AGOS_COOP_PILOT_20261028
+  agent_mode: cooperative_search
+  launch_requires_frozen_release: false
+  fault_ledger_required: true
+  sft_external_weights_required: false
+observation_map:
+  gsam_localizer_enabled: false
+  gsam_sam_enabled: false
+  gsam_point_uncertainty_m: 15.0
+  online_map_enabled: true
+  online_map_resolution_m: 0.5
+  variant_id: R32_ONLINE_MAP

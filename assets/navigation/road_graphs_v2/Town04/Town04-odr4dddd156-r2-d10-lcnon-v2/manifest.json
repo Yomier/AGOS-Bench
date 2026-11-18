@@ -1,0 +1,40 @@
+{
+  "allow_straight_line_fallback": false,
+  "asset_sha256": "fb09e2e18b8147553024b1ddc19f76b70ea7a53492cbfc8bc13ae53ba6ab67a9",
+  "build_config_sha256": "25c55819f3202805622e60fe87c6705358cc07a25801b3ffad802539b1988577",
+  "build_timestamp": "2026-07-21T00:29:24.840359",
+  "carla_air_version": "0.1.7",
+  "carla_asset_name": "/Game/Carla/Maps/Town04_Opt",
+  "carla_client_version": "unknown",
+  "carla_map_reported_name": "Carla/Maps/Town04_Opt",
+  "carla_server_version": "adaf011-dirty",
+  "decision_edge_count": 4408,
+  "decision_node_count": 3837,
+  "decision_spacing_m": 10.0,
+  "file_hashes": {
+    "decision_edges": "a160bfd4606ae92967f3ecda01fb50a990a1d12237222083b6dbf189e0e3b574",
+    "decision_nodes": "3bd2c747ff4294670fd6c13d56547b7db32e0f96962c44bef40fd9684a23a391",
+    "fine_edges": "9cfe8084f8b57c29eed9c0a8dd83eda90b1d9865c91dc6d445dc78520d8d1ec7",
+    "fine_nodes": "f4797744f027ca17d114c1455ea4495174700351f738f391b41a166519861b02"
+  },
+  "fine_edge_count": 18364,
+  "fine_node_count": 17214,
+  "fine_resolution_m": 2.0,
+  "generator_commit": "offline-build",
+  "graph_id": "Town04-odr4dddd156-r2-d10-lcnon-v2",
+  "included_lane_types": [
+    "Driving"
+  ],
+  "junction_lookahead_m": 30.0,
+  "lane_change_policy": "none",
+  "map_key": "Town04",
+  "normal_edges_use_previous": false,
+  "opendrive_sha256": "4dddd1560ab7812b0e89cd4a523d8b6f2b93947eafb496d9eeb83cc772116c85",
+  "schema_version": 2,
+  "source_bundle_sha256": "1a94a83f6a7b6077a8d885f4f66a8ac1eb4f54154e3174adbedfa1cc826e357b",
+  "status": "frozen",
+  "target_maps": [
+    "Town04"
+  ],
+  "validation_status": "passed"
+}

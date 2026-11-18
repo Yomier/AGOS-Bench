@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-09-10",
+  "fine_resolution_m": 2.0,
+  "decision_spacing_m": 10.0,
+  "lane_change_policy": "none",
+  "entries": {
+    "Town01": {
+      "asset_sha256": "2f71113c0b43b64fbf9ad3117824fcbf32a8edb4f6c65d7da8926e67ce274872",
+      "carla_asset_name": "/Game/Carla/Maps/Town01",
+      "graph_dir": "Town01/Town01-odr97a7f6ac-r2-d10-lcnon-v2",
+      "graph_id": "Town01-odr97a7f6ac-r2-d10-lcnon-v2",
+      "map_key": "Town01",
+      "opendrive_sha256": "97a7f6ac67812567e5c8ee0599cd823b23f80f30f3f97c502212e38b72e2b709"
+    },
+    "Town02": {
+      "asset_sha256": "7b7bd278b75f879aa1bc1b47858a63d342c58c46caac1b6145135981e3d52df2",
+      "carla_asset_name": "/Game/Carla/Maps/Town02",
+      "graph_dir": "Town02/Town02-odr953c05f1-r2-d10-lcnon-v2",
+      "graph_id": "Town02-odr953c05f1-r2-d10-lcnon-v2",
+      "map_key": "Town02",
+      "opendrive_sha256": "953c05f17def231239ffcadba3307628a82d0d335b67b4e29c3098f7aed1dd7d"
+    },
+    "Town03": {
+      "asset_sha256": "8602e43a74a30f8f5d171a5dc95418cfd1867c6574865362d2038398aff8461d",
+      "carla_asset_name": "/Game/Carla/Maps/Town03_Opt",
+      "graph_dir": "Town03/Town03-odrabf177bc-r2-d10-lcnon-v2",
+      "graph_id": "Town03-odrabf177bc-r2-d10-lcnon-v2",
+      "map_key": "Town03",
+      "opendrive_sha256": "abf177bcd9b66cfefb7ac4919f6456815f1384f4229f1343c8a6a90bbb7713c9"
+    },
+    "Town04": {
+      "asset_sha256": "fb09e2e18b8147553024b1ddc19f76b70ea7a53492cbfc8bc13ae53ba6ab67a9",
+      "carla_asset_name": "/Game/Carla/Maps/Town04_Opt",
+      "graph_dir": "Town04/Town04-odr4dddd156-r2-d10-lcnon-v2",
+      "graph_id": "Town04-odr4dddd156-r2-d10-lcnon-v2",
+      "map_key": "Town04",
+      "opendrive_sha256": "4dddd1560ab7812b0e89cd4a523d8b6f2b93947eafb496d9eeb83cc772116c85"
+    },
+    "Town05": {
+      "asset_sha256": "561e32b416ef51ec95bb7a5cbd1bcad754fea8f58506029d76980c47e1095120",
+      "carla_asset_name": "/Game/Carla/Maps/Town05_Opt",
+      "graph_dir": "Town05/Town05-odr7edc53b0-r2-d10-lcnon-v2",
+      "graph_id": "Town05-odr7edc53b0-r2-d10-lcnon-v2",
+      "map_key": "Town05",
+      "opendrive_sha256": "7edc53b0be840e177598da7a4ed9571146d7b2595ce280d154c90f92e8a48851"
+    },
+    "Town10HD": {
+      "asset_sha256": "9d9116c22cc39052b9f07054229dc9f763a7dee9e791c5765c0a099432de2058",
+      "carla_asset_name": "/Game/Carla/Maps/Town10HD",
+      "graph_dir": "Town10HD/Town10HD-odr5d883b79-r2-d10-lcnon-v2",
+      "graph_id": "Town10HD-odr5d883b79-r2-d10-lcnon-v2",
+      "map_key": "Town10HD",
+      "opendrive_sha256": "5d883b799f634030af92be1e9d79d107845540ba04338e8c60e095be1aef7be7"
+    }
+  }
+}
