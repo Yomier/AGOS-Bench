@@ -91,11 +91,14 @@ def score_run(run_dir):
         row = json.loads(result_path.read_text(encoding='utf-8'))
         if row.get('release_task_key') != key or row.get('release_plan_sha256') != task['plan_sha256']:
             raise ValueError(f'Locked task identity disagrees with manifest for {key}')
+        for field in ('arm', 'config_sha256', 'resolved_config_sha256'):
+            if row.get('release_' + field) != manifest[field]:
+                raise ValueError(f'Locked {field} disagrees with manifest for {key}')
         vision_errors, vision_ok = vision_counts(result_path.parent / 'ag_os_trace.jsonl')
         if (vision_errors != terminal['vision_errors'] or vision_ok != terminal['vision_ok']
                 or classify(row, vision_errors, vision_ok) != terminal['outcome']):
             raise ValueError(f'Locked outcome disagrees with evidence for {key}')
-        if manifest['arm'] == 'menu_oracle' and (row.get('vlm_calls') != 0 or row.get('http_attempts', 0) != 0):
+        if manifest['arm'] == 'menu_oracle' and (row.get('vlm_calls') != 0 or row.get('vlm_http_attempts') != 0):
             raise ValueError(f'Oracle result includes model calls for {key}')
         rows.append(row)
     report = aggregate_paper_metrics(rows, model_decisions=manifest['arm'] != 'menu_oracle')

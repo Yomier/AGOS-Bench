@@ -45,7 +45,9 @@ done
 
 Each invocation starts from the same base. Each run tokenizes its own inputs with thinking disabled, skips whole examples above 5,120 multimodal tokens, and makes one pass over admitted rows. Both commands use LoRA rank 8, alpha 16 and dropout 0 on the language model's q/v projections in zero-based layers 3, 7, 11, 15, 19, 23, 27 and 31. Training uses AdamW at `1e-4`, zero weight decay, gradient clipping at 1, microbatch 1, accumulation 2 and assistant-only loss weighted by supervised token count. It decodes RGB at the supplied resolution before the saved processor's resizing. For a shorter run, `--max-steps N` limits optimizer steps after token admission.
 
-`tokenization.json` records admitted and skipped row indices. `steps.jsonl` records each optimizer step and its input row indices. `result.json` is written after saving `adapter/` and `processor/` and checking the reloaded adapter's loss. It reports actual consumption, input hash and library versions. Serve the mixed adapter to both agents, or route aerial requests to the UAV adapter and ground requests to the UGV adapter.
+`tokenization.json` records admitted and skipped row indices. `steps.jsonl` records each optimizer step and its input row indices. `result.json` is written after saving `adapter/` and `processor/` and checking the reloaded adapter's loss. It reports actual consumption, input hash and library versions.
+
+For mixed evaluation, set `AGOS_VLM_MODEL` to the served mixed adapter name and use `--arm agos_b` with the standard AGOS-Agent configuration. For split evaluation, serve both adapters on the same `AGOS_VLM_URL`, set `AGOS_UAV_MODEL` and `AGOS_UGV_MODEL` to the corresponding served adapter names, and pass `--arm agos_b --config configs/examples/agos_b_split.yaml` to the evaluation runner. [Evaluation instructions](../benchmark/README.md)
 
 ## What the paper trained on
 

@@ -11,7 +11,15 @@
 
 ### Start an evaluation
 
-Follow the [deployment guide](docs/deployment.md) from a fresh Linux machine. Start with one episode to check the simulator and the dataset before selecting the local-model or API concurrency profile. The simulator release comes from the CARLA-Air authors. [Upstream CARLA-Air](https://github.com/louiszengCN/CarlaAir) · [v0.1.7 distribution](https://huggingface.co/tianlezeng/CarlaAIr-v0.1.7)
+1. On an Ubuntu GPU machine, install the driver, the official CARLA-Air v0.1.7 Linux release and its matching Python SDK. The step-by-step guide includes Vulkan, camera and model-service checks. [Deployment guide](docs/deployment.md) · [Upstream CARLA-Air](https://github.com/louiszengCN/CarlaAir) · [v0.1.7 distribution](https://huggingface.co/tianlezeng/CarlaAIr-v0.1.7)
+2. Activate the simulator environment, install this checkout with `python -m pip install -e '.[dev,dataset]'`, and obtain the `taskset-test300` archive. Verify its SHA-256 and extract it under `$AGOS_DATA_ROOT`. [Access and verification](dataset/README.md#access-and-verification)
+3. Run the command below from this checkout. It validates one real Town03 task, its reference images and the agent configuration offline. With `$AGOS_SIM_ROOT` set and a GPU ready, remove `--dry-run` to execute one model-free simulation. Then choose the local or API profile in the deployment guide.
+
+```bash
+python -m benchmark.run_parallel_eval --data-root "$AGOS_DATA_ROOT" --split test300 \
+  --episode Town03/lite_easy_00001 --arm menu_oracle --workers 1 \
+  --run-dir "$AGOS_OUTPUT_ROOT/first-episode" --dry-run
+```
 
 ### Task splits and demonstrations
 
@@ -36,6 +44,6 @@ Success requires a ground `MATCH` verdict, horizontal distance at most 30 m, lin
 
 ### Citation and licenses
 
-The accompanying manuscript is *Towards Embodied Air-Ground Cooperative Object Search: Benchmark, Dataset and Agentic Method*. Software citation metadata is available in [CITATION.cff](CITATION.cff).
+The accompanying manuscript is *Towards Embodied Air-Ground Cooperative Object Search: Benchmark, Dataset and Agentic Method*. The arXiv identifier is pending. Software citation metadata is available in [CITATION.cff](CITATION.cff).
 
 AGOS-Bench code is distributed under [Apache-2.0](LICENSE). AGOS-Dataset is distributed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). CARLA-Air and the model packages are available from their respective upstream authors.

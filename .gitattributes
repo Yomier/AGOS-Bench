@@ -1,0 +1,6 @@
+# Navigation certificates bind raw source and configuration bytes. Retain the
+# validated contents on every platform, including clients with core.autocrlf.
+* -text
+*.gz binary
+*.png binary
+*.jpg binary
