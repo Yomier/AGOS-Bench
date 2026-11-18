@@ -13,7 +13,7 @@ from agos.eval.metric_contract import (
     assert_uniform_metric_protocol,
 )
 from agos.eval.metric_primitives import compute_ase
-from benchmark.scoring import read_terminal
+from benchmark.scoring import classify, read_terminal, vision_counts
 
 
 def percent(value):
@@ -46,7 +46,12 @@ def aggregate_paper_metrics(episodes, *, model_decisions):
     gva = aggregate_verification_actions(episodes)
     ne = aggregate_navigation_error(episodes, current=True)
     calls = [row.get('vlm_calls') for row in episodes]
-    valid_calls = model_decisions and calls and all(type(count) is int and count >= 0 for count in calls)
+    valid_calls = bool(episodes) and model_decisions
+    for row, count in zip(episodes, calls):
+        by_role = [row.get('uav_vlm_calls'), row.get('ugv_vlm_calls')]
+        if (type(count) is not int or count < 0 or (row['success'] and count == 0)
+                or any(type(n) is not int or n < 0 for n in by_role) or count != sum(by_role)):
+            valid_calls = False
     metrics = {
         'SR': percent(successes / len(episodes)) if episodes else None,
         'OSR': percent(osr['OSR']),
@@ -71,7 +76,9 @@ def score_run(run_dir):
     for task in manifest['tasks']:
         key = task['key']
         folder = (episodes_dir / key).resolve()
-        if key in seen or not folder.is_relative_to(episodes_dir):
+        segments = key.split('/')
+        if (len(segments) != 3 or any(not part or part in ('.', '..') or '\\' in part for part in segments)
+                or key in seen or not folder.is_relative_to(episodes_dir)):
             raise ValueError(f'Invalid or duplicate manifest task: {key}')
         seen.add(key)
         terminal = read_terminal(folder)
@@ -82,8 +89,14 @@ def score_run(run_dir):
         if not result_path.is_relative_to(folder):
             raise ValueError(f'Invalid result path for {key}')
         row = json.loads(result_path.read_text(encoding='utf-8'))
-        if terminal['outcome'] not in ('success', 'failure') or row.get('success') is not (terminal['outcome'] == 'success'):
-            raise ValueError(f'Locked outcome disagrees with result for {key}')
+        if row.get('release_task_key') != key or row.get('release_plan_sha256') != task['plan_sha256']:
+            raise ValueError(f'Locked task identity disagrees with manifest for {key}')
+        vision_errors, vision_ok = vision_counts(result_path.parent / 'ag_os_trace.jsonl')
+        if (vision_errors != terminal['vision_errors'] or vision_ok != terminal['vision_ok']
+                or classify(row, vision_errors, vision_ok) != terminal['outcome']):
+            raise ValueError(f'Locked outcome disagrees with evidence for {key}')
+        if manifest['arm'] == 'menu_oracle' and (row.get('vlm_calls') != 0 or row.get('http_attempts', 0) != 0):
+            raise ValueError(f'Oracle result includes model calls for {key}')
         rows.append(row)
     report = aggregate_paper_metrics(rows, model_decisions=manifest['arm'] != 'menu_oracle')
     return {**report, 'requested': len(seen), 'pending': pending, 'complete': bool(seen) and not pending}
