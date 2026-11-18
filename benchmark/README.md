@@ -25,7 +25,8 @@ python -m benchmark.run_parallel_eval --data-root "$AGOS_DATA_ROOT" \
 
 # All 2,125 tasks across four splits, remote model endpoint, up to ten local slots.
 python -m benchmark.run_parallel_eval --data-root "$AGOS_DATA_ROOT" \
-  --split all --arm baseline_a --profile api --run-dir "$AGOS_OUTPUT_ROOT/api-all"
+  --split all --arm agos_b --config configs/examples/agos_b_api.yaml \
+  --profile api --run-dir "$AGOS_OUTPUT_ROOT/api-all"
 ```
 
 Select a subset with repeated `--episode Town/episode` arguments in one split. `--workers` lowers concurrency. A shared cold-start gate spaces engine launches by 30 seconds, including replacements. `--stagger-seconds` adjusts that interval. Every slot has a private engine, AirSim settings, camera readiness probe and episode child. The default episode wall limit is 9,000 seconds.
@@ -44,4 +45,6 @@ A correct adjudicated CONFIRM yields success. Wrong CONFIRM, reaching the decisi
 
 The scheduler retries pending tasks up to `--max-attempts` per invocation (default 2). To finish a partial batch, fix the facility and repeat the same command with `--resume`. Previous attempts remain on disk. Resume verifies the manifest and locked result SHAs and schedules only pending tasks. Exit 0 indicates all selected tasks scored, including valid model failures. Exit 2 reports a preparation error, exit 3 reports remaining pending tasks or a failed engine shutdown, and exit 130 indicates interruption. A failed shutdown can occur after a valid terminal and therefore coexist with full coverage. Read `stop_failed` in the slot status before resuming.
 
-For the additional paper metrics run `python -m benchmark.paper_metrics --help`. For CPU-only harness regression tests run `python -m pytest -q benchmark/tests`.
+Run `python -m benchmark.paper_metrics "$AGOS_OUTPUT_ROOT/local-test"` to compute the nine paper metrics from the locked episode results. The metric guide lists units, support counts and exit codes. [Scoring a run](METRICS.md)
+
+For CPU-only harness regression tests run `python -m pytest -q benchmark/tests`.
