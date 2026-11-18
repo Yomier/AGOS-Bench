@@ -153,7 +153,7 @@ def execute(a, workers, tasks, metadata, mode, manifest):
         outcomes = {}
         for task in tasks:
             folder = root / 'episodes' / task['key']
-            row = read_terminal(folder)
+            row = read_terminal(folder, task, manifest)
             previous = sorted(folder.glob('attempt-[0-9]*'))
             if previous and (not row or row['outcome'] == 'pending' and row['attempt'] != previous[-1].name):
                 row = collect_attempt(folder, previous[-1], task, mode, manifest, 'recovering interrupted attempt')

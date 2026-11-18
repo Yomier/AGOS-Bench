@@ -1,6 +1,8 @@
 # CarlaAir simulation and serving
 
-AGOS uses the Linux CarlaAir v0.1.7 engine, its matching CARLA Python extension and the AirSim Python client. CarlaAir is an MIT-licensed upstream project by Louis Zeng and contributors. Obtain the Linux release and use the setup instructions in its archive. Use the Python 3.10 client bundled with that release. A PyPI CARLA wheel can load a different ABI. [CarlaAir upstream](https://github.com/louiszengCN/CarlaAir) · [v0.1.7 release](https://github.com/louiszengCN/CarlaAir/releases/tag/v0.1.7)
+AGOS uses the Linux CarlaAir v0.1.7 engine, its matching CARLA Python extension and the AirSim Python client. CarlaAir is an MIT-licensed upstream project by Louis Zeng and contributors. Obtain the Linux release and use the setup instructions in its archive. Use the Python 3.10 client bundled with that release. A PyPI CARLA wheel can load a different ABI. [CarlaAir upstream](https://github.com/louiszengCN/CarlaAir) · [v0.1.7 source release](https://github.com/louiszengCN/CarlaAir/releases/tag/v0.1.7) · [Pinned Linux binary distribution](https://huggingface.co/tianlezeng/CarlaAIr-v0.1.7/resolve/041872adade4b417280c2cf307cb9d9621c1fa2b/CarlaAir-v0.1.7.zip)
+
+Follow the [Ubuntu installation and deployment guide](../docs/deployment.md) for the pinned archive checksum, environment setup, Python client installation and smoke-test commands. [Runtime variables](../docs/deployment-variables.md)
 
 ## Engine and client
 

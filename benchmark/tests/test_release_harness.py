@@ -89,6 +89,47 @@ def test_engine_contract_isolated_per_slot(tmp_path):
         assert settings.is_relative_to(work)
 
 
+def test_nonzero_oracle_http_or_foreign_arm_remain_pending(tmp_path):
+    from benchmark.run_parallel_eval import collect_attempt
+    from benchmark.scoring import read_terminal
+    folder = tmp_path / 'task'
+    attempt = folder / 'attempt-0001'
+    attempt.mkdir(parents=True)
+    task = dict(key='test300/Town03/lite_easy_00001', episode='lite_easy_00001', plan_sha256='plan')
+    manifest = dict(arm='menu_oracle', config_sha256='yaml', resolved_config_sha256='resolved')
+    result = dict(success=True, completed=True, confirm_count=1, failure_stage=None, failure_reason='SUCCESS',
+                  release_task_key=task['key'], release_plan_sha256='plan', release_arm='menu_oracle',
+                  release_config_sha256='yaml', release_resolved_config_sha256='resolved', vlm_calls=0, vlm_http_attempts=0)
+    file = attempt / 'lite_easy_00001_result.json'
+    for changes in ({'vlm_http_attempts': 1}, {'release_arm': 'baseline_a'}, {'release_resolved_config_sha256': 'other'}):
+        file.write_text(json.dumps(dict(result, **changes)))
+        assert collect_attempt(folder, attempt, task, 'menu_oracle', manifest)['outcome'] == 'pending'
+    file.write_text(json.dumps(result))
+    assert collect_attempt(folder, attempt, task, 'menu_oracle', manifest)['outcome'] == 'success'
+    assert read_terminal(folder, task, manifest)['attempt'] == attempt.name
+    with pytest.raises(ValueError):
+        read_terminal(folder, task, dict(manifest, arm='baseline_a'))
+    file.write_text(json.dumps(dict(result, steps=5)))
+    with pytest.raises(ValueError):
+        read_terminal(folder, task, manifest)
+
+
+def test_watchdog_stops_only_its_real_child():
+    import threading
+    import time
+    from carlaair.engine.slot import stop_process, wait_child
+    cmd = [sys.executable, '-B', '-c', 'import time; time.sleep(60)']
+    with subprocess.Popen(cmd) as other, subprocess.Popen(cmd) as child:
+        try:
+            with pytest.raises(TimeoutError):
+                wait_child(child, other, time.monotonic(), threading.Event())
+            stop_process(child)
+            assert child.poll() is not None and other.poll() is None
+        finally:
+            stop_process(child)
+            stop_process(other)
+
+
 def test_foreign_listener_rejected():
     import socket
     from carlaair.engine.slot import ports_free

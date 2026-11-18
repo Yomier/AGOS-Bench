@@ -85,11 +85,12 @@ class CooperativeSearchMethod:
 
     def start_episode(self, episode_context):
         raw = episode_context or {}
-        self._expert_gt = self._private_target(raw)
+        self._expert_gt = None
         self.context = public_context(raw)
         expert_cfg = self.cfg.get("expert") or {}
         self.expert = None
         if expert_cfg.get("enabled"):
+            self._expert_gt = self._private_target(raw)
             if self._expert_gt is None:
                 raise ValueError("cooperative_search: expert mode requires a private target")
             from training.expert import EventExpert
@@ -105,6 +106,7 @@ class CooperativeSearchMethod:
         self._confirm_recorded.clear()
 
     def close_episode(self):
+        self._expert_gt = self.expert = None
         self.context = {}
         self.coverage = self.controller = self.screen = None
         self.policy.drain_calls()
