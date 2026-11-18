@@ -17,7 +17,7 @@ class ObservationMapProtocol:
             raise ValueError("unsupported benchmark observation_contract: %r" % configured)
         map_config = config.get('observation_map') or {}
         capability = agent_mode == 'cooperative_search' and bool(map_config.get('online_map_enabled'))
-        self.excludes_fullcity = bool(contract or configured or capability)
+        self.excludes_fullcity = bool(contract or configured or capability or agent_mode == 'minimal_agent')
         self.online_map = None
         self.output_dir = output_dir
         diag = {**(config.get("diagnostics") or {}), **(config.get("diagnostic") or {})}

@@ -16,7 +16,7 @@ On a configured Linux simulator host, set `AGOS_SIM_ROOT`, use the same command 
 
 ## Model evaluation
 
-Start the perception service and configure the selected model endpoint. The release arm names are `agos_b` (AGOS-Agent), `baseline_a` (Baseline-Agent), `agos_a` and `agos_c`. `--config PATH` selects a compatible custom agent YAML. Each run directory belongs to a single arm, resolved config, backend profile, engine binary and set of task SHAs.
+Configure an image-capable model endpoint. For `minimal_agent` (Minimal-Agent), it supplies the decisions for both robots. For `agos_b` (AGOS-Agent), `baseline_a` (Baseline-Agent) and the ablations `agos_a` and `agos_c`, also start the perception service. `--config PATH` selects a compatible custom agent YAML. Each run directory belongs to a single arm, resolved config, backend profile, engine binary and set of task SHAs.
 
 ```bash
 # All 300 unseen-test tasks, local inference, up to six simulator slots.

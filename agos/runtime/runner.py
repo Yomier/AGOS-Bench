@@ -238,7 +238,7 @@ def _role_uses_vlm(agent_mode, method, role):
 
 
 def _bind_uav_frame(agent_mode, gsam_on):
-    return agent_mode == 'cooperative_search' or bool(gsam_on)
+    return agent_mode in ('cooperative_search', 'minimal_agent') or bool(gsam_on)
 
 
 def _collect_method_trace(agent_mode):
@@ -246,7 +246,8 @@ def _collect_method_trace(agent_mode):
 
 
 def _agent_name_for_mode(agent_mode):
-    return 'CooperativeSearchMethod' if agent_mode == 'cooperative_search' else 'MenuOracleMethod'
+    return {'cooperative_search': 'CooperativeSearchMethod', 'menu_oracle': 'MenuOracleMethod',
+            'minimal_agent': 'MinimalAgent'}[agent_mode]
 
 def _rebind_navigation_certificate(plan_certificate, live_binding, max_dz_m: float = 0.30):
     """GSAM 两实验（2026-10-10）：SPL 部署证书的物理沉降噪声重绑。
@@ -339,7 +340,8 @@ def _resolve_nav_stall_max_steps(config) -> int:
 
 _RUN_META_FILES = ('agos/runtime/runner.py', 'agos/methods/cooperative_search/method.py',
                    'agos/methods/cooperative_search/controller.py', 'agos/methods/cooperative_search/policy.py',
-                   'agos/eval/navigation_oracle.py', 'agos/methods/menu_oracle/method.py')
+                   'agos/eval/navigation_oracle.py', 'agos/methods/menu_oracle/method.py',
+                   'agos/methods/minimal_agent/method.py', 'agos/methods/minimal_agent/prompts.py')
 _RUN_META_CODE_MD5_CACHE = None
 _BEHAVIOR_TREE_MD5_CACHE = None
 
@@ -1509,7 +1511,8 @@ class JointLiteRunner:
         state.max_consecutive_vlm_failures = self.config.get("vlm", {}).get("max_consecutive_failures", 5)
         state.consecutive_vlm_failures = 0
         carla_iface.set_uav_pose(uav_start['x'], uav_start['y'], uav_start['z'], 0)
-        _require_identity_ref = bool((self.config.get('benchmark') or {}).get('require_teammate_reference',False)
+        _require_identity_ref = bool(self.agent_mode == 'minimal_agent'
+                                     or (self.config.get('benchmark') or {}).get('require_teammate_reference',False)
                                      or (self.config.get('observation_map') or {}).get('variant_id')=='R33_SHARED_MAP')
         from agos.episode_io import load_teammate_reference
         # Reject missing/invalid assets before spawn or model use; legacy is explicit.

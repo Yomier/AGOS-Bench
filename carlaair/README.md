@@ -42,7 +42,7 @@ For local Qwen3.5-4B, launch a foreground OpenAI-compatible server in the vLLM e
 python -m carlaair.serving.vllm --model-dir "${MODEL_ROOT:?source the deployment session file}/Qwen3.5-4B" --served-model-name qwen3.5-4b
 ```
 
-Set `AGOS_VLM_URL` to the full chat-completions URL, `AGOS_VLM_MODEL` to its model ID, `AGOS_SIDECAR_URL` to the local perception service base URL, and use `VLLM_API_KEY` if the model endpoint requires a token. With a remote OpenAI-compatible model select `--profile api`; perception and simulator slots remain on the local GPU host. `menu_oracle` uses neither service. [Evaluation commands and repair](../benchmark/README.md)
+Set `AGOS_VLM_URL` to the full chat-completions URL, `AGOS_VLM_MODEL` to its model ID, `AGOS_SIDECAR_URL` to the local perception service base URL, and use `VLLM_API_KEY` if the model endpoint requires a token. With a remote OpenAI-compatible model select `--profile api`; simulator slots remain on the local GPU host. Minimal-Agent needs only the model endpoint. The four cooperative-search arms also need the local perception service. `menu_oracle` uses neither service. [Evaluation commands and repair](../benchmark/README.md)
 
 ## Slot monitoring and shutdown
 

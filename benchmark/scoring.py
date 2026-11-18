@@ -125,6 +125,12 @@ def adjudicate(attempt, result, task, manifest, *, job=None):
             or result.get('mode') != 'joint_' + mode or native.get('source_config_sha256') != manifest['config_sha256']
             or (result.get('evaluation_binding') or {}).get('plan_sha256') != plan):
         raise ValueError('native runner result disagrees with task, plan, method or source config')
+    paper = result.get('paper_experiment') or {}
+    if not isinstance(paper, dict):
+        raise ValueError('invalid native paper experiment metadata')
+    if mode == 'minimal_agent' or 'minimal_agent' in (paper.get('arm'), paper.get('agent_mode')):
+        if paper.get('agent_mode') != mode or paper.get('arm') != manifest['arm']:
+            raise ValueError('native paper experiment disagrees with the Minimal-Agent job identity')
     errors, ok = vision_counts(attempt / 'ag_os_trace.jsonl', purpose=purpose, arm=manifest['arm'])
     outcome = classify(result, errors, ok)
     if outcome != 'pending':

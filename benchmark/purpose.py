@@ -1,8 +1,27 @@
 """Authority of the actual method instantiated for a released run."""
-from agos.methods.cooperative_search.contracts import ARMS
+from agos.methods.cooperative_search.contracts import ARMS as COOPERATIVE_ARMS
+
+
+ARM_MODES = {**dict.fromkeys(sorted(COOPERATIVE_ARMS), 'cooperative_search'),
+             'menu_oracle': 'menu_oracle', 'minimal_agent': 'minimal_agent'}
+
+
+def configured_mode(config, arm):
+    mode = ARM_MODES.get(arm)
+    paper = config.get('paper_experiment') or {}
+    declared_mode = paper.get('agent_mode')
+    if mode is None or (declared_mode and declared_mode != mode):
+        raise ValueError('requested arm disagrees with the configured method identity')
+    if mode == 'minimal_agent' or paper.get('arm') == 'minimal_agent':
+        if paper.get('arm') != arm or declared_mode != mode or config.get('cooperative_search'):
+            raise ValueError('minimal_agent requires its own arm and agent_mode without a cooperative_search method')
+    if mode == 'cooperative_search' and (config.get('cooperative_search') or {}).get('arm') != arm:
+        raise ValueError('--arm must match cooperative_search.arm in the configuration')
+    return mode
 
 
 def admission(config, arm, split, collect=False):
+    mode = configured_mode(config, arm)
     coop = config.get('cooperative_search') or {}
     expert = coop.get('expert') or {}
     enabled = expert.get('enabled', False)
@@ -18,10 +37,8 @@ def admission(config, arm, split, collect=False):
         return 'expert_collect'
     if collect:
         raise ValueError('expert collection requires an enabled drive expert')
-    if arm == 'menu_oracle':
+    if mode == 'menu_oracle':
         return 'oracle_diagnostic'
-    if arm not in ARMS or coop.get('arm') != arm:
-        raise ValueError('method arm differs from the resolved configuration')
     return 'evaluation'
 
 
@@ -33,10 +50,9 @@ def manifest_purpose(manifest):
     elif purpose == 'oracle_diagnostic':
         if arm != 'menu_oracle':
             raise ValueError('oracle_diagnostic requires menu_oracle')
-    elif purpose != 'evaluation' or arm not in ARMS:
+    elif purpose != 'evaluation' or (arm not in COOPERATIVE_ARMS and arm != 'minimal_agent'):
         raise ValueError('missing or incompatible run purpose and arm')
-    mode = 'menu_oracle' if arm == 'menu_oracle' else 'cooperative_search'
-    if manifest.get('mode') != mode:
+    if manifest.get('mode') != ARM_MODES[arm]:
         raise ValueError('run purpose disagrees with method mode')
     return purpose
 

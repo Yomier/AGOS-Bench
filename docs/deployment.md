@@ -1,8 +1,8 @@
 # Deploy AGOS-Bench on Ubuntu
 
-Use this guide on the machine that will render the UAV and UGV cameras. A remote model endpoint moves inference off that machine. CarlaAir and the perception service still run on the simulator host. The English and Chinese instructions share the same Bash blocks. Start with one episode before allocating a split. [Runtime variables](deployment-variables.md)
+Use this guide on the machine that will render the UAV and UGV cameras. A remote model endpoint moves inference off that machine. CarlaAir runs on the simulator host. Baseline-Agent, AGOS-Agent and their ablations also use the perception service on that host. The English and Chinese instructions share the same Bash blocks. Start with one episode before allocating a split. [Runtime variables](deployment-variables.md)
 
-**中文路线。** 在仿真主机上依次执行各节 Bash 块。先完成驱动、Vulkan 和 Python 自检，再用单集 `menu_oracle` 检查仿真全过程。评测 AGOS-Agent 时启动感知服务，并选本地 vLLM 或远端多模态 API。每节的中文说明给出命令执行位置和通过条件。
+**中文路线。** 在仿真主机上依次执行各节 Bash 块。先完成驱动、Vulkan 和 Python 自检，再用单集 `menu_oracle` 检查仿真全过程。评测 Minimal-Agent 时可跳过第 7 节的感知服务，直接配置多模态模型。AGOS-Agent、Baseline-Agent 及其消融配置需要同时启动感知服务。每节的中文说明给出命令执行位置和通过条件。
 
 ## 1. Give an ordinary Linux account access to the GPU
 
@@ -243,7 +243,7 @@ Repeat with the appropriate volume to use another split. The data root passed to
 
 ## 6. Run one episode with zero model API calls
 
-Run this in the evaluation terminal after closing the standalone demo. `--dry-run` checks the selected data and configuration without an engine or model request. Removing `--dry-run` launches a real engine, connects both clients and runs the oracle policy. `menu_oracle` is a deployment diagnostic. A model-based arm will additionally need real perception and VLM calls. [Evaluation entry point](../benchmark/run_parallel_eval.py)
+Run this in the evaluation terminal after closing the standalone demo. `--dry-run` checks the selected data and configuration without an engine or model request. Removing `--dry-run` launches a real engine, connects both clients and runs the oracle policy. `menu_oracle` is a deployment diagnostic. For a model-based arm, configure an image-capable model endpoint. The cooperative-search arms also call the perception service. [Evaluation entry point](../benchmark/run_parallel_eval.py)
 
 **中文。** 用上节从真实索引取到的键做冒烟，`test300` 对应 Town03。先做离线演练，再用不同的运行目录跑真实单集；这两步均无需 API 密钥、模型或 GSAM。查看真实结果、worker 日志与引擎退出情况后再进行后续模型实验。
 
@@ -271,9 +271,9 @@ For a CPU-only check on a separate machine, install `.[dev,dataset]` in Python 3
 
 ## 7. Start the shared perception service
 
-The shared service loads Grounding DINO, SigLIP2 and SAM2 at startup. In the four published arms, the UAV proposal screen requests `segment=False`. The UGV ranks detected crops from its camera views using reference-image similarity. The optional `segment=True` service check below requests a mask when the detector proposes a box. [Agent perception path](../agos/methods/cooperative_search/perception.py)
+The shared service loads Grounding DINO, SigLIP2 and SAM2 at startup. For the four cooperative-search arms, the UAV proposal screen requests `segment=False`. The UGV ranks detected crops from its camera views using reference-image similarity. The optional `segment=True` service check below requests a mask when the detector proposes a box. [Agent perception path](../agos/methods/cooperative_search/perception.py)
 
-Run one shared service on the simulator host. Each local/remote model setup below uses this same service. The following pinned upstream revisions provide reproducible downloads. The detector revision matches the historical launch command. Record the actual files you used if comparing model or runtime variants. [Grounding DINO Base](https://huggingface.co/IDEA-Research/grounding-dino-base) · [SigLIP2 Base](https://huggingface.co/google/siglip2-base-patch16-224) · [SAM2.1 Hiera Small](https://huggingface.co/facebook/sam2.1-hiera-small)
+Run one shared service on the simulator host. Minimal-Agent users can skip this section and proceed to section 8. The following pinned upstream revisions provide reproducible downloads. The detector revision matches the historical launch command. Record the actual files you used if comparing model or runtime variants. [Grounding DINO Base](https://huggingface.co/IDEA-Research/grounding-dino-base) · [SigLIP2 Base](https://huggingface.co/google/siglip2-base-patch16-224) · [SAM2.1 Hiera Small](https://huggingface.co/facebook/sam2.1-hiera-small)
 
 **中文。** 新开感知终端，使用独立 Python 环境。服务启动时加载 DINO、SigLIP2 和 SAM2.1 三套模型。正式 UAV 筛选关闭分割，UGV 对检测框裁图做相似度排序。下文开启分割只用于额外的接口自检。PyTorch 与 torchvision 需匹配驱动支持的 CUDA 版本。下面的安装后断言同时检查 CUDA 和 torchvision 的 CUDA NMS 算子；如失败，按该机器对应的安装命令重装二者，然后再启动服务。 [PyTorch wheel selector](https://pytorch.org/get-started/locally/)
 
@@ -341,7 +341,7 @@ PY
 
 ## 8. Choose how the agent obtains multimodal decisions
 
-Choose **one** model route. OpenAI-compatible chat completions must accept `image_url` messages with inline image data. Use `agos_b` for AGOS-Agent or `baseline_a` for Baseline-Agent. The two other public arms vary coverage or wake-up scheduling. For a fine-tuned variant, use a trained adapter and match its served name to the client. The base model and LoRA checkpoints are separate downloads or training outputs. [Agent configurations](../agents/README.md) · [Training and adapter routing](../training/README.md)
+Choose **one** model route. OpenAI-compatible chat completions must accept `image_url` messages with inline image data. Use `minimal_agent` for the direct MLLM control, `agos_b` for AGOS-Agent or `baseline_a` for Baseline-Agent. The two other public arms vary coverage or wake-up scheduling. For a fine-tuned variant, use a trained adapter and match its served name to the client. The base model and LoRA checkpoints are separate downloads or training outputs. [Agent configurations](../agents/README.md) · [Training and adapter routing](../training/README.md)
 
 ### A. Local Qwen3.5-4B
 
@@ -404,7 +404,7 @@ curl -fsS -H "Authorization: Bearer $VLLM_API_KEY" http://127.0.0.1:8114/v1/mode
 
 ### B. Remote image-capable chat completions
 
-Skip the local vLLM installation. In the evaluation terminal enter the provider's **full chat-completions endpoint**, deployed model identifier and credential. The harness `api` profile changes the worker count. The URL selects the service. A remote batch sends camera/reference images and prompts to that provider and may incur inference charges. Keep the detector running on the simulator host.
+Skip the local vLLM installation. In the evaluation terminal enter the provider's **full chat-completions endpoint**, deployed model identifier and credential. The harness `api` profile changes the worker count. The URL selects the service. A remote batch sends camera/reference images and prompts to that provider and may incur inference charges. Keep the detector running on the simulator host when evaluating a cooperative-search arm.
 
 **中文。** 远端模式只把 MLLM 放在远端。向服务方获取可接收图像的完整 chat/completions 地址、准确模型名和密钥，在评测终端输入。`--profile api` 本身不会切换模型地址。先用下节的一次真实图像调用核对鉴权和多模态支持。
 
@@ -416,6 +416,17 @@ read -rp 'Deployed image-capable model ID: ' AGOS_VLM_MODEL
 read -rsp 'Provider API key: ' VLLM_API_KEY
 printf '\n'
 export AGOS_VLM_URL AGOS_VLM_MODEL VLLM_API_KEY
+```
+
+### Select Minimal-Agent
+
+For the paper configuration, use local Qwen3.5-4B from route A. In the evaluation terminal select the following arm and configuration **before** the model probe and pilot commands in section 9. For a hosted endpoint that rejects `chat_template_kwargs`, use a copy of the Minimal-Agent YAML with that optional key removed and record the changed configuration with the run.
+
+**中文。** 复现论文的 Minimal-Agent 时选择本地 Qwen3.5-4B。先运行下面两行，再执行第 9 节的图像请求和单槽试跑；这条路径无需启动第 7 节的感知模型。
+
+```bash
+ARM=minimal_agent
+AGENT_CONFIG="$AGOS_REPO/agents/configs/minimal_agent.yaml"
 ```
 
 ## 9. Check model responses and measure worker capacity
@@ -458,7 +469,7 @@ Run independent short pilots at **1 → 2 → 4 → 6** workers with local infer
 
 ```bash
 cd "$AGOS_REPO"
-ARM=agos_b
+ARM=${ARM:-agos_b}
 STAMP=$(date -u +%Y%m%dT%H%M%SZ)
 common=(--data-root "$AGOS_DATA_ROOT" --split test300 --arm "$ARM" --profile "$PROFILE" "${native[@]}")
 if [ -n "${AGENT_CONFIG:-}" ]; then common+=(--config "$AGENT_CONFIG"); fi

@@ -17,12 +17,12 @@ from urllib.request import urlopen
 
 from carlaair.engine.profile import admit, identity
 from carlaair.engine.slot import BINARY, Slot, run_owned
-from .purpose import admission
+from .purpose import ARM_MODES, admission, configured_mode
 from .scoring import aggregate, adjudicate, next_attempt, read_terminal, sha256, write_json
 from .tasks import ROOT, SPLITS, load_tasks, navigation_preflight, select_keys
 
 
-ARMS = ('agos_a', 'agos_b', 'agos_c', 'baseline_a', 'menu_oracle')
+ARMS = tuple(ARM_MODES)
 
 
 def parser():
@@ -57,12 +57,7 @@ def verify_config(path, arm, towns):
     from agos.lite_core import load_config
     from agos.roadnet.registry import RoadGraphRegistry
     config = load_config(str(path))
-    mode = 'menu_oracle' if arm == 'menu_oracle' else 'cooperative_search'
-    if mode == 'cooperative_search' and config['cooperative_search']['arm'] != arm:
-        raise ValueError('--arm must match cooperative_search.arm in the configuration')
-    configured_mode = (config.get('paper_experiment') or {}).get('agent_mode')
-    if configured_mode and configured_mode != mode:
-        raise ValueError(f'{path}: expected agent_mode {mode}')
+    mode = configured_mode(config, arm)
     from agos.methods.registry import create
     create(mode, config)
     registry = RoadGraphRegistry.load(config['road_graph']['registry'])
@@ -74,15 +69,17 @@ def verify_config(path, arm, towns):
 def check_services(mode, config, profile):
     if mode == 'menu_oracle':
         return
-    for name in ('gsam_endpoint', 'ugv_endpoint'):
-        parts = urlsplit(config['cooperative_search'][name])
-        health = urlunsplit((parts.scheme, parts.netloc, '/health', '', ''))
-        with urlopen(health, timeout=10) as response:
-            if json.load(response).get('ok') is not True:
-                raise ValueError(f'perception health failed for {name}')
-    expert = config['cooperative_search'].get('expert') or {}
-    if expert.get('enabled') and expert.get('mode', 'drive') == 'drive':
-        return  # Expert-driven collection uses the visual sidecar and generates its own decisions.
+    if mode == 'cooperative_search':
+        coop = config['cooperative_search']
+        for name in ('gsam_endpoint', 'ugv_endpoint'):
+            parts = urlsplit(coop[name])
+            health = urlunsplit((parts.scheme, parts.netloc, '/health', '', ''))
+            with urlopen(health, timeout=10) as response:
+                if json.load(response).get('ok') is not True:
+                    raise ValueError(f'perception health failed for {name}')
+        expert = coop.get('expert') or {}
+        if expert.get('enabled') and expert.get('mode', 'drive') == 'drive':
+            return  # Drive collection generates its own decisions.
     vlm = config['vlm']
     if not urlsplit(vlm['api_url']).netloc or not vlm.get('model'):
         raise ValueError('model identifier and absolute chat-completion URL are required')
@@ -96,7 +93,9 @@ def check_services(mode, config, profile):
             request.add_header('Authorization', 'Bearer ' + token)
         with urlopen(request, timeout=10) as response:
             served = {row['id'] for row in json.load(response)['data']}
-        expected = {vlm.get('uav_model') or vlm['model'], vlm.get('ugv_model') or vlm['model']}
+        expected = {vlm['model']}
+        if mode == 'cooperative_search':
+            expected = {vlm.get(role + '_model') or vlm['model'] for role in ('uav', 'ugv')}
         if expected - served:
             raise ValueError(f'local vLLM is missing model aliases: {sorted(expected - served)}')
 

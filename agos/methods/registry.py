@@ -3,6 +3,7 @@ from importlib import import_module
 
 _METHODS = {
     'cooperative_search': ('agos.methods.cooperative_search.method', 'CooperativeSearchMethod'),
+    'minimal_agent': ('agos.methods.minimal_agent.method', 'MinimalAgentMethod'),
     'menu_oracle': ('agos.methods.menu_oracle.method', 'MenuOracleMethod'),
 }
 PRIMARY_METHODS = tuple(_METHODS)

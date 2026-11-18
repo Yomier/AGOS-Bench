@@ -6,7 +6,7 @@ from pathlib import Path
 import sys
 import time
 
-from .purpose import admission
+from .purpose import ARM_MODES, admission
 from .scoring import sha256, write_json
 
 
@@ -34,7 +34,7 @@ def run(job_file):
     if resolved_sha != job['resolved_config_sha256']:
         raise ValueError('resolved agent configuration changed after admission')
     purpose = admission(config, job['arm'], task['split'], job['purpose'] == 'expert_collect')
-    mode = 'menu_oracle' if purpose == 'oracle_diagnostic' else 'cooperative_search'
+    mode = ARM_MODES[job['arm']]
     if (job['purpose'] != purpose or job['mode'] != mode
             or task['key'] != '/'.join((task['split'], task['town'], task['episode']))):
         raise ValueError('episode job identity disagrees with the resolved method and task')

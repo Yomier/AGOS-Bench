@@ -1,12 +1,12 @@
 # AGOS-Bench
 
-**Embodied air-ground cooperative object search.** A UAV and a ground vehicle receive one reference image of a vehicle and a map of the search region. The UAV searches from above. The ground vehicle must reach the candidate, see it in its cameras and confirm that it matches the reference. Both vehicles act on their own schedules in one CARLA-Air world.
+**Embodied air-ground cooperative object search.** A UAV and a ground vehicle search a specified region for the vehicle shown in one reference image. The UAV searches from above. The ground vehicle must reach the candidate, see it in its cameras and confirm that it matches the reference. Both vehicles act on their own schedules in one CARLA-Air world.
 
 | Start here | What you can do |
 | --- | --- |
 | [AGOS-Bench](benchmark/README.md) | Run episodes, inspect their outcomes and compute benchmark scores. |
 | [AGOS-Dataset](dataset/README.md) | Select a split, verify the downloaded files and locate expert demonstrations. |
-| [Agentic methods](agents/README.md) | Run AGOS-Agent, Baseline-Agent or either of the two single-factor ablations. |
+| [Agentic methods](agents/README.md) | Run Minimal-Agent, Baseline-Agent, AGOS-Agent or either single-factor ablation. |
 | [CARLA-Air integration](carlaair/README.md) | Connect an upstream simulator installation, configure model services and manage concurrent episodes. |
 
 ### Start an evaluation
@@ -34,9 +34,9 @@ The four splits contain **2,125 task instances**. The 1,100 training episodes al
 
 ### Methods and scoring
 
-AGOS-Agent assigns coverage jointly and wakes its multimodal model on events such as new candidate evidence. Baseline-Agent uses fixed coverage and calls the model at coverage decision points. Their perception and verification components are shared. The two ablations vary coverage and wake-up policy one factor at a time.
+Minimal-Agent asks the multimodal model to select each action from the acting robot’s camera observations, the reference image, candidate records and text messages. It runs with CarlaAir and an image-capable model endpoint. AGOS-Agent assigns coverage jointly and wakes its multimodal model on events such as new candidate evidence. Baseline-Agent uses fixed coverage and calls the model at coverage decision points. Their perception and verification components are shared. The two ablations vary coverage and wake-up policy one factor at a time.
 
-Success requires a ground `MATCH` verdict, horizontal distance at most 30 m, line of sight and target visibility in the ground vehicle’s stopping views. A false confirmation, exhausted budget or method-side stall counts as a failure. Infrastructure failures remain pending until rerun and stay outside the scored denominator.
+Success requires the UGV to issue `CONFIRM` within 30 m of the target, with line of sight and target visibility in its stopping views. Minimal-Agent selects `CONFIRM` directly. The cooperative-search arms issue it after a `MATCH` verdict. A false confirmation, exhausted budget or method-side stall counts as a failure. Infrastructure failures remain pending until rerun and stay outside the scored denominator.
 
 ### 中文入口
 
