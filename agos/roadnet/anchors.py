@@ -12,8 +12,7 @@
   <= gap_max（+2m 节点量化），消除复合立交区锚沙漠。
 
 每个锚点都是有向的：记录坐标 (x,y,z)、航向 yaw_deg、八方位 dir。
-来源：原型 杂项/.workbuddy/tmp/anchor_proto_v2.py（v3.1，已通过行驶距离审计：
-Town03 647 锚，行驶口径 max 26.7m，>30m=0）。
+Town03 的 v3.1 路网共 647 个锚点；按行驶距离核验，最大间距为 26.7 m。
 """
 import heapq
 import json

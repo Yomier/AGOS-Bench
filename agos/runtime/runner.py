@@ -50,8 +50,7 @@ def _fs_tag(value, fallback="independent"):
 
     Proposal-bound candidate ids look like ``B8c279e50/V3/P3``; embedding one
     raw into a flat filename joins a nested path whose parent directories are
-    never created, so the very first ``open(..., "wb")`` crashed the episode
-    (internal validation, 2026-10).
+    never created. Replace path separators before writing an image.
     """
     tag = str(value or "").replace(os.sep, "_").replace("/", "_").replace("\\", "_").strip("_")
     return tag or fallback
