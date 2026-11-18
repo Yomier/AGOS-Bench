@@ -1,0 +1,50 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "agos-bench"
+version = "0.1.0"
+description = "Embodied air-ground cooperative object search benchmark"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+]
+dependencies = [
+    "networkx>=3.2",
+    "numpy>=1.24",
+    "Pillow>=10",
+    "PyYAML>=6",
+    "requests>=2.31",
+]
+
+[project.optional-dependencies]
+dataset = ["huggingface-hub>=0.24"]
+dev = ["pytest>=8"]
+perception = ["torch>=2.4", "torchvision>=0.19", "transformers>=4.57.1", "sentencepiece>=0.2"]
+train = ["torch>=2.4", "torchvision>=0.19", "transformers>=5.2", "peft>=0.17", "accelerate>=1"]
+# Pair this legacy Python 3.10 stack with the native SDK from the same CarlaAir release.
+simulator = [
+    "airsim==1.8.1",
+    "msgpack-rpc-python==0.4.1",
+    "opencv-contrib-python>=4.8",
+    "tornado==4.5.3",
+]
+
+[tool.hatch.build.targets.wheel]
+only-include = ["agos", "benchmark", "carlaair", "training", "dataset", "agents/configs", "configs", "assets"]
+exclude = ["**/__pycache__", "**/*.pyc", "**/tests", "**/.pytest_cache"]
+
+[tool.hatch.build.targets.sdist]
+include = ["/agos", "/benchmark", "/carlaair", "/training", "/dataset", "/agents", "/configs", "/assets", "/docs", "/tests", "/CITATION.cff"]
+
+[tool.hatch.build]
+dev-mode-dirs = ["."]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "benchmark/tests", "training/tests"]
+markers = ["simulator: opt-in integration test against a running CarlaAir world"]
