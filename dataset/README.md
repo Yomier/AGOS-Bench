@@ -59,7 +59,7 @@ python dataset/verify.py --directory data --volume all
 tar -xzf data/taskset-test300.tar.gz -C data
 ```
 
-Once hosting is available, the download tool fetches the selected archive from `Yomier/AGOS-Dataset` on Hugging Face and verifies it against the checksums bundled with this release. Install `huggingface_hub` in the environment used for the download. `--revision` accepts a Hub commit or tag. For the planned ModelScope mirror, use `--source modelscope --repo-id Yomier/AGOS-Dataset`.
+Once hosting is available, the download tool fetches the selected archive from `Yomier/AGOS-Dataset` on Hugging Face and verifies it against the checksums bundled with this release. Install `huggingface_hub` in the environment used for the download. `--revision` accepts a Hub commit or tag. For the planned ModelScope mirror, install `modelscope` with `python -m pip install modelscope` and select `--source modelscope --repo-id Yomier/AGOS-Dataset`.
 
 ```bash
 python -m pip install huggingface_hub

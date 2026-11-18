@@ -27,11 +27,11 @@ The profile tool reports `v13-matched` only for the exact three historical diges
 
 ## Perception and local inference
 
-Use separate serving environments as appropriate for PyTorch/Transformers and vLLM. Supply local model directories. The v13 perception service loads GroundingDINO-base, SigLIP2-base-patch16-224 and SAM2.1-hiera-small. The vehicle proposal endpoints use the frozen query and scoring policy. The six-view evidence endpoint does not use segmentation. [Perception implementation](perception/gsam.py)
+Use separate serving environments as appropriate for PyTorch/Transformers and vLLM. Source the session file from the deployment guide in each service terminal. It sets `MODEL_ROOT` to the directory containing the downloaded models. The v13 perception service loads GroundingDINO-base, SigLIP2-base-patch16-224 and SAM2.1-hiera-small. The vehicle proposal endpoints use the frozen query and scoring policy. The six-view evidence endpoint does not use segmentation. [Perception implementation](perception/gsam.py)
 
 ```bash
-python -m carlaair.perception.gsam --detector-model "$DINO_DIR" \
-  --encoder-model "$SIGLIP_DIR" --sam-model "$SAM2_DIR" --port 8201
+python -m carlaair.perception.gsam --detector-model "${MODEL_ROOT:?source the deployment session file}/grounding-dino-base" \
+  --encoder-model "$MODEL_ROOT/siglip2-base-patch16-224" --sam-model "$MODEL_ROOT/sam2.1-hiera-small" --port 8201
 # In another terminal
 curl --fail http://127.0.0.1:8201/health
 ```
@@ -39,7 +39,7 @@ curl --fail http://127.0.0.1:8201/health
 For local Qwen3.5-4B, launch a foreground OpenAI-compatible server in the vLLM environment. The release defaults to port 8114, BF16, 16,384-token context, 16 scheduler sequences, eager mode and GPU memory utilization 0.30. Choose the serving environment for your model. The evaluator verifies the requested local model IDs through `/v1/models`. For role-specific adapters pass `--adapter NAME=DIRECTORY` twice and select the split-agent config. Each adapter directory must contain `adapter_config.json`. `--dry-run` prints the command without loading the model. [Serving launcher](serving/vllm.py)
 
 ```bash
-python -m carlaair.serving.vllm --model-dir "$MODEL_DIR" --served-model-name qwen3.5-4b
+python -m carlaair.serving.vllm --model-dir "${MODEL_ROOT:?source the deployment session file}/Qwen3.5-4B" --served-model-name qwen3.5-4b
 ```
 
 Set `AGOS_VLM_URL` to the full chat-completions URL, `AGOS_VLM_MODEL` to its model ID, `AGOS_SIDECAR_URL` to the local perception service base URL, and use `VLLM_API_KEY` if the model endpoint requires a token. With a remote OpenAI-compatible model select `--profile api`; perception and simulator slots remain on the local GPU host. `menu_oracle` uses neither service. [Evaluation commands and repair](../benchmark/README.md)

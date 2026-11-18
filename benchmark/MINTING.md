@@ -1,6 +1,6 @@
 # Assemble released tasks and generate custom episodes
 
-Run these commands from the repository root. Set `AGOS_DATA_ROOT` to the root of the extracted task volume. Both commands require a fresh output directory. [Data and checksums](../dataset/README.md)
+Run these commands from the repository root. Set `AGOS_DATA_ROOT` to the root of the extracted task volume. Source the deployment session file to set `AGOS_OUTPUT_ROOT` to your experiment directory. Both commands require a fresh output directory. [Data and checksums](../dataset/README.md)
 
 ## Copy a verified subset
 
@@ -8,11 +8,11 @@ Run these commands from the repository root. Set `AGOS_DATA_ROOT` to the root of
 
 ```bash
 python -m dataset.generation.subset --data-root "$AGOS_DATA_ROOT" \
-  --split test300 --episode Town03/lite_easy_00001 --output runs/test-subset
+  --split test300 --episode Town03/lite_easy_00001 --output "$AGOS_OUTPUT_ROOT/test-subset"
 
-python -m benchmark.run_parallel_eval --data-root runs/test-subset \
+python -m benchmark.run_parallel_eval --data-root "$AGOS_OUTPUT_ROOT/test-subset" \
   --split test300 --episode Town03/lite_easy_00001 --arm menu_oracle \
-  --workers 1 --run-dir runs/subset-check --dry-run
+  --workers 1 --run-dir "$AGOS_OUTPUT_ROOT/subset-check" --dry-run
 ```
 
 ## Generate a custom ground-start episode
@@ -22,7 +22,7 @@ python -m benchmark.run_parallel_eval --data-root runs/test-subset \
 ```bash
 python -m dataset.generation.derive --data-root "$AGOS_DATA_ROOT" \
   --split test300 --episode Town03/lite_easy_00001 --seed 37 \
-  --output runs/derived-37 --dry-run
+  --output "$AGOS_OUTPUT_ROOT/derived-37" --dry-run
 ```
 
 The offline proposal checks the parent bytes, calibration, references, frozen road graph and control graph. For the published parent above, seed 37 selects port `1566:1:2:2` and episode `derived_9bf26cae4e13d828_37`. The proposal contains no simulator observations or acceptance receipt.

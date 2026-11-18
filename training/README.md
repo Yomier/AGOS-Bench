@@ -27,6 +27,8 @@ Check `manifest.json` for 1,100 episodes, 45,843 unique images, per-file counts 
 Install GPU-enabled PyTorch and its compatible torchvision build for your CUDA environment, then install the training extra. Set `AGOS_BASE_MODEL` to the local model directory containing Qwen3.5-4B weights, tokenizer, processor and chat template. The model loader reads local files. [Qwen3.5-4B](https://huggingface.co/Qwen/Qwen3.5-4B)
 
 ```bash
+export AGOS_BASE_MODEL="${MODEL_ROOT:?source the deployment session file}/Qwen3.5-4B"
+test -r "$AGOS_BASE_MODEL/config.json" || exit 1
 python -m pip install -e '.[train]'
 python -m training.train \
   --base "$AGOS_BASE_MODEL" --data "$AGOS_OUTPUT_ROOT/corpus/mixed.jsonl" \
@@ -59,7 +61,7 @@ For mixed evaluation, set `AGOS_VLM_MODEL` to the served mixed adapter name and 
 
 The recorded runs used the same 6,014 examples across the two regimes. They completed one epoch below a 4,096-step ceiling. Their receipts record PyTorch 2.13.0, Transformers 5.16.1 and PEFT 0.21.2. The historical input used its own prompt preparation and, where the underlying panels were available, rebuilt ground-confirmation collages. The current public release provides a later, cleaned bank with 1,100 episodes and 27,720 examples. Training on this bank is a new experiment. Its admission counts, adapters and scores depend on the supplied data and processor. The example commands omit the historical 4,096-step ceiling so the larger bank can complete an epoch. Historical training inputs and adapters are outside this release.
 
-The public trajectory volume contains 820 `expert_confirm` rows. All 820 were captured with the generic decision system prompt (`SYSTEM`), byte-identical to the system prompt in the volume's 22,376 decision rows. The corpus converter preserves those recorded bytes. For fresh captures, the collector uses the deployed `confirm_verify` system prompt selected by the same configuration. With `verify_system_v2: true` in the supplied AGOS-Agent configuration, this selects the dedicated ground-confirmation prompt (`CONFIRM_SYSTEM`).
+The public trajectory volume contains 820 `expert_confirm` rows. All 820 were captured with the generic decision system prompt (`SYSTEM`), byte-identical to the system prompt in the volume's 22,376 decision rows. The current primary-decision prompt adds six lines, including guidance on matching both color and vehicle model and a limit on repeated `STOP_OBSERVE` actions. The corpus converter preserves the recorded prompts byte for byte. For fresh captures, the collector uses the deployed `confirm_verify` system prompt selected by the same configuration. With `verify_system_v2: true` in the supplied AGOS-Agent configuration, this selects the dedicated ground-confirmation prompt (`CONFIRM_SYSTEM`).
 
 ## Collect new expert examples
 
