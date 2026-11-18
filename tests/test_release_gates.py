@@ -51,7 +51,7 @@ def record(purpose='evaluation'):
     arm = 'menu_oracle' if purpose == 'oracle_diagnostic' else 'agos_b'
     mode = 'menu_oracle' if arm == 'menu_oracle' else 'cooperative_search'
     split = 'train1100' if purpose == 'expert_collect' else 'test300'
-    task = dict(key=f'{split}/Town03/example', episode='example', plan_sha256='plan')
+    task = dict(key=f'{split}/Town03/example', split=split, town='Town03', episode='example', plan_sha256='plan')
     manifest = dict(schema=2, purpose=purpose, mode=mode, arm=arm, config_sha256='yaml',
                     resolved_config_sha256='resolved', tasks=[task])
     raw = dict(episode_id='example', mode='joint_' + mode, run_meta={'source_config_sha256': 'yaml', 'agent_mode': mode},
@@ -95,6 +95,16 @@ def test_collect_and_resume_check_native_evidence(tmp_path, change):
         paper_metrics.score_run(tmp_path)
 
 
+def test_run_summary_counts_expert_success_without_model_sr():
+    from benchmark.scoring import aggregate
+    outcomes = {'a': 'success', 'b': 'failure'}
+    expert = aggregate(outcomes, 'expert_collect')
+    assert expert['successes'] == 1 and expert['sr'] is None and expert['purpose'] == 'expert_collect'
+    oracle = aggregate(outcomes, 'oracle_diagnostic')
+    assert oracle['sr'] is None and oracle['oracle_qa_sr'] == .5
+    assert aggregate(outcomes, 'evaluation')['sr'] == .5
+
+
 def test_zero_call_failure_and_oracle_qa_keep_distinct_purposes(tmp_path):
     manifest, task, raw = record()
     raw.update(success=False, failure_stage='STEP_BUDGET_EXHAUSTED', failure_reason='BUDGET_EXHAUSTED',
@@ -122,7 +132,8 @@ def test_paper_aggregation_refuses_collection_and_zero_call_model_success(tmp_pa
         paper_metrics.aggregate_paper_metrics([raw], model_decisions=True)
 
 
-def test_fresh_drive_receipt_freezes_but_expert_trace_cannot_be_relabelled(tmp_path):
+@pytest.mark.parametrize('legacy', [False, True])
+def test_fresh_drive_receipt_freezes_but_expert_trace_cannot_be_relabelled(tmp_path, legacy):
     from PIL import Image
     from agos.lite_core import LiteObservation
     from agos.methods.cooperative_search.policy import DecisionPolicy
@@ -139,6 +150,35 @@ def test_fresh_drive_receipt_freezes_but_expert_trace_cannot_be_relabelled(tmp_p
     trace = dict(role='UAV', step=1, variant_id='agos_b', model_calls=policy.drain_events())
     (attempt / 'ag_os_trace.jsonl').write_text(json.dumps(trace) + '\n')
     assert evaluation.collect_attempt(folder, attempt, task, manifest['mode'], manifest)['outcome'] == 'success'
+    if legacy:
+        import hashlib
+        from agos.lite_core import load_config
+        yaml_file = tmp_path / 'expert.yaml'
+        cfg = yaml.safe_load((ROOT / 'agents/configs/agos_b.yaml').read_text())
+        cfg['cooperative_search']['expert'] = {'enabled': True, 'mode': 'drive'}
+        yaml_file.write_text(yaml.safe_dump(cfg))
+        source = sha256(yaml_file)
+        resolved = hashlib.sha256(json.dumps(load_config(str(yaml_file)), sort_keys=True, default=str).encode()).hexdigest()
+        manifest.update(schema=1, config_sha256=source, resolved_config_sha256=resolved)
+        manifest.pop('purpose')
+        raw.pop('release_purpose')
+        raw.update(release_config_sha256=source, release_resolved_config_sha256=resolved)
+        raw['run_meta']['source_config_sha256'] = source
+        job = dict(manifest, config=str(yaml_file), task=task)
+        write_json(attempt / 'job.json', job)
+        result_file = attempt / 'example_result.json'
+        write_json(result_file, raw)
+        terminal = json.loads((folder / 'terminal.json').read_bytes())
+        terminal.pop('purpose')
+        write_json(folder / 'terminal.json', dict(terminal, result_sha256=sha256(result_file)))
+        write_json(tmp_path / 'manifest.json', manifest)
+        assert freeze(tmp_path, tmp_path / 'old-frozen')['rows'] == 1
+        with pytest.raises(ValueError, match='purpose'):
+            paper_metrics.score_run(tmp_path)
+        yaml_file.write_text(yaml_file.read_text().replace('enabled: true', 'enabled: false'))
+        with pytest.raises(ValueError, match='config'):
+            freeze(tmp_path, tmp_path / 'wrong-config')
+        return
     assert freeze(tmp_path, tmp_path / 'frozen')['rows'] == 1
     manifest['purpose'] = raw['release_purpose'] = 'evaluation'
     raw.update(vlm_calls=1, uav_vlm_calls=1, vlm_http_attempts=1, uav_vlm_http_attempts=1)

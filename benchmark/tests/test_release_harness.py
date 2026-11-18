@@ -95,7 +95,7 @@ def test_nonzero_oracle_http_or_foreign_arm_remain_pending(tmp_path):
     folder = tmp_path / 'task'
     attempt = folder / 'attempt-0001'
     attempt.mkdir(parents=True)
-    task = dict(key='test300/Town03/lite_easy_00001', episode='lite_easy_00001', plan_sha256='plan')
+    task = dict(key='test300/Town03/lite_easy_00001', split='test300', town='Town03', episode='lite_easy_00001', plan_sha256='plan')
     manifest = dict(arm='menu_oracle', mode='menu_oracle', purpose='oracle_diagnostic', config_sha256='yaml',
                     resolved_config_sha256='resolved', tasks=[task])
     (attempt / 'job.json').write_text(json.dumps(dict(manifest, task=task)))

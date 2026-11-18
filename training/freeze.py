@@ -64,6 +64,31 @@ def site_row(call, step, episode_key, output):
     return row
 
 
+def verify_legacy_collection(attempt, receipt, result, task, manifest, verified_configs):
+    """Schema 1 omitted purpose. Recover it only from the original, hash-bound configuration."""
+    from agos.lite_core import load_config
+    from benchmark.purpose import admission
+    from benchmark.scoring import adjudicate, sha256
+
+    job = json.loads((attempt / 'job.json').read_bytes())
+    if any('purpose' in row for row in (receipt, job)) or 'release_purpose' in result:
+        raise ValueError('mixed legacy and current collection records')
+    source = Path(job['config'])
+    if source not in verified_configs:
+        if not source.is_file() or sha256(source) != manifest['config_sha256']:
+            raise ValueError(f'legacy expert config missing or source SHA-256 differs: {source}')
+        config = load_config(str(source))
+        resolved = hashlib.sha256(json.dumps(config, sort_keys=True, default=str).encode()).hexdigest()
+        if resolved != manifest['resolved_config_sha256']:
+            raise ValueError('legacy expert config differs after environment expansion')
+        admission(config, manifest['arm'], 'train1100', True)
+        verified_configs.add(source)
+    purpose = manifest['purpose']
+    proof = adjudicate(attempt, dict(result, release_purpose=purpose), task, manifest, job=dict(job, purpose=purpose))
+    if proof != (receipt['outcome'], receipt['vision_errors'], receipt['vision_ok']):
+        raise ValueError('legacy collection receipt disagrees with original evidence')
+
+
 def freeze(run, destination):
     from benchmark.purpose import manifest_purpose
     from benchmark.scoring import load_terminal
@@ -71,6 +96,10 @@ def freeze(run, destination):
     run = Path(run)
     manifest_file = run / 'manifest.json'
     manifest = json.loads(manifest_file.read_bytes()) if manifest_file.is_file() else None
+    legacy = manifest is not None and manifest.get('schema') == 1 and 'purpose' not in manifest
+    verified_configs = set()
+    if legacy:
+        manifest = dict(manifest, purpose='expert_collect')
     if manifest is not None and manifest_purpose(manifest) != 'expert_collect':
         raise ValueError('freeze requires an expert_collect run')
     tasks = {t['key']: t for t in manifest['tasks']} if manifest is not None else {}
@@ -87,13 +116,15 @@ def freeze(run, destination):
                 task_key = 'train1100/' + key
                 if manifest is not None and task_key not in tasks:
                     raise ValueError(f'{task_key}: absent from collection manifest')
-                selected, result = load_terminal(terminal.parent, tasks.get(task_key), manifest)
+                selected, result = load_terminal(terminal.parent, tasks.get(task_key), None if legacy else manifest)
                 if manifest is None and ('purpose' in selected or any(k.startswith('release_') for k in result or {})):
                     raise ValueError(f'{key}: missing release collection manifest')
                 if selected['outcome'] not in ('success', 'failure') or selected.get('vision_errors'):
                     excluded[key] = 'pending or visual fault'
                     continue
                 attempt = terminal.parent / selected['attempt']
+                if legacy:
+                    verify_legacy_collection(attempt, selected, result, tasks[task_key], manifest, verified_configs)
                 reason = result['failure_reason']
                 faults = result.get('paper_fault_audit') or {}
                 if (reason not in ('SUCCESS', 'BUDGET_EXHAUSTED', 'UGV_NAV_STALLED')

@@ -86,14 +86,17 @@ def classify(result, vision_errors=0, vision_ok=0):
     return 'failure' if reason in failures.get(stage, set()) else 'pending'
 
 
-def aggregate(outcomes):
+def aggregate(outcomes, purpose='evaluation'):
     successes = sum(v == 'success' for v in outcomes.values())
     failures = sum(v == 'failure' for v in outcomes.values())
     pending = sorted(k for k, v in outcomes.items() if v == 'pending')
     complete = successes + failures
-    return dict(total=len(outcomes), successes=successes, failures=failures, pending=pending,
-                sr=successes / complete if complete else None,
-                coverage=complete / len(outcomes) if outcomes else 0)
+    rate = successes / complete if complete else None
+    summary = dict(purpose=purpose, total=len(outcomes), successes=successes, failures=failures, pending=pending,
+                   sr=rate if purpose == 'evaluation' else None, coverage=complete / len(outcomes) if outcomes else 0)
+    if purpose == 'oracle_diagnostic':
+        summary['oracle_qa_sr'] = rate
+    return summary
 
 
 def next_attempt(folder):
@@ -101,17 +104,20 @@ def next_attempt(folder):
     return folder / f'attempt-{max(numbers, default=0) + 1:04d}'
 
 
-def adjudicate(attempt, result, task, manifest):
+def adjudicate(attempt, result, task, manifest, *, job=None):
     from .purpose import manifest_purpose, verify_calls
     purpose = manifest_purpose(manifest)
-    job = json.loads((attempt / 'job.json').read_text(encoding='utf-8'))
+    if job is None:
+        job = json.loads((attempt / 'job.json').read_text(encoding='utf-8'))
     for key in ('purpose', 'arm', 'config_sha256', 'resolved_config_sha256'):
         if job.get(key) != manifest[key] or result.get('release_' + key) != manifest[key]:
             raise ValueError(f'job or result {key} disagrees with manifest')
     mode = manifest['mode']
     plan = task['plan_sha256']
     key = task['key']
-    if (job.get('mode') != mode or job['task']['key'] != key or job['task']['plan_sha256'] != plan
+    dispatched = job['task']
+    if (job.get('mode') != mode or dispatched['key'] != key or dispatched['plan_sha256'] != plan
+            or key.split('/') != [dispatched.get(field) for field in ('split', 'town', 'episode')]
             or result.get('release_task_key') != key or result.get('release_plan_sha256') != plan):
         raise ValueError('inconsistent task, plan or mode binding')
     native = result.get('run_meta') or {}

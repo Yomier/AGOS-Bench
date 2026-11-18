@@ -201,7 +201,7 @@ def execute(a, workers, tasks, metadata, mode, manifest):
                 row = collect_attempt(folder, attempt, task, mode, manifest, error)
                 with lock_state:
                     outcomes[task['key']] = row['outcome']
-                    write_json(root / 'summary.json', aggregate(outcomes))
+                    write_json(root / 'summary.json', aggregate(outcomes, manifest['purpose']))
                 if row['outcome'] == 'pending' and count + 1 < a.max_attempts:
                     work.put((task, count + 1))
         interrupted = []
@@ -210,7 +210,7 @@ def execute(a, workers, tasks, metadata, mode, manifest):
             stop.set()
         original = {s: signal.signal(s, cancel) for s in (signal.SIGINT, signal.SIGTERM)}
         mon = threading.Thread(target=monitor, args=(root, done), daemon=True)
-        write_json(root / 'summary.json', aggregate(outcomes))
+        write_json(root / 'summary.json', aggregate(outcomes, manifest['purpose']))
         mon.start()
         try:
             from carlaair.engine.slot import own_slot
@@ -226,7 +226,7 @@ def execute(a, workers, tasks, metadata, mode, manifest):
             mon.join()
             for s, previous in original.items():
                 signal.signal(s, previous)
-        summary = aggregate(outcomes)
+        summary = aggregate(outcomes, manifest['purpose'])
         print(json.dumps(summary, ensure_ascii=False))
         if interrupted:
             return 130
