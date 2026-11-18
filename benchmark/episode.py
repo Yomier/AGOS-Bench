@@ -6,6 +6,7 @@ from pathlib import Path
 import sys
 import time
 
+from .purpose import admission
 from .scoring import sha256, write_json
 
 
@@ -32,6 +33,11 @@ def run(job_file):
     resolved_sha = hashlib.sha256(json.dumps(config, sort_keys=True, default=str).encode()).hexdigest()
     if resolved_sha != job['resolved_config_sha256']:
         raise ValueError('resolved agent configuration changed after admission')
+    purpose = admission(config, job['arm'], task['split'], job['purpose'] == 'expert_collect')
+    mode = 'menu_oracle' if purpose == 'oracle_diagnostic' else 'cooperative_search'
+    if (job['purpose'] != purpose or job['mode'] != mode
+            or task['key'] != '/'.join((task['split'], task['town'], task['episode']))):
+        raise ValueError('episode job identity disagrees with the resolved method and task')
     config['carla'].update(host='127.0.0.1', rpc_port=job['rpc'], airsim_port=job['airsim'])
     os.environ.update(AGOS_SOURCE_CONFIG_SHA256=job['config_sha256'],
                       AGOS_SOURCE_CONFIG_BASENAME=Path(job['config']).name,
@@ -48,6 +54,7 @@ def run(job_file):
                                  vlm_config=config.get('vlm'))
         result = runner.run_episode(iface, plan, job['output'])
         result['episode_wall_time_s'] = time.monotonic() - started
+        result['release_purpose'] = purpose
         result['release_task_key'] = task['key']
         result['release_plan_sha256'] = task['plan_sha256']
         result['release_arm'] = job['arm']

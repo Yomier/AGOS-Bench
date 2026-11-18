@@ -65,9 +65,16 @@ def site_row(call, step, episode_key, output):
 
 
 def freeze(run, destination):
-    from benchmark.scoring import read_terminal
+    from benchmark.purpose import manifest_purpose
+    from benchmark.scoring import load_terminal
 
-    tree = Path(run) / 'episodes' / 'train1100'
+    run = Path(run)
+    manifest_file = run / 'manifest.json'
+    manifest = json.loads(manifest_file.read_bytes()) if manifest_file.is_file() else None
+    if manifest is not None and manifest_purpose(manifest) != 'expert_collect':
+        raise ValueError('freeze requires an expert_collect run')
+    tasks = {t['key']: t for t in manifest['tasks']} if manifest is not None else {}
+    tree = run / 'episodes' / 'train1100'
     terminals = sorted(tree.glob('*/*/terminal.json'))
     if not terminals:
         raise ValueError('No Train1100 terminal records found')
@@ -77,12 +84,16 @@ def freeze(run, destination):
         with (output / 'rows.jsonl').open('x', encoding='utf-8', newline='\n') as stream:
             for terminal in terminals:
                 key = terminal.parent.relative_to(tree).as_posix()
-                selected = read_terminal(terminal.parent)
+                task_key = 'train1100/' + key
+                if manifest is not None and task_key not in tasks:
+                    raise ValueError(f'{task_key}: absent from collection manifest')
+                selected, result = load_terminal(terminal.parent, tasks.get(task_key), manifest)
+                if manifest is None and ('purpose' in selected or any(k.startswith('release_') for k in result or {})):
+                    raise ValueError(f'{key}: missing release collection manifest')
                 if selected['outcome'] not in ('success', 'failure') or selected.get('vision_errors'):
                     excluded[key] = 'pending or visual fault'
                     continue
                 attempt = terminal.parent / selected['attempt']
-                result = json.loads((attempt / selected['result']).read_text(encoding='utf-8'))
                 reason = result['failure_reason']
                 faults = result.get('paper_fault_audit') or {}
                 if (reason not in ('SUCCESS', 'BUDGET_EXHAUSTED', 'UGV_NAV_STALLED')

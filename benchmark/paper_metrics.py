@@ -13,7 +13,8 @@ from agos.eval.metric_contract import (
     assert_uniform_metric_protocol,
 )
 from agos.eval.metric_primitives import compute_ase
-from benchmark.scoring import classify, read_terminal, vision_counts
+from benchmark.purpose import manifest_purpose, verify_calls
+from benchmark.scoring import load_terminal
 
 
 def percent(value):
@@ -32,6 +33,10 @@ def aggregate_paper_metrics(episodes, *, model_decisions):
     if episodes and assert_uniform_metric_protocol(episodes) != [METRIC_REVISION]:
         raise ValueError('The selected results do not use the current metric protocol.')
     for row in episodes:
+        purpose = 'evaluation' if model_decisions else 'oracle_diagnostic'
+        if row.get('release_purpose', purpose) != purpose:
+            raise ValueError(f"Cannot score {row['release_purpose']} as {purpose}")
+        verify_calls(row, purpose, include_http=False)
         protocol = row.get('success_protocol') or {}
         if (protocol.get('id') != 'AGOS_CONFIRM30_V1' or protocol.get('max_confirm_distance_m') != 30
                 or protocol.get('require_los') is not True or protocol.get('require_gt_visible_in_stop_6view') is not True
@@ -47,11 +52,6 @@ def aggregate_paper_metrics(episodes, *, model_decisions):
     ne = aggregate_navigation_error(episodes, current=True)
     calls = [row.get('vlm_calls') for row in episodes]
     valid_calls = bool(episodes) and model_decisions
-    for row, count in zip(episodes, calls):
-        by_role = [row.get('uav_vlm_calls'), row.get('ugv_vlm_calls')]
-        if (type(count) is not int or count < 0 or (row['success'] and count == 0)
-                or any(type(n) is not int or n < 0 for n in by_role) or count != sum(by_role)):
-            valid_calls = False
     metrics = {
         'SR': percent(successes / len(episodes)) if episodes else None,
         'OSR': percent(osr['OSR']),
@@ -71,6 +71,9 @@ def aggregate_paper_metrics(episodes, *, model_decisions):
 
 def score_run(run_dir):
     manifest = json.loads((run_dir / 'manifest.json').read_text(encoding='utf-8'))
+    purpose = manifest_purpose(manifest)
+    if purpose == 'expert_collect':
+        raise ValueError('expert_collect is privileged training data and cannot produce paper metrics')
     episodes_dir = (run_dir / 'episodes').resolve()
     pending, rows, seen = [], [], set()
     for task in manifest['tasks']:
@@ -81,28 +84,13 @@ def score_run(run_dir):
                 or key in seen or not folder.is_relative_to(episodes_dir)):
             raise ValueError(f'Invalid or duplicate manifest task: {key}')
         seen.add(key)
-        terminal = read_terminal(folder)
+        terminal, row = load_terminal(folder, task, manifest)
         if terminal is None or terminal['outcome'] == 'pending':
             pending.append(key)
             continue
-        result_path = (folder / terminal['attempt'] / terminal['result']).resolve()
-        if not result_path.is_relative_to(folder):
-            raise ValueError(f'Invalid result path for {key}')
-        row = json.loads(result_path.read_text(encoding='utf-8'))
-        if row.get('release_task_key') != key or row.get('release_plan_sha256') != task['plan_sha256']:
-            raise ValueError(f'Locked task identity disagrees with manifest for {key}')
-        for field in ('arm', 'config_sha256', 'resolved_config_sha256'):
-            if row.get('release_' + field) != manifest[field]:
-                raise ValueError(f'Locked {field} disagrees with manifest for {key}')
-        vision_errors, vision_ok = vision_counts(result_path.parent / 'ag_os_trace.jsonl')
-        if (vision_errors != terminal['vision_errors'] or vision_ok != terminal['vision_ok']
-                or classify(row, vision_errors, vision_ok) != terminal['outcome']):
-            raise ValueError(f'Locked outcome disagrees with evidence for {key}')
-        if manifest['arm'] == 'menu_oracle' and (row.get('vlm_calls') != 0 or row.get('vlm_http_attempts') != 0):
-            raise ValueError(f'Oracle result includes model calls for {key}')
         rows.append(row)
-    report = aggregate_paper_metrics(rows, model_decisions=manifest['arm'] != 'menu_oracle')
-    return {**report, 'requested': len(seen), 'pending': pending, 'complete': bool(seen) and not pending}
+    report = aggregate_paper_metrics(rows, model_decisions=purpose == 'evaluation')
+    return {**report, 'purpose': purpose, 'requested': len(seen), 'pending': pending, 'complete': bool(seen) and not pending}
 
 
 def main():

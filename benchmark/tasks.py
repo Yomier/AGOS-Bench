@@ -29,7 +29,25 @@ def select_keys(split, episodes):
     return selected
 
 
-def load_tasks(data_root, selected):
+def navigation_preflight(config):
+    """Load runtime graphs once per distinct contract across the selected plans."""
+    from agos.runtime.runner import _load_roadnet_for_episode, _load_sparse_nav_adapter, _sparse_nav_enabled
+    fields = ('map', 'map_key', 'action_space_version', 'road_graph_id', 'road_graph_asset_sha256',
+              'control_graph_sha256', 'semantic_adapter_sha256', 'sparse_intersection_max_distance_m',
+              'control_graph_release_id', 'road_graph_dir')
+    checked = set()
+
+    def check(plan):
+        contract = tuple(plan.get(field) for field in fields)
+        if contract not in checked:
+            _load_roadnet_for_episode(config, plan)
+            if _sparse_nav_enabled(config):
+                _load_sparse_nav_adapter(config, plan)
+            checked.add(contract)
+    return check
+
+
+def load_tasks(data_root, selected, check_navigation=None):
     from agos.episode_io import load_and_validate_episode_plan
     from agos.eval.contamination import _extract_xy
     with (ROOT / 'dataset/tasks.csv').open(encoding='utf-8-sig', newline='') as stream:
@@ -44,6 +62,8 @@ def load_tasks(data_root, selected):
                 raise ValueError(f'{split}/{key}: {asset} differs from the released task index')
         path = data_root / entry['plan_path']
         plan = load_and_validate_episode_plan(str(path), formal=True, check_reference=True)
+        if check_navigation is not None:
+            check_navigation(plan)
         actual = plan['map'].split('/')[-1].removesuffix('_Opt')
         if actual != town or plan['episode_id'] != episode:
             raise ValueError(f'manifest and embedded identity disagree at {path}')

@@ -8,6 +8,8 @@ python -m benchmark.paper_metrics "$AGOS_OUTPUT_ROOT/smoke" > "$AGOS_OUTPUT_ROOT
 
 `requested` is the number of tasks selected in the run manifest. `scored` counts successful episodes and valid method failures. `pending` lists tasks without a valid terminal result, including infrastructure failures. The scorer returns status `2` for incomplete coverage and emits the provisional numbers on standard output. Use the evaluator's resume command before reporting a complete split.
 
+The report records its run purpose. Use `evaluation` for model comparisons. `oracle_diagnostic` marks the model-free deployment check. Expert collection uses privileged training labels, and the paper scorer rejects these runs. For model evaluations, a successful episode requires evidence of a model call. A legitimate zero-call failure remains in the denominator.
+
 | Output | Unit | What is averaged |
 | --- | --- | --- |
 | `SR` | % | Correct confirmations per scored episode. |

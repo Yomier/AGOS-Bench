@@ -39,7 +39,7 @@ def main(argv=None):
     config_file = output / 'expert.yaml'
     config_file.write_text(yaml.safe_dump(config, sort_keys=False), encoding='utf-8')
     cmd = [sys.executable, '-m', 'benchmark.run_parallel_eval', '--data-root', str(args.data_root.resolve()),
-           '--split', 'train1100', '--arm', 'agos_b', '--config', str(config_file),
+           '--split', 'train1100', '--arm', 'agos_b', '--expert-collect', '--config', str(config_file),
            '--run-dir', str(output / 'run'), '--workers', str(args.workers)]
     for episode in args.episode:
         cmd.extend(['--episode', episode])

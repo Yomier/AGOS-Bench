@@ -17,8 +17,9 @@ from urllib.request import urlopen
 
 from carlaair.engine.profile import admit, identity
 from carlaair.engine.slot import BINARY, Slot, run_owned
-from .scoring import aggregate, classify, next_attempt, read_terminal, sha256, verify_binding, vision_counts, write_json
-from .tasks import ROOT, SPLITS, load_tasks, select_keys
+from .purpose import admission
+from .scoring import aggregate, adjudicate, next_attempt, read_terminal, sha256, write_json
+from .tasks import ROOT, SPLITS, load_tasks, navigation_preflight, select_keys
 
 
 ARMS = ('agos_a', 'agos_b', 'agos_c', 'baseline_a', 'menu_oracle')
@@ -31,6 +32,7 @@ def parser():
     p.add_argument('--episode', action='append', default=[], metavar='TOWN/EPISODE', help='select one address; repeatable')
     p.add_argument('--arm', choices=ARMS, default='agos_b')
     p.add_argument('--config', type=Path, help='agent YAML override')
+    p.add_argument('--expert-collect', action='store_true', help='collect privileged Train1100 drive traces')
     p.add_argument('--run-dir', type=Path, required=True)
     p.add_argument('--sim-root', type=Path, default=os.getenv('AGOS_SIM_ROOT'))
     p.add_argument('--profile', choices=['local', 'api'], default='local', help='local = 6 slots, API = 10 slots')
@@ -61,6 +63,8 @@ def verify_config(path, arm, towns):
     configured_mode = (config.get('paper_experiment') or {}).get('agent_mode')
     if configured_mode and configured_mode != mode:
         raise ValueError(f'{path}: expected agent_mode {mode}')
+    from agos.methods.registry import create
+    create(mode, config)
     registry = RoadGraphRegistry.load(config['road_graph']['registry'])
     for town in towns:
         registry.resolve(town)
@@ -99,18 +103,15 @@ def check_services(mode, config, profile):
 
 def collect_attempt(folder, attempt, task, mode, manifest, error=None):
     result_file = attempt / (task['episode'] + '_result.json')
-    row = dict(attempt=attempt.name, outcome='pending', result=None, vision_errors=0, vision_ok=0)
+    row = dict(attempt=attempt.name, purpose=manifest['purpose'], outcome='pending', result=None, vision_errors=0, vision_ok=0)
     if error:
         row['worker_error'] = str(error)
     if result_file.is_file():
         try:
             result = json.loads(result_file.read_text(encoding='utf-8'))
-            verify_binding(result, task, manifest)
-            errors, ok = vision_counts(attempt / 'ag_os_trace.jsonl')
-            row.update(outcome=classify(result, errors, ok), vision_errors=errors, vision_ok=ok,
+            outcome, errors, ok = adjudicate(attempt, result, task, manifest)
+            row.update(outcome=outcome, vision_errors=errors, vision_ok=ok,
                        result=result_file.name, result_sha256=sha256(result_file))
-            if mode == 'menu_oracle' and (result.get('vlm_calls') != 0 or result.get('vlm_http_attempts') != 0):
-                raise ValueError('menu oracle reported nonzero or missing model call count')
         except (OSError, ValueError, TypeError, KeyError) as exc:
             row.update(outcome='pending', evidence_error=str(exc))
     write_json(attempt / 'score.json', row)
@@ -185,7 +186,7 @@ def execute(a, workers, tasks, metadata, mode, manifest):
                 attempt = next_attempt(folder)
                 attempt.mkdir(parents=True)
                 job = dict(task=task, output=str(attempt), config=str(a.config), config_sha256=manifest['config_sha256'],
-                           arm=manifest['arm'], resolved_config_sha256=manifest['resolved_config_sha256'],
+                           purpose=manifest['purpose'], arm=manifest['arm'], resolved_config_sha256=manifest['resolved_config_sha256'],
                            rpc=slot.rpc, airsim=slot.airsim, slot=index, mode=mode,
                            siblings=str(siblings / f"{task['split']}-{task['town']}.json"))
                 job_path = attempt / 'job.json'
@@ -245,10 +246,11 @@ def main(argv=None):
         a.config = (a.config or ROOT / 'agents/configs' / (a.arm + '.yaml')).resolve(strict=True)
         workers = worker_count(a.profile, a.workers)
         keys = select_keys(a.split, a.episode)
-        tasks, metadata = load_tasks(a.data_root.resolve(), keys)
-        mode, config = verify_config(a.config, a.arm, {task['town'] for task in tasks})
+        mode, config = verify_config(a.config, a.arm, {address.split('/')[0] for _, address in keys})
+        purpose = admission(config, a.arm, a.split, a.expert_collect)
+        tasks, metadata = load_tasks(a.data_root.resolve(), keys, navigation_preflight(config))
         digest = hashlib.sha256(json.dumps(config, sort_keys=True, default=str).encode()).hexdigest()
-        manifest = dict(schema=1, arm=a.arm, mode=mode, profile=a.profile, native=identity(a.native_profile),
+        manifest = dict(schema=2, purpose=purpose, arm=a.arm, mode=mode, profile=a.profile, native=identity(a.native_profile),
                         native_profile_sha256=sha256(a.native_profile) if a.native_profile else None,
                         config_sha256=sha256(a.config), resolved_config_sha256=digest,
                         tasks=[{'key': t['key'], 'plan_sha256': t['plan_sha256']} for t in tasks])
@@ -258,7 +260,7 @@ def main(argv=None):
                 raise ValueError(f'missing engine under {a.sim_root}: {BINARY}')
         if a.dry_run:
             print(json.dumps(dict(tasks=len(tasks), first=tasks[0]['key'], last=tasks[-1]['key'], arm=a.arm,
-                                  mode=mode, slots=workers, stagger_seconds=a.stagger_seconds, native=manifest['native'],
+                                  mode=mode, purpose=purpose, slots=workers, stagger_seconds=a.stagger_seconds, native=manifest['native'],
                                   engine_path_checked=bool(a.sim_root), config=str(a.config))))
             return 0
         if sys.platform != 'linux' or os.geteuid() == 0 or not a.sim_root:

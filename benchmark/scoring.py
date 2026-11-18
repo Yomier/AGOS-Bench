@@ -23,14 +23,20 @@ def write_json(path, value):
     os.replace(tmp, path)
 
 
-def vision_counts(path):
+def vision_counts(path, *, purpose=None, arm=None):
     errors = ok = 0
     if path.is_file():
         with path.open(encoding='utf-8') as stream:
             for line in stream:
                 if not line.strip():
                     continue
-                status = (json.loads(line).get('vision') or {}).get('status')
+                step = json.loads(line)
+                if arm and step.get('variant_id', arm) != arm:
+                    raise ValueError('method trace arm disagrees with the job')
+                if purpose == 'evaluation' and ('expert_decision' in step or 'expert_label' in step or any(
+                        call.get('call_kind', '').startswith('expert_') for call in step.get('model_calls') or [])):
+                    raise ValueError('privileged expert trace in model evaluation')
+                status = (step.get('vision') or {}).get('status')
                 errors += status == 'error'
                 ok += status == 'ok'
     return errors, ok
@@ -95,23 +101,55 @@ def next_attempt(folder):
     return folder / f'attempt-{max(numbers, default=0) + 1:04d}'
 
 
-def verify_binding(result, task, manifest):
-    expected = dict(release_task_key=task['key'], release_plan_sha256=task['plan_sha256'],
-                    release_arm=manifest['arm'], release_config_sha256=manifest['config_sha256'],
-                    release_resolved_config_sha256=manifest['resolved_config_sha256'])
-    if any(result.get(k) != v for k, v in expected.items()):
-        raise ValueError('missing or inconsistent task, arm or configuration binding')
+def adjudicate(attempt, result, task, manifest):
+    from .purpose import manifest_purpose, verify_calls
+    purpose = manifest_purpose(manifest)
+    job = json.loads((attempt / 'job.json').read_text(encoding='utf-8'))
+    for key in ('purpose', 'arm', 'config_sha256', 'resolved_config_sha256'):
+        if job.get(key) != manifest[key] or result.get('release_' + key) != manifest[key]:
+            raise ValueError(f'job or result {key} disagrees with manifest')
+    mode = manifest['mode']
+    plan = task['plan_sha256']
+    key = task['key']
+    if (job.get('mode') != mode or job['task']['key'] != key or job['task']['plan_sha256'] != plan
+            or result.get('release_task_key') != key or result.get('release_plan_sha256') != plan):
+        raise ValueError('inconsistent task, plan or mode binding')
+    native = result.get('run_meta') or {}
+    if (result.get('episode_id') != key.rsplit('/', 1)[-1] or native.get('agent_mode') != mode
+            or result.get('mode') != 'joint_' + mode or native.get('source_config_sha256') != manifest['config_sha256']
+            or (result.get('evaluation_binding') or {}).get('plan_sha256') != plan):
+        raise ValueError('native runner result disagrees with task, plan, method or source config')
+    errors, ok = vision_counts(attempt / 'ag_os_trace.jsonl', purpose=purpose, arm=manifest['arm'])
+    outcome = classify(result, errors, ok)
+    if outcome != 'pending':
+        verify_calls(result, purpose)
+    return outcome, errors, ok
+
+
+def load_terminal(folder, task=None, manifest=None):
+    path = folder / 'terminal.json'
+    if not path.is_file():
+        return None, None
+    row = json.loads(path.read_text(encoding='utf-8'))
+    raw = None
+    if row['outcome'] not in {'success', 'failure', 'pending'}:
+        raise ValueError('invalid terminal outcome')
+    if row['outcome'] in {'success', 'failure'}:
+        result = folder / row['attempt'] / row['result']
+        if not result.resolve().is_relative_to(folder.resolve()):
+            raise ValueError('locked result outside episode directory')
+        data = result.read_bytes()
+        if hashlib.sha256(data).hexdigest() != row['result_sha256']:
+            raise ValueError(f'locked result changed: {result}')
+        raw = json.loads(data)
+        if manifest is not None:
+            if row.get('purpose') != manifest['purpose'] or result.name != task['key'].rsplit('/', 1)[-1] + '_result.json':
+                raise ValueError('locked receipt disagrees with run purpose or episode')
+            proof = adjudicate(result.parent, raw, task, manifest)
+            if proof != (row['outcome'], row['vision_errors'], row['vision_ok']):
+                raise ValueError('locked outcome disagrees with original evidence')
+    return row, raw
 
 
 def read_terminal(folder, task=None, manifest=None):
-    path = folder / 'terminal.json'
-    if not path.is_file():
-        return None
-    row = json.loads(path.read_text(encoding='utf-8'))
-    if row['outcome'] in {'success', 'failure'}:
-        result = folder / row['attempt'] / row['result']
-        if sha256(result) != row['result_sha256']:
-            raise ValueError(f'locked result changed: {result}')
-        if manifest is not None:
-            verify_binding(json.loads(result.read_text(encoding='utf-8')), task, manifest)
-    return row
+    return load_terminal(folder, task, manifest)[0]

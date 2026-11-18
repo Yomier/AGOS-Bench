@@ -96,10 +96,15 @@ def test_nonzero_oracle_http_or_foreign_arm_remain_pending(tmp_path):
     attempt = folder / 'attempt-0001'
     attempt.mkdir(parents=True)
     task = dict(key='test300/Town03/lite_easy_00001', episode='lite_easy_00001', plan_sha256='plan')
-    manifest = dict(arm='menu_oracle', config_sha256='yaml', resolved_config_sha256='resolved')
+    manifest = dict(arm='menu_oracle', mode='menu_oracle', purpose='oracle_diagnostic', config_sha256='yaml',
+                    resolved_config_sha256='resolved', tasks=[task])
+    (attempt / 'job.json').write_text(json.dumps(dict(manifest, task=task)))
     result = dict(success=True, completed=True, confirm_count=1, failure_stage=None, failure_reason='SUCCESS',
                   release_task_key=task['key'], release_plan_sha256='plan', release_arm='menu_oracle',
-                  release_config_sha256='yaml', release_resolved_config_sha256='resolved', vlm_calls=0, vlm_http_attempts=0)
+                  release_purpose='oracle_diagnostic', episode_id=task['episode'], mode='joint_menu_oracle',
+                  run_meta={'agent_mode': 'menu_oracle', 'source_config_sha256': 'yaml'}, evaluation_binding={'plan_sha256': 'plan'},
+                  release_config_sha256='yaml', release_resolved_config_sha256='resolved', vlm_calls=0, vlm_http_attempts=0,
+                  uav_vlm_calls=0, ugv_vlm_calls=0, uav_vlm_http_attempts=0, ugv_vlm_http_attempts=0)
     file = attempt / 'lite_easy_00001_result.json'
     for changes in ({'vlm_http_attempts': 1}, {'release_arm': 'baseline_a'}, {'release_resolved_config_sha256': 'other'}):
         file.write_text(json.dumps(dict(result, **changes)))
