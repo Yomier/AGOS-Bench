@@ -29,4 +29,3 @@ __pycache__/
 *.db
 .DS_Store
 Thumbs.db
-common/__pycache__/

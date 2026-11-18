@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "Please cite this software when using AGOS-Bench."
+title: AGOS-Bench
+type: software
+authors:
+  - name: AGOS-Bench contributors
+abstract: "A benchmark for embodied air-ground cooperative object search in urban environments. Aerial discovery and ground-level instance verification run in one CARLA-Air simulation."
+license: Apache-2.0
+keywords:
+  - embodied intelligence
+  - cooperative object search
+  - benchmark
+  - multimodal agents
+# TODO: Add the paper's public citation when its authors and identifier are published.

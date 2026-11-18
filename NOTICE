@@ -1,0 +1,4 @@
+AGOS-Bench
+Copyright 2026 Yomier and the AGOS-Bench contributors.
+
+AGOS-Bench integrates with the CARLA-Air v0.1.7 simulator, developed by the CARLA-Air authors at https://github.com/louiszengCN/CarlaAir. The simulator is distributed by its authors.
