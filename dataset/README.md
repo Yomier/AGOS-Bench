@@ -42,18 +42,22 @@ Each JSONL row has `messages`, `images` and `meta`. Resolve image paths relative
 
 These are simulator expert demonstrations. The historical trained models consumed 6,014 rows after length filtering from an earlier 8,212-row input. Training on the complete 27,720-row release is a distinct training setting.
 
+## Independent certification
+
+The `certification` archive contains six evidence files for each of the 2,125 tasks. Under `certification/<split>/<episode_key>/`, the replay records the independent execution and links to its arrival image. The `oracle_qa/` directory contains the deployed navigation oracle, the deployment bindings before and after execution, and the validation receipt.
+
+The archive's `certification/manifest.json` joins the six files to each published plan and records original and distributed file hashes. For 123 training tasks renamed during dataset construction, `replay_episode_key` and `replay_plan_sha256` identify the plan used in the independent replay. Reapplying the documented rename, reference path changes and oracle rehash reproduced each final source plan byte for byte. Replay records preserve the original engine receipt digest. The arrival image and all four oracle and deployment files preserve their original bytes.
+
 ## Access and verification
 
-Five archives are prepared locally. External hosting is pending. The separate `certification` volume is on hold while original independent replay evidence for 300 Seen-Test450 tasks is recovered. The four task archives contain the embedded navigation certificates in every plan. The trajectory and task archives can be used independently of the separate replay volume.
-
-From the AGOS-Bench repository root, place the archives in `data/`, verify them against the bundled checksums, and extract the desired archives into the same directory. `--volume all` checks every available volume and reports the certification hold. [Release checksums](SHA256SUMS)
+All six archives are prepared locally. External hosting is pending. From the AGOS-Bench repository root, place the archives in `data/`, verify them against the bundled checksums, and extract the volumes you need into the same directory. `--volume all` requires all six archives and all six checksums. [Release checksums](SHA256SUMS)
 
 ```bash
 python dataset/verify.py --directory data --volume all
 tar -xzf data/taskset-test300.tar.gz -C data
 ```
 
-Once hosting is available, the download tool fetches the selected archive from `Yomier/AGOS-Dataset` on Hugging Face and verifies it against the checksums bundled with this release. Install `huggingface_hub` in the environment used for the download. `--revision` accepts a Hub commit or tag.
+Once hosting is available, the download tool fetches the selected archive from `Yomier/AGOS-Dataset` on Hugging Face and verifies it against the checksums bundled with this release. Install `huggingface_hub` in the environment used for the download. `--revision` accepts a Hub commit or tag. For the planned ModelScope mirror, use `--source modelscope --repo-id Yomier/AGOS-Dataset`.
 
 ```bash
 python -m pip install huggingface_hub
@@ -64,4 +68,4 @@ python dataset/download.py --directory data --volume taskset-test300
 
 The dataset is distributed under [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/). Credit AGOS-Dataset and its authors when redistributing the tasks or demonstrations. The accompanying code has its own license in the AGOS-Bench repository.
 
-Citation metadata is maintained with the code release. The arXiv identifier is pending (`TODO`).
+Citation metadata is maintained with the code release. The arXiv identifier is pending. [AGOS-Bench](https://github.com/Yomier/AGOS-Bench)

@@ -1,4 +1,4 @@
-"""Download selected AGOS archives from Hugging Face and verify their hashes."""
+"""Download selected AGOS archives from Hugging Face or ModelScope and verify their hashes."""
 
 import argparse
 import sys
@@ -15,19 +15,24 @@ def main():
     parser.add_argument("--volume", choices=(*VOLUMES, "all"), default="all")
     parser.add_argument("--directory", type=Path, default=Path("data"))
     parser.add_argument("--repo-id", default="Yomier/AGOS-Dataset")
-    parser.add_argument("--revision", default="main")
+    parser.add_argument("--source", choices=("hf", "modelscope"), default="hf")
+    parser.add_argument("--revision", help="Hub commit, tag, or branch; defaults to the provider's default branch")
     args = parser.parse_args()
     checksums = Path(__file__).with_name("SHA256SUMS")
     try:
         released = read_checksums(checksums)
         names = selected(args.volume, released)
-        from huggingface_hub import snapshot_download
+        if args.source == "modelscope":
+            from modelscope import snapshot_download
+        else:
+            from huggingface_hub import snapshot_download
         snapshot_download(repo_id=args.repo_id, repo_type="dataset", revision=args.revision,
-                          local_dir=args.directory,
+                          local_dir=str(args.directory),
                           allow_patterns=[f"{name}.tar.gz" for name in names] + ["SHA256SUMS"])
         verify(args.directory, checksums, args.volume)
     except ImportError:
-        parser.exit(1, "Install huggingface_hub to download archives.\n")
+        package = "modelscope" if args.source == "modelscope" else "huggingface-hub"
+        parser.exit(1, f"Install {package} to use the selected download source.\n")
     except (ValueError, OSError) as exc:
         print(exc, file=sys.stderr)
         return 1

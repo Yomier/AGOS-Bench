@@ -76,6 +76,9 @@ def check_services(mode, config, profile):
         with urlopen(health, timeout=10) as response:
             if json.load(response).get('ok') is not True:
                 raise ValueError(f'perception health failed for {name}')
+    expert = config['cooperative_search'].get('expert') or {}
+    if expert.get('enabled') and expert.get('mode', 'drive') == 'drive':
+        return  # Expert-driven collection uses the visual sidecar and generates its own decisions.
     vlm = config['vlm']
     if not urlsplit(vlm['api_url']).netloc or not vlm.get('model'):
         raise ValueError('model identifier and absolute chat-completion URL are required')

@@ -213,6 +213,28 @@ def test_expert_verify_site_carries_the_same_system_as_deployment_verify(monkeyp
         assert expert["system_prompt"] == deployed["system_prompt"]
 
 
+@pytest.mark.parametrize('verify_v2', [False, True])
+def test_expert_confirmation_records_deployed_prompt_bytes(monkeypatch, verify_v2):
+    from agos.methods.cooperative_search import policy as module
+
+    monkeypatch.setattr(module, 'VLMClient', Transport)
+    p = module.DecisionPolicy({'cooperative_search': {'verify_system_v2': verify_v2}})
+    obs = observation('UGV')
+    obs.target_reference_image = b'reference image bytes'
+    captured = p.record_expert_confirm(obs, {'target_verdict': 'MATCH'}, 'verify')
+    p._remaining = 1
+    p.vlm.responses = [{'target_verdict': 'MATCH'}]
+    p.verify_confirm(obs)
+    deployed = p.events[-1]
+
+    assert (captured['call_kind'], deployed['call_kind']) == ('expert_confirm', 'confirm_verify')
+    assert captured['system_prompt'] == deployed['system_prompt'] == (
+        module.CONFIRM_SYSTEM if verify_v2 else module.SYSTEM)
+    assert captured['user_prompt'] == deployed['user_prompt']
+    assert captured['image_sha256'] == deployed['image_sha256']
+    assert p.drain_calls() == 1
+
+
 def test_verify_reads_answers_nested_the_way_the_system_prompt_asks(monkeypatch):
     # The shared system prompt places these fields under action.
     p = policy(monkeypatch)

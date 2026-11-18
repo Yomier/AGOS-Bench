@@ -421,7 +421,7 @@ class DecisionPolicy:
         prompt = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
         event = {"episode_id": obs.episode_id, "role": obs.role, "step": obs.step,
                  "call_id": call_id, "call_kind": call_kind, "public_input": payload,
-                 "system_prompt": _system_for(call_kind, self.verify_system_v2), "user_prompt": prompt,
+                 "system_prompt": _system_for(payload["call_kind"], self.verify_system_v2), "user_prompt": prompt,
                  "prompt_sha256": hashlib.sha256(prompt.encode("utf-8")).hexdigest(),
                  "image_sha256": [hashlib.sha256(image).hexdigest() for image in images],
                  "status": "expert", "target": deepcopy(target),

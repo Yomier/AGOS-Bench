@@ -2,6 +2,7 @@ cff-version: 1.2.0
 message: "Please cite this software when using AGOS-Bench."
 title: AGOS-Bench
 type: software
+repository-code: https://github.com/Yomier/AGOS-Bench
 authors:
   - name: AGOS-Bench contributors
 abstract: "A benchmark for embodied air-ground cooperative object search in urban environments. Aerial discovery and ground-level instance verification run in one CARLA-Air simulation."

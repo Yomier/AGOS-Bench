@@ -130,6 +130,42 @@ def test_watchdog_stops_only_its_real_child():
             stop_process(other)
 
 
+def test_service_preflight_uses_real_http_and_skips_unused_models():
+    from http.server import BaseHTTPRequestHandler, HTTPServer
+    import threading
+    from benchmark.run_parallel_eval import check_services
+    paths = []
+    class Handler(BaseHTTPRequestHandler):
+        def do_GET(self):
+            paths.append(self.path)
+            result = {'ok': True} if self.path == '/health' else {'data': [{'id': 'uav'}, {'id': 'ugv'}]}
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(json.dumps(result).encode())
+        def log_message(self, *args):
+            pass
+    with HTTPServer(('127.0.0.1', 0), Handler) as server:
+        url = 'http://127.0.0.1:' + str(server.server_port)
+        threading.Thread(target=server.serve_forever, daemon=True).start()
+        try:
+            coop = {'gsam_endpoint': url + '/v1/gsam', 'ugv_endpoint': url + '/v1/ugv_views'}
+            config = {'cooperative_search': coop, 'vlm': {'model': 'base', 'api_url': url + '/v1/chat/completions',
+                                                        'uav_model': 'uav', 'ugv_model': 'ugv'}}
+            check_services('menu_oracle', {}, 'local')
+            assert not paths
+            check_services('cooperative_search', config, 'local')
+            assert paths[-1] == '/v1/models'
+            config['vlm']['ugv_model'] = 'missing'
+            with pytest.raises(ValueError, match='missing'):
+                check_services('cooperative_search', config, 'local')
+            paths.clear()
+            coop['expert'] = {'enabled': True, 'mode': 'drive'}
+            check_services('cooperative_search', config, 'local')
+            assert paths and set(paths) == {'/health'}
+        finally:
+            server.shutdown()
+
+
 def test_foreign_listener_rejected():
     import socket
     from carlaair.engine.slot import ports_free

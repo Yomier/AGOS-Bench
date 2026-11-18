@@ -18,11 +18,9 @@ def selected(volume, checksums):
             raise ValueError(f"{volume} has no released checksum")
         return (volume,)
     missing = set(VOLUMES) - checksums.keys()
-    if missing == {"certification"}:
-        print("certification is pending original replay evidence. Verifying the five available volumes.", file=sys.stderr)
-    elif missing:
+    if missing:
         raise ValueError("Incomplete release checksum file. Missing " + ", ".join(sorted(missing)))
-    return tuple(name for name in VOLUMES if name in checksums)
+    return VOLUMES
 
 
 def read_checksums(path):
