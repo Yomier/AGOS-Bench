@@ -159,14 +159,13 @@ sha256sum "$ue" "$libcarla"
 
 ## 4. Clone the benchmark and install its client
 
-Copy the HTTPS clone URL from the repository that supplied this guide. If you already have the release checkout, set `AGOS_REPO` to its absolute path in your session file and skip the clone. Use one terminal as the evaluation terminal for the remaining sections. The optional service terminals have their own setup blocks.
+Clone the project from its GitHub repository. If you already have the release checkout, set `AGOS_REPO` to its absolute path in your session file and skip the clone. Use one terminal as the evaluation terminal for the remaining sections. The optional service terminals have their own setup blocks.
 
-**中文。** 从本指南所在发布仓库的 Code 菜单取 HTTPS 地址。已有本地检出时，设好 `AGOS_REPO` 后直接执行第二块。后续以该目录为工作目录，评测终端始终使用 `carlaAir` 环境。
+**中文。** 以下命令克隆正式项目地址。已有本地检出时，设好 `AGOS_REPO` 后直接执行第二块。后续以该目录为工作目录，评测终端始终使用 `carlaAir` 环境。
 
 ```bash
 source "$HOME/.config/agos-bench/session.sh"
-read -rp 'Release repository HTTPS clone URL: ' REPO_URL
-git clone "$REPO_URL" "$AGOS_REPO"
+git clone https://github.com/Yomier/AGOS-Bench.git "$AGOS_REPO"
 ```
 
 ```bash
@@ -202,7 +201,7 @@ python -m carlaair.engine.profile \
 
 ## 5. Obtain and check the data volumes
 
-One test volume is enough for the smoke. Keep the **split name, town, episode ID and plan hash** together. Episode IDs can repeat in different towns and splits. Four task volumes contain 2,125 episodes. The volume name `certification` is reserved for certification evidence. Check the release checksum list for its availability. `trajectories-train1100` holds the 1,100 expert trajectories and 27,720 labeled samples used to construct a new training corpus. [Dataset release and availability](../dataset/README.md) · [Corpus and adapter training](../training/README.md)
+One test volume is enough for the smoke. Keep the **split name, town, episode ID and plan hash** together. Episode IDs can repeat in different towns and splits. Four task volumes contain 2,125 episodes. The `certification` volume contains independent replay evidence for all 2,125 tasks. `trajectories-train1100` holds the 1,100 expert trajectories and 27,720 labeled samples used to construct a new training corpus. [Dataset release and availability](../dataset/README.md) · [Corpus and adapter training](../training/README.md)
 
 | Volume argument | Split for the runner | Episodes |
 |---|---|---:|
@@ -211,9 +210,9 @@ One test volume is enough for the smoke. Keep the **split name, town, episode ID
 | `taskset-validation275` | `validation275` | 275 |
 | `taskset-train1100` | `train1100` | 1,100 |
 
-This release has local checksums for the four task archives and the expert archive. External hosting is pending. **For an offline delivery**, copy the supplied archive into your data root. If it is already there, just set `volume=taskset-test300` in the evaluation terminal. [Checksum list](../dataset/SHA256SUMS)
+Six archives are available in the offline delivery. External hosting is pending. To verify a full delivery, run `python dataset/verify.py --volume all --directory "$DELIVERY"` from the repository root with `DELIVERY` set to the directory holding the archives. Expect six `OK` lines. A missing archive, missing checksum or digest mismatch returns a nonzero exit status. For the first smoke, copy just the test volume into your data root as shown below. [Checksum list](../dataset/SHA256SUMS)
 
-**中文。** 五个卷已有交付校验值，独立认证卷仍在等原始证据。首次只选 `taskset-test300`。有离线文件时执行下面的复制块；已有文件可略过复制。HF 发布后也可用下一块下载，二选一。两条路线都用本次代码随附的摘要校验，通过后才解压。
+**中文。** 本地交付含四个任务卷、一个覆盖全部 2,125 项任务的独立认证卷，以及一个专家轨迹卷。`--volume all` 严格校验这六卷。首次冒烟只需要 `taskset-test300`。有离线文件时执行下面的复制块；已有文件可略过复制。HF 发布后也可用下一块下载，二选一。两条路线都用本次代码随附的摘要校验，通过后才解压。
 
 ```bash
 cd "$AGOS_REPO"
@@ -272,9 +271,11 @@ For a CPU-only check on a separate machine, install `.[dev,dataset]` in Python 3
 
 ## 7. Start the shared perception service
 
-All four model-based arms use the detector and retrieval encoder for visual proposals, and SAM2 for masks. Run one shared service on the simulator host. Each local/remote model setup below uses this same service. The following pinned upstream revisions provide reproducible downloads. The detector revision matches the historical launch command. Record the actual files you used if comparing model or runtime variants. [Grounding DINO Base](https://huggingface.co/IDEA-Research/grounding-dino-base) · [SigLIP2 Base](https://huggingface.co/google/siglip2-base-patch16-224) · [SAM2.1 Hiera Small](https://huggingface.co/facebook/sam2.1-hiera-small)
+The shared service loads Grounding DINO, SigLIP2 and SAM2 at startup. In the four published arms, the UAV proposal screen requests `segment=False`. The UGV ranks detected crops from its camera views using reference-image similarity. The optional `segment=True` service check below requests a mask when the detector proposes a box. [Agent perception path](../agos/methods/cooperative_search/perception.py)
 
-**中文。** 新开感知终端，使用独立 Python 环境。下载 DINO、SigLIP2 和 SAM2.1 三套完整模型。PyTorch 与 torchvision 需匹配驱动支持的 CUDA 版本。下面的安装后断言同时检查 CUDA 和 torchvision 的 CUDA NMS 算子；如失败，按该机器对应的安装命令重装二者，然后再启动服务。 [PyTorch wheel selector](https://pytorch.org/get-started/locally/)
+Run one shared service on the simulator host. Each local/remote model setup below uses this same service. The following pinned upstream revisions provide reproducible downloads. The detector revision matches the historical launch command. Record the actual files you used if comparing model or runtime variants. [Grounding DINO Base](https://huggingface.co/IDEA-Research/grounding-dino-base) · [SigLIP2 Base](https://huggingface.co/google/siglip2-base-patch16-224) · [SAM2.1 Hiera Small](https://huggingface.co/facebook/sam2.1-hiera-small)
+
+**中文。** 新开感知终端，使用独立 Python 环境。服务启动时加载 DINO、SigLIP2 和 SAM2.1 三套模型。正式 UAV 筛选关闭分割，UGV 对检测框裁图做相似度排序。下文开启分割只用于额外的接口自检。PyTorch 与 torchvision 需匹配驱动支持的 CUDA 版本。下面的安装后断言同时检查 CUDA 和 torchvision 的 CUDA NMS 算子；如失败，按该机器对应的安装命令重装二者，然后再启动服务。 [PyTorch wheel selector](https://pytorch.org/get-started/locally/)
 
 ```bash
 source "$HOME/.config/agos-bench/session.sh"
@@ -417,33 +418,43 @@ printf '\n'
 export AGOS_VLM_URL AGOS_VLM_MODEL VLLM_API_KEY
 ```
 
-## 9. Check one model request and measure worker capacity
+## 9. Check model responses and measure worker capacity
 
-In the **evaluation terminal**, send one image and inspect the returned content. This is the first standalone model request in the guide and may be billable on a hosted service. It checks the configured endpoint, credentials and image transfer; the subsequent one-worker pilot exercises the full prompts. A local-only run can use the same check against loopback.
+In the **evaluation terminal**, send a red image through each selected decision route. The shared configuration sends one request. The split configuration sends one to the UAV adapter and one to the UGV adapter. Check the served names and answers in the output. A hosted service may bill these requests. The subsequent one-worker pilot exercises the full agent prompts.
 
 ```bash
-python - <<'PY'
-import base64, io, os, requests
+cd "$AGOS_REPO"
+python - "${AGENT_CONFIG:-agents/configs/agos_b.yaml}" <<'PY'
+import base64, io, os, sys, requests
 from PIL import Image
+from agos.lite_core import load_config
+vlm = load_config(sys.argv[1])['vlm']
+if 'uav_model' in vlm or 'ugv_model' in vlm:
+    routes = [('UAV', vlm['uav_model']), ('UGV', vlm['ugv_model'])]
+else:
+    routes = [('shared', vlm['model'])]
 img = io.BytesIO()
 Image.new('RGB', (224,224), 'red').save(img, 'PNG')
 uri = 'data:image/png;base64,' + base64.b64encode(img.getvalue()).decode('ascii')
 question = [{'type':'text','text':'Name the single color in the image in one word.'},
             {'type':'image_url','image_url':{'url':uri}}]
-response = requests.post(os.environ['AGOS_VLM_URL'], timeout=120,
-    headers={'Authorization':'Bearer '+os.environ['VLLM_API_KEY']},
-    json={'model':os.environ['AGOS_VLM_MODEL'],'messages':[{'role':'user','content':question}],
-          'max_tokens':1024,'temperature':0})
-response.raise_for_status()
-content = response.json()['choices'][0]['message']['content']
-assert isinstance(content, str) and content.strip(), 'expected an assistant answer'
-print(content)
+for role, model in routes:
+    payload = {'model':model,'messages':[{'role':'user','content':question}],
+               'max_tokens':vlm['max_output_tokens'],'temperature':vlm['temperature']}
+    if 'chat_template_kwargs' in vlm:
+        payload['chat_template_kwargs'] = vlm['chat_template_kwargs']
+    response = requests.post(vlm['api_url'], timeout=vlm['timeout_s'],
+        headers={'Authorization':'Bearer '+os.environ[vlm['api_key_env']]}, json=payload)
+    response.raise_for_status()
+    content = response.json()['choices'][0]['message']['content']
+    assert isinstance(content, str) and content.strip(), f'{role} {model}: empty answer'
+    print(role, model, content)
 PY
 ```
 
 Run independent short pilots at **1 → 2 → 4 → 6** workers with local inference, or **1 → 2 → 4 → 6 → 8 → 10** with a remote API. These are operator-selected stages for measuring capacity. The public runner caps the profiles at six and ten respectively, staggers cold starts by 30 seconds and gives each active slot a fresh engine per attempt. Run the next stage only after inspecting the current one. Using a fresh run directory per stage keeps timing and outcomes attributable to a specific concurrency level. GPU memory measured under one town or one model can change with the others. [Slot configuration](../carlaair/engine/slot.py) · [Runner arguments](../benchmark/run_parallel_eval.py)
 
-**中文。** 先发一次真实图像请求，期望回答红色。选定 `PROFILE=local` 或 `api` 后定义下列函数。逐档手动执行，1 个 worker 用 1 集，后续每档选至少与 worker 数一样多的不同集，才会真的并发。等本档收卷后检查 summary、视觉轨迹、模型鉴权、剩余显存和延迟，再到下一档。遇到设施异常先查原因，保留发生时的 attempt。
+**中文。** 共享模型发一次真实图像请求；分角色模式将同一张图分别发给 UAV、UGV 两个实际服务的模型名，各验一次，期望回答红色。选定 `PROFILE=local` 或 `api` 后定义下列函数。逐档手动执行，1 个 worker 用 1 集，后续每档选至少与 worker 数一样多的不同集，才会真的并发。等本档收卷后检查 summary、视觉轨迹、模型鉴权、剩余显存和延迟，再到下一档。遇到设施异常先查原因，保留发生时的 attempt。
 
 ```bash
 cd "$AGOS_REPO"

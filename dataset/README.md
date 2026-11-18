@@ -34,6 +34,8 @@ test300/dataset/Town03/images/lite_easy_00001_teammate_reference.png
 
 Each split also includes its own `tasks.csv` and `manifest.json`. In the index, `plan_sha256` covers the published JSON bytes. `source_plan_sha256` covers the original plan. Published plans refer to calibration and navigation assets using paths relative to the AGOS-Bench repository root. The `navigation_binding_sha256` and `navigation_certificate_sha256` columns identify the embedded navigation oracle. The publisher recomputed both canonical JSON hashes for every task and checked both reference image hashes against the original plan.
 
+To copy a verified subset or generate a custom ground-start variant on CarlaAir, follow the [task generation guide](https://github.com/Yomier/AGOS-Bench/blob/main/benchmark/MINTING.md). Custom variants have a separate task identity.
+
 ## Expert trajectories
 
 The `trajectories-train1100` archive extracts into a directory of the same name. It contains `rows.jsonl`, `episodes.csv`, and `images/<sha256>.png`. The 27,720 rows contain 82,331 image references to 45,843 distinct images. Of these rows, 23,529 belong to the aerial robot and 4,191 to the ground vehicle. The trajectory outcomes were 910 successful confirmations, 177 budget terminations, and 13 navigation stalls.

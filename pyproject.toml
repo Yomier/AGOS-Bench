@@ -46,5 +46,5 @@ include = ["/agos", "/benchmark", "/carlaair", "/training", "/dataset", "/agents
 dev-mode-dirs = ["."]
 
 [tool.pytest.ini_options]
-testpaths = ["tests", "benchmark/tests", "training/tests"]
+testpaths = ["tests", "benchmark/tests", "training/tests", "dataset/generation/tests"]
 markers = ["simulator: opt-in integration test against a running CarlaAir world"]
