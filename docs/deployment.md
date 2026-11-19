@@ -1,14 +1,12 @@
 # Deploy AGOS-Bench on Ubuntu
 
-Use this guide on the machine that will render the UAV and UGV cameras. A remote model endpoint moves inference off that machine. CarlaAir runs on the simulator host. Baseline-Agent, AGOS-Agent and their ablations also use the perception service on that host. The English and Chinese instructions share the same Bash blocks. Start with one episode before allocating a split. [Runtime variables](deployment-variables.md)
-
-**中文路线。** 在仿真主机上依次执行各节 Bash 块。先完成驱动、Vulkan 和 Python 自检，再用单集 `menu_oracle` 检查仿真全过程。评测 Minimal-Agent 时可跳过第 7 节的感知服务，直接配置多模态模型。AGOS-Agent、Baseline-Agent 及其消融配置需要同时启动感知服务。每节的中文说明给出命令执行位置和通过条件。
+Use this guide on the machine that will render the UAV and UGV cameras. A remote model endpoint moves inference off that machine. CarlaAir runs on the simulator host. Baseline-Agent, AGOS-Agent and their ablations also use the perception service on that host. After checking the driver, Vulkan and Python, run one `menu_oracle` episode before allocating a split. Minimal-Agent can skip the perception service in section 7 and proceed to model setup in section 8. [Runtime variables](deployment-variables.md)
 
 ## 1. Give an ordinary Linux account access to the GPU
 
 Use Ubuntu 22.04 x86_64 on bare metal or a VM with a passed-through NVIDIA GPU and graphics support. Upstream also lists Ubuntu 20.04. On a managed host with a working driver, start at the post-reboot checks. Upstream budgets about 8 GB of VRAM for a single Town10HD demo. The local inference model, detector, image encoder and mask model need additional VRAM, as does each concurrent engine. Measure on the actual host before choosing the worker count. [Ubuntu driver installation](https://ubuntu.com/server/docs/how-to/graphics/install-nvidia-drivers/) · [CarlaAir system requirements](https://huggingface.co/tianlezeng/CarlaAIr-v0.1.7) · [Town10HD quick start](https://github.com/louiszengCN/CarlaAir/blob/main/CarlaAir_Release/guide/Quick-Start.md)
 
-**中文。** 以下从新装 Ubuntu 22.04 x86_64、有 sudo 权限的普通账户开始。已有厂商驱动的主机只安装工具并做重启后的检查。先看显存、主存和数据盘余量，再定并发。引擎 ZIP 与解压文件合计约 25.2 GB，数据卷、模型、环境和运行日志另计。
+Use a regular account with `sudo` access. If the NVIDIA driver is already working, install the tools and proceed to the post-reboot checks. Check available VRAM, system RAM and disk space before choosing the worker count. Allow about 25.2 GB for the engine ZIP and extracted files, plus space for data volumes, models, environments and logs.
 
 ```bash
 sudo apt-get update
@@ -43,9 +41,7 @@ df -h "$HOME"
 
 ## 2. Install conda and the official Linux simulator
 
-Choose a writable data disk. The examples use `$HOME/agos-work`; to move it, set `AGOS_WORK` before creating the environment file. This file contains paths only. Source it in every new Bash terminal used below. The fresh-install commands use Miniforge. For an existing conda install, skip the installer and point `CONDA_BASE` in the file to `conda info --base`. [Miniforge release and checksum](https://github.com/conda-forge/miniforge/releases/tag/26.9.4-2)
-
-**中文。** 用普通账号在数据盘建工作目录。环境文件不存 API 密钥。准备多个终端时，每个终端都先 `source "$HOME/.config/agos-bench/session.sh"`。如果已有 conda，把 `CONDA_BASE` 改为已有安装目录并跳过 Miniforge 安装块。
+Choose a writable data disk. The examples use `$HOME/agos-work`; to move it, set `AGOS_WORK` before creating the environment file. Keep API keys out of this file. Source `$HOME/.config/agos-bench/session.sh` in every new Bash terminal used below. The fresh-install commands use Miniforge. For an existing conda install, skip the installer and point `CONDA_BASE` in the file to `conda info --base`. [Miniforge release and checksum](https://github.com/conda-forge/miniforge/releases/tag/26.9.4-2)
 
 ```bash
 export AGOS_WORK="${AGOS_WORK:-$HOME/agos-work}"
@@ -82,7 +78,7 @@ conda --version
 
 The official HF file is a ZIP with a **single `CarlaAir-v0.1.7/` root**, 33,274 entries and 18,335,602,720 uncompressed bytes. It contains the Linux Shipping executable, UE assets, AirSim settings, the custom CPython 3.10 SDK tarball and both upstream setup and test scripts. The pinned revision and expected archive digest below come from HF. Keep ZIP and extracted tree on the same Linux filesystem with execution enabled or put the extracted tree on a separate executable mount. [Pinned upstream file](https://huggingface.co/tianlezeng/CarlaAIr-v0.1.7/blob/041872adade4b417280c2cf307cb9d9621c1fa2b/CarlaAir-v0.1.7.zip)
 
-**中文。** 下载官方 Linux ZIP，校验输出应为 `OK` 后才解压。`AGOS_SIM_ROOT` 指向内含 `CarlaUE4/` 的那一层。归档中的客户端扩展要求 Linux x86_64 上的 CPython 3.10。
+Wait for the checksum to report `OK` before extracting. Set `AGOS_SIM_ROOT` to the directory containing `CarlaUE4/`. The bundled client extension requires CPython 3.10 on Linux x86_64.
 
 ```bash
 cd "$AGOS_WORK/downloads"
@@ -118,9 +114,7 @@ print('client:', carla.Client('127.0.0.1', 2000).get_client_version())
 PY
 ```
 
-The first upstream test runs with the engine stopped. Expect successful imports and warnings about idle ports 2000 and 41451. For an optional standalone test **on an otherwise idle, dedicated graphical machine**, run `./CarlaAir.sh Town03 --fg` from the unpacked directory. Its startup script terminates other matching UE processes. In a second `carlaAir` terminal run the following checks, then press Ctrl+C in the demo terminal. On a shared/headless server skip the demo and use the one-worker benchmark smoke below. The benchmark starts the Shipping binary itself.
-
-**中文。** 首次测试只验证环境，2000/41451 未监听是预期。独占图形主机可用上游 `--fg` 演示，第二终端执行下面的双协议断言，最后回到演示终端 Ctrl+C。上游启动器会清理同名进程，共享机器或无显示器主机直接走后文单 worker 冒烟，切勿与评测并行运行演示。
+The first upstream test runs with the engine stopped. Expect successful imports and warnings about idle ports 2000 and 41451. For an optional standalone test **on an otherwise idle, dedicated graphical machine**, run `./CarlaAir.sh Town03 --fg` from the unpacked directory. Its startup script terminates other matching UE processes. In a second `carlaAir` terminal run the following checks, then press Ctrl+C in the demo terminal. On a shared/headless server skip the demo and use the one-worker benchmark smoke below. The benchmark starts the Shipping binary itself. Close the standalone demo before starting a benchmark run.
 
 ```bash
 source "$HOME/.config/agos-bench/session.sh"
@@ -155,13 +149,11 @@ libcarla=$(python -c 'import carla.libcarla as m; print(m.__file__)')
 sha256sum "$ue" "$libcarla"
 ```
 
-**中文。** 官方包的引擎 SHA 以 `cbc11f` 开头，生产引擎以 `84ab7d` 开头，二者共用 SHA 以 `479565` 开头的 libcarla。只有已取得且验证过生产 UE 和 guard 的用户才能选择相应 native 运行。重新生成或迁移路径后的 JSON 有自己的 SHA；保留本机工件、flags 与实际进程的身份记录。公开 ZIP 不含这两件生产工件。以下默认使用 stock 模式，请在结果中注明。
+The patched engine and Stop guard are separate from the public ZIP. Use the historical native profile only after obtaining and verifying both artifacts. A profile JSON generated for a new installation or updated with different paths has a different SHA-256. Record the local artifact hashes, launch flags and actual process identity. The commands below default to stock mode. Record the mode with your results.
 
 ## 4. Clone the benchmark and install its client
 
-Clone the project from its GitHub repository. If you already have the release checkout, set `AGOS_REPO` to its absolute path in your session file and skip the clone. Use one terminal as the evaluation terminal for the remaining sections. The optional service terminals have their own setup blocks.
-
-**中文。** 以下命令克隆正式项目地址。已有本地检出时，设好 `AGOS_REPO` 后直接执行第二块。后续以该目录为工作目录，评测终端始终使用 `carlaAir` 环境。
+Clone the project from its GitHub repository. If you already have the release checkout, set `AGOS_REPO` to its absolute path in your session file and skip the clone. Use one terminal as the evaluation terminal for the remaining sections. Keep the `carlaAir` environment active and use the checkout as the working directory in that terminal. The optional service terminals have their own setup blocks.
 
 ```bash
 source "$HOME/.config/agos-bench/session.sh"
@@ -210,9 +202,7 @@ One test volume is enough for the smoke. Keep the **split name, town, episode ID
 | `taskset-validation275` | `validation275` | 275 |
 | `taskset-train1100` | `train1100` | 1,100 |
 
-Six archives are available in the offline delivery. External hosting is pending. To verify a full delivery, run `python dataset/verify.py --volume all --directory "$DELIVERY"` from the repository root with `DELIVERY` set to the directory holding the archives. Expect six `OK` lines. A missing archive, missing checksum or digest mismatch returns a nonzero exit status. For the first smoke, copy just the test volume into your data root as shown below. [Checksum list](../dataset/SHA256SUMS)
-
-**中文。** 本地交付含四个任务卷、一个覆盖全部 2,125 项任务的独立认证卷，以及一个专家轨迹卷。`--volume all` 严格校验这六卷。首次冒烟只需要 `taskset-test300`。有离线文件时执行下面的复制块；已有文件可略过复制。HF 发布后也可用下一块下载，二选一。两条路线都用本次代码随附的摘要校验，通过后才解压。
+Six archives are available in the offline delivery. External hosting is pending. To verify a full delivery, run `python dataset/verify.py --volume all --directory "$DELIVERY"` from the repository root with `DELIVERY` set to the directory holding the archives. Expect six `OK` lines. A missing archive, missing checksum or digest mismatch returns a nonzero exit status. For the first smoke, copy just the test volume into your data root as shown below. Skip the copy if the archive is already there. [Checksum list](../dataset/SHA256SUMS)
 
 ```bash
 cd "$AGOS_REPO"
@@ -229,7 +219,7 @@ volume=taskset-test300
 python dataset/download.py --volume "$volume" --directory "$AGOS_DATA_ROOT"
 ```
 
-For either route, expect `OK  taskset-test300.tar.gz`, followed by the selected plan's digest. This archive's SHA-256 is `b3c314bb12a47d947f884d34ddbeb276fb96931b5d22147810271cd790faf127`.
+For either route, verify the archive against the bundled checksum before extracting it. Expect `OK  taskset-test300.tar.gz`, followed by the selected plan's digest. This archive's SHA-256 is `b3c314bb12a47d947f884d34ddbeb276fb96931b5d22147810271cd790faf127`.
 
 ```bash
 python dataset/verify.py --volume "$volume" --directory "$AGOS_DATA_ROOT" && \
@@ -245,7 +235,7 @@ Repeat with the appropriate volume to use another split. The data root passed to
 
 Run this in the evaluation terminal after closing the standalone demo. `--dry-run` checks the selected data and configuration without an engine or model request. Removing `--dry-run` launches a real engine, connects both clients and runs the oracle policy. `menu_oracle` is a deployment diagnostic. For a model-based arm, configure an image-capable model endpoint. The cooperative-search arms also call the perception service. [Evaluation entry point](../benchmark/run_parallel_eval.py)
 
-**中文。** 用上节从真实索引取到的键做冒烟，`test300` 对应 Town03。先做离线演练，再用不同的运行目录跑真实单集；这两步均无需 API 密钥、模型或 GSAM。查看真实结果、worker 日志与引擎退出情况后再进行后续模型实验。
+Use the Town03 episode key selected in section 5. Run the offline check first and use a separate run directory for the live episode. Both checks run without a model, API key or GSAM service. Inspect the live result, worker log and engine shutdown before running a model-based arm.
 
 ```bash
 cd "$AGOS_REPO"
@@ -275,7 +265,7 @@ The shared service loads Grounding DINO, SigLIP2 and SAM2 at startup. For the fo
 
 Run one shared service on the simulator host. Minimal-Agent users can skip this section and proceed to section 8. The following pinned upstream revisions provide reproducible downloads. The detector revision matches the historical launch command. Record the actual files you used if comparing model or runtime variants. [Grounding DINO Base](https://huggingface.co/IDEA-Research/grounding-dino-base) · [SigLIP2 Base](https://huggingface.co/google/siglip2-base-patch16-224) · [SAM2.1 Hiera Small](https://huggingface.co/facebook/sam2.1-hiera-small)
 
-**中文。** 新开感知终端，使用独立 Python 环境。服务启动时加载 DINO、SigLIP2 和 SAM2.1 三套模型。正式 UAV 筛选关闭分割，UGV 对检测框裁图做相似度排序。下文开启分割只用于额外的接口自检。PyTorch 与 torchvision 需匹配驱动支持的 CUDA 版本。下面的安装后断言同时检查 CUDA 和 torchvision 的 CUDA NMS 算子；如失败，按该机器对应的安装命令重装二者，然后再启动服务。 [PyTorch wheel selector](https://pytorch.org/get-started/locally/)
+Open a dedicated perception terminal and use a separate Python environment. Install PyTorch and torchvision builds that match the CUDA version supported by your driver. The checks below verify CUDA access and torchvision's CUDA NMS operator. If either check fails, reinstall both packages using the commands for your machine before starting the service. [PyTorch wheel selector](https://pytorch.org/get-started/locally/)
 
 ```bash
 source "$HOME/.config/agos-bench/session.sh"
@@ -347,7 +337,7 @@ Choose **one** model route. OpenAI-compatible chat completions must accept `imag
 
 Use a third terminal on the simulator host or a dedicated inference GPU. The historical zero-shot service used `vllm 0.28.0`, `transformers 5.16.1` and `torch 2.13.0+cu130`, bf16, context 16,384, 16 sequences, GPU memory utilization 0.30 and eager execution. Local vLLM defaults to loopback port 8114. The VRAM fraction is a fraction of a whole GPU. On a smaller device, it may be too small even to load the weights. Record any change to `--gpu-memory-utilization`, then recheck capacity for the engines. [vLLM launcher](../carlaair/serving/vllm.py) · [Qwen model card](https://huggingface.co/Qwen/Qwen3.5-4B) · [vLLM installation](https://docs.vllm.ai/en/stable/getting_started/installation/gpu/)
 
-**中文。** 本地模型路线在第三个终端执行。历史环境为独立 Python 3.12，须有匹配的 CUDA 驱动和 BF16 GPU。使用已发布模型目录可跳过下载，保留 tokenizer、processor 和权重索引。`--dry-run` 可先检查 shell 命令。实际启动后该终端保持前台，评测终端也要导出同一密钥。
+The local route uses a separate Python 3.12 environment and requires a compatible CUDA driver and a GPU with BF16 support. If you already have the model snapshot, skip the download and keep its tokenizer, processor and weights index. Use `--dry-run` to inspect the launch command. Leave vLLM running in the foreground and export the same key in the evaluation terminal.
 
 ```bash
 source "$HOME/.config/agos-bench/session.sh"
@@ -385,7 +375,7 @@ curl -fsS -H "Authorization: Bearer $VLLM_API_KEY" http://127.0.0.1:8114/v1/mode
 
 **Optional trained adapters.** Use your own completed training outputs. The [training guide](../training/README.md) uses `$AGOS_OUTPUT_ROOT/{mixed,uav,ugv}/adapter`. Stop your own base-only server in its terminal before starting a replacement. For mixed training, add `--adapter "mixed=$AGOS_OUTPUT_ROOT/mixed/adapter"` to the local launcher and set `AGOS_VLM_MODEL=mixed` in the evaluation terminal. For split training, pass both adapters to one service as shown below. The role-specific YAML selects a served adapter for every aerial or ground decision. A CUDA training job and these inference services compete for VRAM; finish training before starting evaluation on the same card.
 
-**中文。** 零样本无需 LoRA。mixed 模式两角色用同一模型名；split 模式在同一端口加载两套 rank-8 adapter，再在评测终端导出两个被服务的角色名并指定 split 配置。下面两块只用于 split。训练权重目录来自读者自己的训练输出。
+Zero-shot evaluation uses the base model. Mixed training serves one adapter name for both roles. The next two blocks are for split training, which serves two rank-8 adapters on the same port and selects their names through the split configuration.
 
 ```bash
 # vLLM terminal, after stopping the base-only service
@@ -406,7 +396,7 @@ curl -fsS -H "Authorization: Bearer $VLLM_API_KEY" http://127.0.0.1:8114/v1/mode
 
 Skip the local vLLM installation. In the evaluation terminal enter the provider's **full chat-completions endpoint**, deployed model identifier and credential. The harness `api` profile changes the worker count. The URL selects the service. A remote batch sends camera/reference images and prompts to that provider and may incur inference charges. Keep the detector running on the simulator host when evaluating a cooperative-search arm.
 
-**中文。** 远端模式只把 MLLM 放在远端。向服务方获取可接收图像的完整 chat/completions 地址、准确模型名和密钥，在评测终端输入。`--profile api` 本身不会切换模型地址。先用下节的一次真实图像调用核对鉴权和多模态支持。
+Use the image probe in section 9 to check authentication and image support before the pilot.
 
 ```bash
 PROFILE=api
@@ -422,7 +412,7 @@ export AGOS_VLM_URL AGOS_VLM_MODEL VLLM_API_KEY
 
 For the paper configuration, use local Qwen3.5-4B from route A. In the evaluation terminal select the following arm and configuration **before** the model probe and pilot commands in section 9. For a hosted endpoint that rejects `chat_template_kwargs`, use a copy of the Minimal-Agent YAML with that optional key removed and record the changed configuration with the run.
 
-**中文。** 复现论文的 Minimal-Agent 时选择本地 Qwen3.5-4B。先运行下面两行，再执行第 9 节的图像请求和单槽试跑；这条路径无需启动第 7 节的感知模型。
+Minimal-Agent can skip the perception service in section 7.
 
 ```bash
 ARM=minimal_agent
@@ -431,7 +421,7 @@ AGENT_CONFIG="$AGOS_REPO/agents/configs/minimal_agent.yaml"
 
 ## 9. Check model responses and measure worker capacity
 
-In the **evaluation terminal**, send a red image through each selected decision route. The shared configuration sends one request. The split configuration sends one to the UAV adapter and one to the UGV adapter. Check the served names and answers in the output. A hosted service may bill these requests. The subsequent one-worker pilot exercises the full agent prompts.
+In the **evaluation terminal**, send a red image through each selected decision route. The shared configuration sends one request. The split configuration sends one to the UAV adapter and one to the UGV adapter. Check the served names and verify that each model answers `red`. A hosted service may bill these requests. The subsequent one-worker pilot exercises the full agent prompts.
 
 ```bash
 cd "$AGOS_REPO"
@@ -465,7 +455,7 @@ PY
 
 Run independent short pilots at **1 → 2 → 4 → 6** workers with local inference, or **1 → 2 → 4 → 6 → 8 → 10** with a remote API. These are operator-selected stages for measuring capacity. The public runner caps the profiles at six and ten respectively, staggers cold starts by 30 seconds and gives each active slot a fresh engine per attempt. Run the next stage only after inspecting the current one. Using a fresh run directory per stage keeps timing and outcomes attributable to a specific concurrency level. GPU memory measured under one town or one model can change with the others. [Slot configuration](../carlaair/engine/slot.py) · [Runner arguments](../benchmark/run_parallel_eval.py)
 
-**中文。** 共享模型发一次真实图像请求；分角色模式将同一张图分别发给 UAV、UGV 两个实际服务的模型名，各验一次，期望回答红色。选定 `PROFILE=local` 或 `api` 后定义下列函数。逐档手动执行，1 个 worker 用 1 集，后续每档选至少与 worker 数一样多的不同集，才会真的并发。等本档收卷后检查 summary、视觉轨迹、模型鉴权、剩余显存和延迟，再到下一档。遇到设施异常先查原因，保留发生时的 attempt。
+Set `PROFILE` to `local` or `api` before defining the function below. Each stage needs at least as many distinct episodes as workers to exercise all slots. Check the summary, visual traces, model authentication, free VRAM and latency before moving to the next stage. If infrastructure fails, keep the attempt and diagnose the failure before continuing.
 
 ```bash
 cd "$AGOS_REPO"
@@ -504,7 +494,7 @@ cat /proc/sys/net/ipv4/ip_local_port_range
 
 The machine is ready for the selected worker count once the verified archive and references load, the actual simulator passes the dual-RPC/camera probe, the zero-API oracle has an adjudicated terminal, the perception and image-model probes return usable responses, and the chosen model pilot finishes with full coverage and stopped slots. Keep the same model ID, endpoint, data, native runtime and arm configuration throughout a run. The released arm YAML sets the method budget to 80 team steps and 1,000 model calls. The default wall timeout is 9,000 seconds per episode. Each scheduled slot reserves the host's ports, so run one batch at a time on the simulator host.
 
-**中文。** 在评测终端输入这台机器经过阶跃验证的并发数，对整个 split 先做 dry-run（应显示 300 个 test300 任务及预期 profile、模型臂），再启动实际任务。独立实验使用新目录。切换模型、臂或 split 后重新做小批检查；不要覆盖已有运行。
+In the evaluation terminal, enter the highest worker count verified by the pilots. The dry run should show all 300 `test300` tasks and the expected profile and arm before the live run starts. Use a fresh directory for each independent experiment. Repeat the pilot after changing the model, arm or split.
 
 ```bash
 read -rp 'Highest worker count verified on this host: ' WORKERS
@@ -535,7 +525,7 @@ A successful ground confirmation must identify the correct object under Confirm3
 
 Read the first pending attempt before restarting. Live runner exit codes are `0` for complete evaluation, `2` for a setup/input failure, `3` for unresolved pending/infrastructure interruption, and `130` for a handled interrupt. If an episode wrote a valid result and its engine subsequently failed to stop, coverage can already be 1 while the runner returns `3`. Inspect `slots/slot-XX/status.json` for `stop_failed` and verify the recorded engine has exited before another dispatch. The separate paper-metrics command exits `2` if coverage is incomplete. Correct the facility problem, then resume using the same original selection, run directory, model endpoint, YAML and native identity. Existing valid successes **and valid failures** stay locked by hash. Regenerating the manifest or deleting `terminal.json` breaks that protection. The default runner attempts pending tasks up to twice per invocation; later invocations create new attempt directories.
 
-**中文。** 先在原目录里查看 pending 的首个 attempt，修复仿真或服务问题。对同一 `batch` 加 `--resume`，只补缺失和设施 pending，成功与有效方法失败均保留。补跑结束应看到 `coverage=1`、`pending=[]`，再计算正式指标。另开 shell 时，重新设置原路径、模型、profile、split、arm 和 `RUN`；不要再次执行生成新时间戳的行。
+Add `--resume` to the original `batch` to run only missing episodes and those pending because of infrastructure failures. If you open a new shell, restore the original paths, model, profile, split, arm and `RUN`, and rebuild `batch` using that run directory. Skip the line that generates a new timestamp. Confirm `coverage=1` and `pending=[]` before reporting the final metrics.
 
 ```bash
 jq -r '.pending[]' "$RUN/summary.json"
@@ -551,21 +541,19 @@ python -m benchmark.run_parallel_eval "${batch[@]}" --resume && \
   python -m benchmark.paper_metrics "$RUN"
 ```
 
-To interrupt, press **Ctrl+C in the evaluation terminal first**. Let the supervisor close its own episode child and UE process. Check each created slot's final `stage` and investigate `stop_failed` against the recorded PID, command line and engine log. An old PID can be reused. When engines have exited, press Ctrl+C in the **vLLM** and **GSAM** foreground terminals you started. For the remote route, only the local GSAM service belongs to this setup. Keep run directories, source revisions, model revisions and logs. Use `ss -ltnp` and `nvidia-smi` to confirm resource release.
+To interrupt, press **Ctrl+C in the evaluation terminal first**. Let the supervisor close its own episode child and UE process. Wait for each created slot to report `stopped`. Investigate `stop_failed` against the recorded PID, command line and engine log. An old PID can be reused. When engines have exited, press Ctrl+C in the **vLLM** and **GSAM** foreground terminals you started. For the remote route, the provider manages the model service. Terminating UE processes by name can stop other jobs and destroy diagnostic evidence. Keep run directories, source revisions, model revisions and logs. Use `ss -ltnp` and `nvidia-smi` to confirm resource release.
 
-**中文。** 停服顺序为评测前台 Ctrl+C → 等各 slot `stopped` → 分别在自己启动的 vLLM、GSAM 前台 Ctrl+C → 查端口、GPU 和日志。远端服务归提供方管理。全局杀同名 UE 会影响其他作业并破坏现场。
+## Troubleshooting
 
-## Troubleshooting / 故障排查
-
-| Symptom / 现象 | What to check and how to recover / 处理 |
+| Symptom | What to check and how to recover |
 |---|---|
-| `nvidia-smi` fails or `cuInit` returns nonzero | Check the loaded driver and reboot after a driver upgrade. Re-run the two checks and `vulkaninfo --summary` as the actual evaluation account. 有 NVML 输出仍需确认 CUDA 新进程可用。 |
-| Vulkan shows only llvmpipe, or engine cannot create a device | Inspect NVIDIA's ICD in `/usr/share/vulkan/icd.d` or `/etc/vulkan/icd.d`, device permissions and the current login groups. For containers verify graphics libraries/device passthrough. 看到软件设备时不要发评测。 |
-| `import carla`/`airsim` fails or reports the wrong ABI | Use `conda activate carlaAir`, Python 3.10, `PYTHONNOUSERSITE=1`, and the bundled `env_setup` payload. Inspect `carla.libcarla.__file__` and `ldd` on that extension. Rebuild the AirSim sdist after its build-time dependencies have been installed. 客户端应来自官方 ZIP，避免通用 PyPI carla 覆盖。 |
-| ZIP hash mismatch / 数据卷哈希不符 | Fetch the correct immutable revision into a fresh download location and verify again. For AGOS volumes select the checksum file matching the delivered archive. 不能靠改 checksum 放行。 |
+| `nvidia-smi` fails or `cuInit` returns nonzero | Check the loaded driver and reboot after a driver upgrade. Re-run the two checks and `vulkaninfo --summary` as the actual evaluation account. Confirm that a fresh process can initialize CUDA even if NVML reports a GPU. |
+| Vulkan shows only llvmpipe, or engine cannot create a device | Inspect NVIDIA's ICD in `/usr/share/vulkan/icd.d` or `/etc/vulkan/icd.d`, device permissions and the current login groups. For containers verify graphics libraries/device passthrough. Wait for Vulkan to show the physical GPU before starting evaluation. |
+| `import carla`/`airsim` fails or reports the wrong ABI | Use `conda activate carlaAir`, Python 3.10, `PYTHONNOUSERSITE=1`, and the bundled `env_setup` payload. Inspect `carla.libcarla.__file__` and `ldd` on that extension. Rebuild the AirSim sdist after its build-time dependencies have been installed. Use the client from the official ZIP and avoid overwriting it with the generic `carla` package from PyPI. |
+| Simulator ZIP or data volume hash mismatch | Fetch the correct immutable revision into a fresh download location and verify again. For AGOS volumes select the checksum file matching the delivered archive. Keep the published checksum when retrying the download. |
 | Unknown episode / missing plan or reference image | Inspect the split index, the `split/dataset/TownXX/` layout and tar contents. Select `Town03` for `test300`. Re-extract the verified volume with all references. |
 | Dry-run passes but engine fails to launch | Inspect `attempt-*/engine.log`, execute bit, ELF architecture and missing `ldd` libraries. Use a non-root owner and an executable filesystem. Headless evaluation uses `-RenderOffScreen` and real Vulkan rendering. |
-| Repeated `checking_camera_and_rpc` or `waiting_for_ports` | Read `worker.log` and all five ports from slot status. Identify the process using each TCP listener. End your own old run gracefully or wait; check RAM/VRAM and the correct map. 单独开放 RPC 不能证明 AirSim 和相机可用。 |
+| Repeated `checking_camera_and_rpc` or `waiting_for_ports` | Read `worker.log` and all five ports from slot status. Identify the process using each TCP listener. End your own old run gracefully or wait; check RAM/VRAM and the correct map. Check AirSim and camera readiness even if the CARLA RPC port is open. |
 | 401/403/404, empty completion or image-format error | Confirm key in the **worker's shell**, exact model ID, complete URL, and provider support for image data and the request fields in the selected YAML. Send the image probe, then run the one-worker pilot again. |
 | HTTP 429, slow responses, OOM or driver reset under load | Stop at the last working concurrency stage. Inspect per-attempt timestamps, endpoint quotas, `resources.jsonl`, memory left after loading the three perception models and local vLLM. Retry pending tasks after recovery. |
 | Sidecar HTTP 200 yet many `vision:error` / stale successes | Inspect its timestamped logs, `/v1/gsam` and `/v1/ugv_views` responses, actual model paths/device and the attempt trace. Restart the owning service and use the same frozen weights for repair. |

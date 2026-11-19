@@ -18,10 +18,8 @@ The [deployment guide](deployment.md) creates a reusable Bash file for local pat
 | `AGOS_VLM_MODEL` | `qwen3.5-4b` | Exact served model ID, shared across roles by the default agent configs. |
 | `AGOS_UAV_MODEL`, `AGOS_UGV_MODEL` | `uav`, `ugv` | Required by the split-adapter example YAML. Both aliases must be served on the configured chat-completions URL. |
 | `AGENT_CONFIG` | `$AGOS_REPO/configs/examples/agos_b_api.yaml` or `$AGOS_REPO/configs/examples/agos_b_split.yaml` | Guide only. Passed to `--config` when set. The selected file's arm must match `--arm`. |
-| `VLLM_API_KEY` | Set in the service/worker shell as appropriate | Bearer credential named by `vlm.api_key_env`. The loopback example uses the disposable value `local` in both processes. For a remote API, enter your own provider key at the hidden prompt in the evaluation terminal. |
+| `VLLM_API_KEY` | Set in the service/worker shell as appropriate | Bearer credential named by `vlm.api_key_env`. The loopback example uses the disposable value `local` in both processes. For a remote API, enter your own provider key at the hidden prompt in the evaluation terminal. Set credentials only in the shells of processes that use them. |
 | `UGV_ACTION_SPACE` | Leave unset for released tasks | An existing shell override takes precedence over the agent configuration. All 2,125 published plans use `sparse_nav_v1`. Run `unset UGV_ACTION_SPACE` before the offline preflight if you previously selected another action space. |
 | `PYTHONNOUSERSITE` | `1` | Keeps a per-user Python install from shadowing the active conda client SDK. |
 
-`PROFILE=local` and `PROFILE=api` in the guide are shell variables passed to `--profile`. They set six or ten slots by default. `--workers N` selects a smaller count. `--native-profile` independently selects the optional native client guard and verified engine. [Native profile implementation](../carlaair/engine/profile.py)
-
-**中文。** 数据根是 `test300/` 等解压目录的父级。引擎根是 `CarlaUE4/` 的父级。输出根下每个实验用独立目录。感知地址填基址，模型地址填完整接口路径。并发 profile、模型路由和 native profile 是三个独立参数。密钥只在所属进程的 shell 中设置。
+`PROFILE=local` and `PROFILE=api` in the guide are shell variables passed to `--profile`. They set six or ten slots by default. `--workers N` selects a smaller count. The worker profile, model routing and native profile are independent. `--native-profile` selects the optional native client guard and verified engine. [Native profile implementation](../carlaair/engine/profile.py)

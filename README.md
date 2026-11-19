@@ -1,3 +1,5 @@
+<p align="right"><a href="README.zh-CN.md"><img alt="阅读中文版" src="https://img.shields.io/badge/README-%E4%B8%AD%E6%96%87-2f6feb"></a></p>
+
 <h1 align="center">Towards Embodied Air-Ground Cooperative Object Search: Benchmark, Dataset and Agentic Method</h1>
 
 <p align="center">
@@ -10,7 +12,7 @@
 
 A UAV and a ground vehicle search an urban region for the vehicle in a reference image. The UAV surveys the region and shares candidates. The ground vehicle approaches and confirms the matching instance using its own cameras in the same CARLA-Air world.
 
-[Benchmark](benchmark/README.md) · [Dataset](dataset/README.md) · [Agent configurations](agents/README.md) · [CARLA-Air integration](carlaair/README.md) · [部署指南（中英双语）](docs/deployment.md)
+[Benchmark](benchmark/README.md) · [Dataset](dataset/README.md) · [Agent configurations](agents/README.md) · [CARLA-Air integration](carlaair/README.md) · [Deployment guide](docs/deployment.md)
 
 ## Highlights
 
