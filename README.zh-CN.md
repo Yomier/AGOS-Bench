@@ -6,6 +6,7 @@
   <a href="https://arxiv.org/abs/2609.08402v1"><img alt="Paper: earlier arXiv v1" src="https://img.shields.io/badge/Paper-earlier%20arXiv%20v1-b31b1b"></a>
   <a href="dataset/README.md#access-and-verification"><img alt="Dataset: Hugging Face upload pending" src="https://img.shields.io/badge/Dataset-Hugging%20Face%20pending-d6a900"></a>
   <a href="https://huggingface.co/Qwen/Qwen3.5-4B"><img alt="Models: Qwen3.5-4B base on Hugging Face" src="https://img.shields.io/badge/Models-Qwen3.5--4B%20base-6b4eff"></a>
+  <a href="https://github.com/louiszengCN/CarlaAir"><img alt="Simulator: CarlaAir v0.1.7" src="https://img.shields.io/badge/Simulator-CarlaAir%20v0.1.7-1f8b4c"></a>
 </p>
 
 <p align="center"><img src="assets/teaser.png" alt="AGOS-Bench Figure 1 showing aerial search, candidate handoff, ground verification and target confirmation" width="100%"></p>
