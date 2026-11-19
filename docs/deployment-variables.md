@@ -18,7 +18,7 @@ The [deployment guide](deployment.md) creates a reusable Bash file for local pat
 | `AGOS_VLM_MODEL` | `qwen3.5-4b` | Exact served model ID, shared across roles by the default agent configs. |
 | `AGOS_UAV_MODEL`, `AGOS_UGV_MODEL` | `uav`, `ugv` | Required by the split-adapter example YAML. Both aliases must be served on the configured chat-completions URL. |
 | `AGENT_CONFIG` | `$AGOS_REPO/configs/examples/agos_b_api.yaml` or `$AGOS_REPO/configs/examples/agos_b_split.yaml` | Guide only. Passed to `--config` when set. The selected file's arm must match `--arm`. |
-| `VLLM_API_KEY` | Set in the service/worker shell as appropriate | Bearer credential named by `vlm.api_key_env`. The loopback example sets `local` in both processes. Enter a provider key in the evaluation terminal when using a remote API. |
+| `VLLM_API_KEY` | Set in the service/worker shell as appropriate | Bearer credential named by `vlm.api_key_env`. The loopback example uses the disposable value `local` in both processes. For a remote API, enter your own provider key at the hidden prompt in the evaluation terminal. |
 | `UGV_ACTION_SPACE` | Leave unset for released tasks | An existing shell override takes precedence over the agent configuration. All 2,125 published plans use `sparse_nav_v1`. Run `unset UGV_ACTION_SPACE` before the offline preflight if you previously selected another action space. |
 | `PYTHONNOUSERSITE` | `1` | Keeps a per-user Python install from shadowing the active conda client SDK. |
 

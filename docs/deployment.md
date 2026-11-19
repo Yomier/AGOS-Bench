@@ -25,7 +25,7 @@ done
 sudo reboot
 ```
 
-Log in again as the same account. Inspect the physical device name in `vulkaninfo` and check that a fresh process can initialize CUDA. A display warning from `vulkaninfo` over SSH can coexist with a working physical device. A listing with only llvmpipe indicates software rendering. In a container the host must expose the NVIDIA graphics/Vulkan and compute libraries and device nodes to the account.
+After reboot, open a new shell under the same account. Inspect the physical device name in `vulkaninfo` and check that a fresh process can initialize CUDA. A display warning from `vulkaninfo` over SSH can coexist with a working physical device. A listing with only llvmpipe indicates software rendering. In a container the host must expose the NVIDIA graphics/Vulkan and compute libraries and device nodes to the account.
 
 ```bash
 id
