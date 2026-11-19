@@ -1,7 +1,7 @@
 <h1 align="center">Towards Embodied Air-Ground Cooperative Object Search: Benchmark, Dataset and Agentic Method</h1>
 
 <p align="center">
-  <a href="https://arxiv.org/abs/2609.08402v1"><img alt="Paper: arXiv v1" src="https://img.shields.io/badge/Paper-arXiv%20v1-b31b1b"></a>
+  <a href="https://arxiv.org/abs/2609.08402v1"><img alt="Paper: earlier arXiv v1" src="https://img.shields.io/badge/Paper-earlier%20arXiv%20v1-b31b1b"></a>
   <a href="dataset/README.md#access-and-verification"><img alt="Dataset: Hugging Face upload pending" src="https://img.shields.io/badge/Dataset-Hugging%20Face%20pending-d6a900"></a>
   <a href="https://huggingface.co/Qwen/Qwen3.5-4B"><img alt="Models: Qwen3.5-4B base on Hugging Face" src="https://img.shields.io/badge/Models-Qwen3.5--4B%20base-6b4eff"></a>
 </p>
@@ -33,16 +33,17 @@ python -m pip install -e '.[dev,dataset]'
 
 1. **Simulator.** Install the upstream Linux ZIP and its bundled CPython 3.10 SDK using the commands in the deployment guide. This creates the `carlaAir` environment and a shell session file for data, model and simulator paths. In the evaluation terminal activate `carlaAir` and run `python -m pip install -e '.[simulator,dev,dataset]'`. [CARLA-Air v0.1.7 install](docs/deployment.md#2-install-conda-and-the-official-linux-simulator)
 2. **Perception.** In a separate terminal, run `conda create -y -n agos-perception python=3.12 pip`, `conda activate agos-perception`, and `python -m pip install -e '.[perception,dataset]'`. Download the pinned Grounding DINO, SigLIP 2 and SAM2.1 snapshots and start the bundled service. This step serves AGOS-Agent, Baseline-Agent and their ablations. [Snapshot and service commands](docs/deployment.md#7-start-the-shared-perception-service)
-3. **Inference.** In another terminal, run `conda create -y -n agos-vllm python=3.12 pip`, `conda activate agos-vllm`, and `python -m pip install 'vllm==0.28.0' 'transformers==5.16.1'`. Serve the pinned Qwen3.5-4B snapshot, or use an image-capable OpenAI-compatible endpoint. [Serving commands and environment variables](docs/deployment.md#8-choose-how-the-agent-obtains-multimodal-decisions)
+3. **Inference.** In another terminal, run `conda create -y -n agos-vllm python=3.12 pip`, `conda activate agos-vllm`, `python -m pip install 'vllm==0.28.0' 'transformers==5.16.1'`, and `python -m pip install -e '.[dataset]'` from the checkout. Serve the pinned Qwen3.5-4B snapshot, or use an image-capable OpenAI-compatible endpoint. [Serving commands and environment variables](docs/deployment.md#8-choose-how-the-agent-obtains-multimodal-decisions)
 
 ## Data and checkpoints
 
-The six AGOS-Dataset volumes are staged for Hugging Face. Until hosting is available, use a delivered copy of the archives. Unseen-Test300 only needs `taskset-test300.tar.gz`. The following commands default to `data/` and `runs/` in the checkout if the deployment session has not set those paths.
+The six AGOS-Dataset volumes are staged for Hugging Face. Until hosting is available, use a delivered copy of the archives. Unseen-Test300 only needs `taskset-test300.tar.gz`. In each terminal, source the deployment session file or set the variables below from the checkout root. Use the same paths in the evaluation, inference and training terminals.
 
 ```bash
 export AGOS_DATA_ROOT="${AGOS_DATA_ROOT:-$PWD/data}"
 export AGOS_OUTPUT_ROOT="${AGOS_OUTPUT_ROOT:-$PWD/runs}"
-mkdir -p "$AGOS_DATA_ROOT" "$AGOS_OUTPUT_ROOT"
+export MODEL_ROOT="${MODEL_ROOT:-$PWD/weights}"
+mkdir -p "$AGOS_DATA_ROOT" "$AGOS_OUTPUT_ROOT" "$MODEL_ROOT"
 
 # Run after the dataset is published, or place the delivered archive in AGOS_DATA_ROOT.
 # hf download Yomier/AGOS-Dataset taskset-test300.tar.gz --repo-type dataset --local-dir "$AGOS_DATA_ROOT"
