@@ -148,7 +148,7 @@ python -m training.train --base "$MODEL_ROOT/Qwen3.5-4B" --data "$AGOS_OUTPUT_RO
 ```bibtex
 @misc{yu2026agos,
   title     = {Towards Embodied Air-Ground Cooperative Object Search: Benchmark, Dataset and Agentic Method},
-  author    = {Yu, Boao and Chen, Zimo and Rao, Junreng and Hu, Yue and Zhu, Zhengqiu and Zhao, Yong and Ju, Rusheng},
+  author    = {Yu, Boao and Chen, Zimo and Rao, Junreng and Hu, Yue and Zhu, Zhengqiu and Zhao, Yong and Gao, Jianzhe and Zhu, Pengfei and Ju, Rusheng},
   year      = {2026},
   publisher = {arXiv},
   doi       = {10.48550/ARXIV.2609.08402},
