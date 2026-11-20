@@ -3,7 +3,7 @@
 <h1 align="center">Towards Embodied Air-Ground Cooperative Object Search: Benchmark, Dataset and Agentic Method</h1>
 
 <p align="center">
-  <a href="https://arxiv.org/abs/2609.08402v1"><img alt="Paper: earlier arXiv v1" src="https://img.shields.io/badge/Paper-earlier%20arXiv%20v1-b31b1b"></a>
+  <a href="https://arxiv.org/abs/2609.08402"><img alt="Paper: arXiv 2609.08402v2" src="https://img.shields.io/badge/Paper-arXiv%202609.08402%20v2-b31b1b"></a>
   <a href="https://huggingface.co/datasets/Yomier/AGOS-Dataset"><img alt="Dataset on Hugging Face" src="https://img.shields.io/badge/Hugging%20Face-Dataset-d6a900"></a>
   <a href="https://modelscope.cn/datasets/Yomier/AGOS-Dataset"><img alt="Dataset on ModelScope" src="https://img.shields.io/badge/ModelScope-Dataset-5f45d8"></a>
   <a href="https://huggingface.co/Qwen/Qwen3.5-4B"><img alt="Models: Qwen3.5-4B base on Hugging Face" src="https://img.shields.io/badge/Models-Qwen3.5--4B%20base-6b4eff"></a>
@@ -143,7 +143,7 @@ python -m training.train --base "$MODEL_ROOT/Qwen3.5-4B" --data "$AGOS_OUTPUT_RO
 
 ## Citation and license
 
-The public arXiv v1 is the earlier AGOS preprint. The figure, split sizes and results above describe the revised experiment. Use the software citation for this checkout and the following BibTeX for the public preprint. [Software citation](CITATION.cff) · [arXiv v1](https://arxiv.org/abs/2609.08402v1)
+The revised manuscript is arXiv:2609.08402v2. The figure, split sizes and results above describe this revised experiment. Use the software citation for this checkout and the following BibTeX for the paper. [Software citation](CITATION.cff) · [arXiv 2609.08402v2](https://arxiv.org/abs/2609.08402v2)
 
 ```bibtex
 @misc{yu2026agos,
@@ -152,7 +152,7 @@ The public arXiv v1 is the earlier AGOS preprint. The figure, split sizes and re
   year      = {2026},
   publisher = {arXiv},
   doi       = {10.48550/ARXIV.2609.08402},
-  url       = {https://arxiv.org/abs/2609.08402v1}
+  url       = {https://arxiv.org/abs/2609.08402v2}
 }
 ```
 

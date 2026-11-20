@@ -81,4 +81,4 @@ Choose `--volume all` to download or verify all six archives. For a repeatable d
 
 The dataset is distributed under [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/). Credit AGOS-Dataset and its authors when redistributing the tasks or demonstrations. The accompanying code has its own license in the AGOS-Bench repository.
 
-Citation metadata is maintained with the code release. The public arXiv v1 describes an earlier experimental setup. The revised manuscript’s public citation is pending. [AGOS-Bench](https://github.com/Yomier/AGOS-Bench)
+Citation metadata is maintained with the code release. The revised manuscript is arXiv:2609.08402v2. [AGOS-Bench](https://github.com/Yomier/AGOS-Bench)
