@@ -202,7 +202,7 @@ One test volume is enough for the smoke. Keep the **split name, town, episode ID
 | `taskset-validation275` | `validation275` | 275 |
 | `taskset-train1100` | `train1100` | 1,100 |
 
-Six archives are available in the offline delivery. External hosting is pending. To verify a full delivery, run `python dataset/verify.py --volume all --directory "$DELIVERY"` from the repository root with `DELIVERY` set to the directory holding the archives. Expect six `OK` lines. A missing archive, missing checksum or digest mismatch returns a nonzero exit status. For the first smoke, copy just the test volume into your data root as shown below. Skip the copy if the archive is already there. [Checksum list](../dataset/SHA256SUMS)
+The six archives are available as an offline delivery and on two public hubs. To verify a full delivery, run `python dataset/verify.py --volume all --directory "$DELIVERY"` from the repository root with `DELIVERY` set to the directory holding the archives. Expect six `OK` lines. A missing archive, missing checksum or digest mismatch returns a nonzero exit status. For the first smoke, copy just the test volume into your data root as shown below. Skip the copy if the archive is already there. [Checksum list](../dataset/SHA256SUMS)
 
 ```bash
 cd "$AGOS_REPO"
@@ -211,15 +211,26 @@ read -erp 'Directory containing the delivered .tar.gz volumes: ' DELIVERY
 cp -n "$DELIVERY/$volume.tar.gz" "$AGOS_DATA_ROOT/"
 ```
 
-**After HF publication**, the alternative is to download the same volume from the dataset repository. To bind a Hub revision, add `--revision` and its commit hash to the download command.
+For online access, choose one provider and run the command below. The evaluation environment already includes `huggingface_hub` through the `dataset` extra. [Hugging Face (`main`)](https://huggingface.co/datasets/Yomier/AGOS-Dataset) · [ModelScope (`master`)](https://modelscope.cn/datasets/Yomier/AGOS-Dataset)
+
+**Hugging Face**
 
 ```bash
 cd "$AGOS_REPO"
 volume=taskset-test300
-python dataset/download.py --volume "$volume" --directory "$AGOS_DATA_ROOT"
+python dataset/download.py --source hf --repo-id Yomier/AGOS-Dataset --revision main --volume "$volume" --directory "$AGOS_DATA_ROOT"
 ```
 
-For either route, verify the archive against the bundled checksum before extracting it. Expect `OK  taskset-test300.tar.gz`, followed by the selected plan's digest. This archive's SHA-256 is `b3c314bb12a47d947f884d34ddbeb276fb96931b5d22147810271cd790faf127`.
+**ModelScope**
+
+```bash
+cd "$AGOS_REPO"
+volume=taskset-test300
+python -m pip install modelscope
+python dataset/download.py --source modelscope --repo-id Yomier/AGOS-Dataset --revision master --volume "$volume" --directory "$AGOS_DATA_ROOT"
+```
+
+For any route, verify the archive against the bundled checksum before extracting it. Expect `OK  taskset-test300.tar.gz`, followed by the selected plan's digest. This archive's SHA-256 is `b3c314bb12a47d947f884d34ddbeb276fb96931b5d22147810271cd790faf127`.
 
 ```bash
 python dataset/verify.py --volume "$volume" --directory "$AGOS_DATA_ROOT" && \

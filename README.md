@@ -4,7 +4,8 @@
 
 <p align="center">
   <a href="https://arxiv.org/abs/2609.08402v1"><img alt="Paper: earlier arXiv v1" src="https://img.shields.io/badge/Paper-earlier%20arXiv%20v1-b31b1b"></a>
-  <a href="dataset/README.md#access-and-verification"><img alt="Dataset: Hugging Face upload pending" src="https://img.shields.io/badge/Dataset-Hugging%20Face%20pending-d6a900"></a>
+  <a href="https://huggingface.co/datasets/Yomier/AGOS-Dataset"><img alt="Dataset on Hugging Face" src="https://img.shields.io/badge/Hugging%20Face-Dataset-d6a900"></a>
+  <a href="https://modelscope.cn/datasets/Yomier/AGOS-Dataset"><img alt="Dataset on ModelScope" src="https://img.shields.io/badge/ModelScope-Dataset-5f45d8"></a>
   <a href="https://huggingface.co/Qwen/Qwen3.5-4B"><img alt="Models: Qwen3.5-4B base on Hugging Face" src="https://img.shields.io/badge/Models-Qwen3.5--4B%20base-6b4eff"></a>
   <a href="https://github.com/louiszengCN/CarlaAir"><img alt="Simulator: CarlaAir v0.1.7" src="https://img.shields.io/badge/Simulator-CarlaAir%20v0.1.7-1f8b4c"></a>
 </p>
@@ -40,16 +41,33 @@ python -m pip install -e '.[dev,dataset]'
 
 ## Data and checkpoints
 
-The six AGOS-Dataset volumes are staged for Hugging Face. Until hosting is available, use a delivered copy of the archives. Unseen-Test300 only needs `taskset-test300.tar.gz`. In each terminal, source the deployment session file or set the variables below from the checkout root. Use the same paths in the evaluation, inference and training terminals.
+Download all six AGOS-Dataset volumes from Hugging Face (`main`) or ModelScope (`master`). Unseen-Test300 only needs `taskset-test300.tar.gz`. In each terminal, source the deployment session file or set the variables below from the checkout root. Use the same paths in the evaluation, inference and training terminals.
 
 ```bash
 export AGOS_DATA_ROOT="${AGOS_DATA_ROOT:-$PWD/data}"
 export AGOS_OUTPUT_ROOT="${AGOS_OUTPUT_ROOT:-$PWD/runs}"
 export MODEL_ROOT="${MODEL_ROOT:-$PWD/weights}"
 mkdir -p "$AGOS_DATA_ROOT" "$AGOS_OUTPUT_ROOT" "$MODEL_ROOT"
+```
 
-# Run after the dataset is published, or place the delivered archive in AGOS_DATA_ROOT.
-# hf download Yomier/AGOS-Dataset taskset-test300.tar.gz --repo-type dataset --local-dir "$AGOS_DATA_ROOT"
+Choose one hub and run the command below. For the offline route, place the delivered `taskset-test300.tar.gz` in `$AGOS_DATA_ROOT`, then proceed to verification and extraction.
+
+**Hugging Face**
+
+```bash
+python dataset/download.py --source hf --repo-id Yomier/AGOS-Dataset --revision main --volume taskset-test300 --directory "$AGOS_DATA_ROOT"
+```
+
+**ModelScope**
+
+```bash
+python -m pip install modelscope
+python dataset/download.py --source modelscope --repo-id Yomier/AGOS-Dataset --revision master --volume taskset-test300 --directory "$AGOS_DATA_ROOT"
+```
+
+After downloading or copying the archive, verify its SHA-256 against the bundled list and extract it.
+
+```bash
 python dataset/verify.py --volume taskset-test300 --directory "$AGOS_DATA_ROOT" && \
   tar -xzf "$AGOS_DATA_ROOT/taskset-test300.tar.gz" -C "$AGOS_DATA_ROOT"
 ```

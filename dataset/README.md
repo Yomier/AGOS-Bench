@@ -52,19 +52,30 @@ The archive's `certification/manifest.json` joins the six files to each publishe
 
 ## Access and verification
 
-All six archives are prepared locally. External hosting is pending. From the AGOS-Bench repository root, place the archives in `data/`, verify them against the bundled checksums, and extract the volumes you need into the same directory. `--volume all` requires all six archives and all six checksums. [Release checksums](SHA256SUMS)
+All six archives are available on Hugging Face and ModelScope. Choose one mirror and run the command below. Run the commands from the AGOS-Bench repository root. The downloader verifies each selected archive against the checksums bundled with this checkout. [Hugging Face (`main`)](https://huggingface.co/datasets/Yomier/AGOS-Dataset) · [ModelScope (`master`)](https://modelscope.cn/datasets/Yomier/AGOS-Dataset) · [Release checksums](SHA256SUMS)
 
-```bash
-python dataset/verify.py --directory data --volume all
-tar -xzf data/taskset-test300.tar.gz -C data
-```
-
-Once hosting is available, the download tool fetches the selected archive from `Yomier/AGOS-Dataset` on Hugging Face and verifies it against the checksums bundled with this release. Install `huggingface_hub` in the environment used for the download. `--revision` accepts a Hub commit or tag. For the planned ModelScope mirror, install `modelscope` with `python -m pip install modelscope` and select `--source modelscope --repo-id Yomier/AGOS-Dataset`.
+**Hugging Face**
 
 ```bash
 python -m pip install huggingface_hub
-python dataset/download.py --directory data --volume taskset-test300
+python dataset/download.py --source hf --repo-id Yomier/AGOS-Dataset --revision main --volume taskset-test300 --directory data
 ```
+
+**ModelScope**
+
+```bash
+python -m pip install modelscope
+python dataset/download.py --source modelscope --repo-id Yomier/AGOS-Dataset --revision master --volume taskset-test300 --directory data
+```
+
+For offline access, place the delivered archives in `data/`. Verify before extracting, whether the archive came from a hub or an offline transfer.
+
+```bash
+python dataset/verify.py --directory data --volume taskset-test300 && \
+  tar -xzf data/taskset-test300.tar.gz -C data
+```
+
+Choose `--volume all` to download or verify all six archives. For a repeatable download, set `--revision` to a specific release revision supported by your selected hub.
 
 ## License and citation
 

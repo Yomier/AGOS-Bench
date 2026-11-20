@@ -4,7 +4,8 @@
 
 <p align="center">
   <a href="https://arxiv.org/abs/2609.08402v1"><img alt="Paper: earlier arXiv v1" src="https://img.shields.io/badge/Paper-earlier%20arXiv%20v1-b31b1b"></a>
-  <a href="dataset/README.md#access-and-verification"><img alt="Dataset: Hugging Face upload pending" src="https://img.shields.io/badge/Dataset-Hugging%20Face%20pending-d6a900"></a>
+  <a href="https://huggingface.co/datasets/Yomier/AGOS-Dataset"><img alt="Dataset on Hugging Face" src="https://img.shields.io/badge/Hugging%20Face-Dataset-d6a900"></a>
+  <a href="https://modelscope.cn/datasets/Yomier/AGOS-Dataset"><img alt="Dataset on ModelScope" src="https://img.shields.io/badge/ModelScope-Dataset-5f45d8"></a>
   <a href="https://huggingface.co/Qwen/Qwen3.5-4B"><img alt="Models: Qwen3.5-4B base on Hugging Face" src="https://img.shields.io/badge/Models-Qwen3.5--4B%20base-6b4eff"></a>
   <a href="https://github.com/louiszengCN/CarlaAir"><img alt="Simulator: CarlaAir v0.1.7" src="https://img.shields.io/badge/Simulator-CarlaAir%20v0.1.7-1f8b4c"></a>
 </p>
@@ -40,16 +41,33 @@ python -m pip install -e '.[dev,dataset]'
 
 ## Data and checkpoints
 
-AGOS-Dataset 的六个压缩卷已准备，Hugging Face 上传待完成。已有离线压缩卷即可开始，Unseen-Test300 只需要 `taskset-test300.tar.gz`。在每个终端加载部署会话文件，或从仓库根目录设置下列环境变量。评测、推理和训练终端应使用相同的路径。
+可从 Hugging Face（`main`）或 ModelScope（`master`）下载 AGOS-Dataset 的全部六卷。Unseen-Test300 只需要 `taskset-test300.tar.gz`。在各终端加载部署会话文件，或从仓库根目录设置下列环境变量。评测、推理和训练终端应使用相同的路径。
 
 ```bash
 export AGOS_DATA_ROOT="${AGOS_DATA_ROOT:-$PWD/data}"
 export AGOS_OUTPUT_ROOT="${AGOS_OUTPUT_ROOT:-$PWD/runs}"
 export MODEL_ROOT="${MODEL_ROOT:-$PWD/weights}"
 mkdir -p "$AGOS_DATA_ROOT" "$AGOS_OUTPUT_ROOT" "$MODEL_ROOT"
+```
 
-# Run after the dataset is published, or place the delivered archive in AGOS_DATA_ROOT.
-# hf download Yomier/AGOS-Dataset taskset-test300.tar.gz --repo-type dataset --local-dir "$AGOS_DATA_ROOT"
+选择一家平台，运行下面对应的命令。已有离线压缩卷时，将 `taskset-test300.tar.gz` 放入 `$AGOS_DATA_ROOT` 后直接校验和解压。
+
+**Hugging Face**
+
+```bash
+python dataset/download.py --source hf --repo-id Yomier/AGOS-Dataset --revision main --volume taskset-test300 --directory "$AGOS_DATA_ROOT"
+```
+
+**ModelScope**
+
+```bash
+python -m pip install modelscope
+python dataset/download.py --source modelscope --repo-id Yomier/AGOS-Dataset --revision master --volume taskset-test300 --directory "$AGOS_DATA_ROOT"
+```
+
+下载或复制完成后，按仓库附带的 SHA-256 校验，再解压。
+
+```bash
 python dataset/verify.py --volume taskset-test300 --directory "$AGOS_DATA_ROOT" && \
   tar -xzf "$AGOS_DATA_ROOT/taskset-test300.tar.gz" -C "$AGOS_DATA_ROOT"
 ```
